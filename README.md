@@ -4,12 +4,12 @@
 
 ## Team members & roles
 
-Michael:  Github moderator, Development
+**Michael**:  Github moderator, Development
 
-Sue:      UX Design
+**Sue**:      UX Design
 
-Sarah:    Design/Development
+**Sarah**:    Design/Development
 
-Leanne:   Team Leader, Marketing, Project Manager
+**Leanne**:   Team Leader, Marketing, Project Manager
 
-Melody:   Development
+**Melody**:   Development

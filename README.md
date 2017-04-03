@@ -1,6 +1,6 @@
 # YumMe
 
-[Problem statement goes here]
+[Problem statement goes here, testing github on slack]
 
 ## Team members & roles
 

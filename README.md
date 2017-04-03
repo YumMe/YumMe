@@ -8,8 +8,9 @@
 
 **Sue**:      UX Design
 
-**Sarah**:    Design/Development
+**Sarah**:    Design & Development
 
 **Leanne**:   Team Leader, Marketing, Project Manager
 
 **Melody**:   Development
+

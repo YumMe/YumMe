@@ -10,6 +10,14 @@ One of our target demographics that currently faces this problem are people who 
 
 We’re going to address this problem by creating an application that helps these people choose where to eat by showing photo examples of food from nearby restaurants, allowing them to find appealing food **quickly** and **easily**.
 
+**Sources**
+Alexandra Duron (2016, February, 5). Is It Bad to Eat The Same Foods Every Day? Retrieved April 04, 2017, from http://greatist.com/eat/same-food-every-day
+
+Anucyia Victor (2015, April, 15). One in three employees eat the same lunch every day - with cheese, ham, or chicken sandwiches being the favourites. Retrieved April 04, 2017, from http://www.dailymail.co.uk/news/article-3040880/Staff-eat-lunches-day-employees-tuck-thing-cheese-ham-chicken-sandwiches-favourites.html
+
+Smarandescu, L., & Mennecke, B. (2013, July 18). Want kids to eat healthier? Don't tell them, show them. Retrieved April 03, 2017, from http://www.news.iastate.edu/news/2013/07/18/digitaldisplays 
+
+
 ## Team members & roles
 
 **Michael**:  Github moderator, Development

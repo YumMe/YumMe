@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './Frontpage.css';
 
 class App extends Component {
   render() {
     return (
       <div className="title">
-        YumMe!
+        YumMe! this is the front page
       </div>
     );
   }

@@ -19,6 +19,22 @@ export default class SearchBar extends React.Component {
     componentDidMount() {
 
 
+        // Finds suggested cities
+        // http://www.geonames.org/export/geonames-search.html
+        
+        // example endpoint: http://api.geonames.org/search?q=london&maxRows=10&username=demo
+        /*
+            name_startsWith =>  whatever is in the search bar
+            maxRows =>          10
+            country =>          US/USA
+            orderby =>          population
+
+
+
+        */
+
+
+
         // 5/10/2017 testing API: Google Places API
         // test Seattle
 
@@ -39,19 +55,23 @@ export default class SearchBar extends React.Component {
                     @maxprice       => max price
 
                 Useful:
-                    @opennow        => Only gets places that are open
+                    @opennow        => only gets places that are open
+                    @types          => "food" gets only restaurants
             ____________________
             Example Calls:
 
                 https://maps.googleapis.com/maps/api/place/textsearch/xml
                     ?query=restaurants+in+Sydney
-                    &key=YOUR_API_KEY
+                    &key=AIzaSyChXBucOpcxrW2wlwhjpEBHWaZXf2NjBrQ
                     &location=42.3675294,-71.186966
                     &radius=10000
                     &rankby=distance
                     &types=food
 
         */
+        var apiKey = "AIzaSyChXBucOpcxrW2wlwhjpEBHWaZXf2NjBrQ";
+        var query = "https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Seattle&key=" + key + "&rankby=distance&types=food";
+
 
 
     }
@@ -71,7 +91,7 @@ export default class SearchBar extends React.Component {
     render() {
         return (
             <section role="region" id="searchBar">
-
+                Beep
             </section>
         );
     }

@@ -11,13 +11,13 @@ export default class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            suggestedCities: [],
         };
     }
 
     // When the page loads
-    componentDidMount() {
-
+    componentWillMount() {
+        var that = this;
 
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
@@ -26,58 +26,41 @@ export default class SearchBar extends React.Component {
         /*
             name_startsWith =>  whatever is in the search bar
             maxRows =>          10
-            country =>          US/USA
-            orderby =>          population
-
-
-
+            country =>          US
+            orderby =>          population (that's the default)
         */
+        fetch('http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb&name_startsWith=sammamish')
+            .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                    // Clear suggested cities
+                    this.setState({suggestedCities: []});
+                    return;
+                }
 
-
-
-        // 5/10/2017 testing API: Google Places API
-        // test Seattle
-
-        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?parameters
-
-        /*
-            Required Parameters
-                @key        => AIzaSyChXBucOpcxrW2wlwhjpEBHWaZXf2NjBrQ
-                @location   => Latitude, Longitude
-                @rankby     => use "distance"
-                @radius     => (actually optional) gets stuff in a radius
-
-            Optional Parameters
-                Not that useful:
-                    @keyword        => name, type, address (probably not needed)
-                    @language       => multilanguage support (probably not needed)
-                    @minprice       => min price
-                    @maxprice       => max price
-
-                Useful:
-                    @opennow        => only gets places that are open
-                    @types          => "food" gets only restaurants
-            ____________________
-            Example Calls:
-
-                https://maps.googleapis.com/maps/api/place/textsearch/xml
-                    ?query=restaurants+in+Sydney
-                    &key=AIzaSyChXBucOpcxrW2wlwhjpEBHWaZXf2NjBrQ
-                    &location=42.3675294,-71.186966
-                    &radius=10000
-                    &rankby=distance
-                    &types=food
-
-        */
-        var apiKey = "AIzaSyChXBucOpcxrW2wlwhjpEBHWaZXf2NjBrQ";
-        var query = "https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Seattle&key=" + key + "&rankby=distance&types=food";
-
-
-
+                // Examine the text in the response
+                response.json().then(function (data) {
+                    console.log(data);
+                    if (data) {
+                        var cityNames = [];
+                        for (var k in data.geonames) {//adminCode1
+                            cityNames.push(data.geonames[k].name);
+                        };
+                    }
+                    that.setState({suggestedCities: cityNames});
+                });
+            }
+            )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
     }
 
     // When the user types into the search bar,
     // change search results in dropdown
+    // todo
     handleChange(event) {
         var field = event.target.name;
         var value = event.target.value;
@@ -91,7 +74,10 @@ export default class SearchBar extends React.Component {
     render() {
         return (
             <section role="region" id="searchBar">
-                Beep
+                <div>search bar</div>
+                <div>
+                    {this.state.suggestedCities}
+                </div>
             </section>
         );
     }

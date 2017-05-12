@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "author": "Melody Lee, Michael Lew, Andrew Vuong, Dillon Byron",
+  "author": "YumMe team",
   "homepage": "https://set this later/build",
   "version": "0.1.0",
   "private": true,
@@ -11,7 +11,6 @@
     "bootstrap": "^3.3.7",
     "enzyme": "^2.6.0",// testing
     "react-bootstrap": "^0.30.6",
-    "react-dom": "^15.3.2", // kinda like jquery stuff i guess 
     "react-loader": "^2.4.0", // loading spinners, kinda cool
     "react-router": "^3.0.0", // routing page to page
     "react-time": "^4.2.0",//some time functions

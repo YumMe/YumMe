@@ -13,6 +13,8 @@ export default class SearchBar extends React.Component {
         this.state = {
             search: '',
             suggestedCities: [],
+            fetch: [],
+            // make fetchQueue 
         };
     }
 
@@ -28,21 +30,24 @@ export default class SearchBar extends React.Component {
             country =>          US
             orderby =>          population (that's the default)
         */
-        this.updateDropdownResults();
+        //this.updateDropdownResults();
     }
 
-    // Verifies that a string is only letters
+    // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
     stringIsOnlyLetters(string) {
-        // regex: ^[A-Z]+$
         return string.match('^[A-Z]+$');
     }
 
     // Update dropdown results based on search
-    updateDropdownResults() {
+    updateDropdownResults(query) {
         var that = this;
 
         var searchQuery = this.state.search.trim();
         console.log(this.state.search);
+
+        if (searchQuery === this.state.search) {
+             that.setState({fetch: null});
+        }
 
         // If nothing in the search bar, clear search results
         if (searchQuery === '') {
@@ -50,14 +55,14 @@ export default class SearchBar extends React.Component {
         } else {
 
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
-            fetch('http://api.geonames.org/searchJSON?q=' + searchQuery + '&maxRows=10&username=greycabb&country=us&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?q=' + searchQuery +
+                '&maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {
-                        console.log('Looks like there was a problem. Status Code: ' +
-                            response.status);
+                        console.log('Looks like there was a problem. Status Code: ' + response.status);
                         // Clear suggested cities
-                        this.setState({suggestedCities: []});
+                        this.setState({suggestedCities: ["An error occurred"]});
                         return;
                     }
 
@@ -65,8 +70,10 @@ export default class SearchBar extends React.Component {
                     response.json().then(function (data) {
                         console.log(data);
                         if (data) {
-                            var cityNames = [];
+                            var cityNames = ["[Results for " + searchQuery + "]"];
                             var resultCount = 0;
+                            
+                            // Cities
                             for (var k in data.geonames) {
                                 var name = data.geonames[k].name;
                                 var state = data.geonames[k].adminCode1;
@@ -106,21 +113,21 @@ export default class SearchBar extends React.Component {
 
     // Type into search bar
     onChange(e) {
-        e.preventDefault();
-        console.log(e.target.value);
+        //e.preventDefault();
         this.setState(
             {
                 search: e.target.value
             }
         );
-        this.updateDropdownResults();
+        this.updateDropdownResults(e.target.value);
     }
 
+    //onChange={(e) => this.onChange(e)}
     // Render in dom
     render() {
         return (
             <section role="region" id="searchBar">
-                <input type="text" name="search" placeholder="Where do you want to eat?" onChange={(e) => this.onChange(e)} onKeyUp={(e) => this.onChange(e)}>
+                <input type="text" name="search" placeholder="Where do you want to eat?" onKeyUp={(e) => this.onChange(e)}>
                 </input>
                 <div>
                     {this.state.suggestedCities}

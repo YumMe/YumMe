@@ -20,7 +20,9 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer = this.resetTypingTimer.bind(this);
         this.updateDropdownResults = this.updateDropdownResults.bind(this);
         this.clickSearchResult = this.clickSearchResult.bind(this);
-    }
+        this.getCurrentLocation = this.getCurrentLocation.bind(this);
+        this.showPosition = this.showPosition.bind(this);
+}
 
     // typingTimer: change search results 200ms AFTER user stops typing
     resetTypingTimer(fast) {
@@ -29,7 +31,7 @@ export default class SearchBar extends React.Component {
         }
         var time = 200;
         if (fast === true) {
-            time = 100;
+            time = 10;
         }
         this.setState({
             typingTimer: setTimeout(this.updateDropdownResults, time)
@@ -50,6 +52,7 @@ export default class SearchBar extends React.Component {
         */
         //this.updateDropdownResults();
         this.resetTypingTimer();
+        this.getCurrentLocation();
     }
 
     // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
@@ -78,7 +81,7 @@ export default class SearchBar extends React.Component {
         } else {
 
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?&maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {
@@ -103,8 +106,12 @@ export default class SearchBar extends React.Component {
                                 // Ignore non-letter state codes
                                 if (state !== undefined && that.stringIsOnlyLetters(state)) {
                                     name += ', ' + state;
-                                    cityNames.push(name);
-                                    resultCount++;
+
+                                    // Ignore the result in the search bar
+                                    if (name.toLowerCase() !== searchQuery.toLowerCase()) {
+                                        cityNames.push(name);
+                                        resultCount++;
+                                    }
 
                                     // Stop at the 10th vallid result (city, state pair)
                                     if (resultCount >= 10) {
@@ -135,9 +142,6 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer();
     }
 
-    // Replace search bar text
-
-
     // Click search result, replacing text of search bar with what was clicked
     clickSearchResult(e, that) {
         
@@ -156,6 +160,19 @@ export default class SearchBar extends React.Component {
         );
         clearTimeout(this.typingTimer);
         this.resetTypingTimer(true);
+    }
+
+    // Location pointer icon
+    getCurrentLocation() {
+        if (!navigator.geolocation) {
+            alert("Geolocation not supported in your browser");
+        }
+        var location = navigator.geolocation.getCurrentPosition(this.showPosition);
+        console.log(location);
+    }
+    showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude); 
     }
 
     // Render in dom

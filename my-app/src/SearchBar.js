@@ -14,8 +14,21 @@ export default class SearchBar extends React.Component {
             search: '',
             suggestedCities: [],
             fetch: [],
-            // make fetchQueue 
+            typingTimer: null
         };
+        this.stringIsOnlyLetters = this.stringIsOnlyLetters.bind(this);
+        this.resetTypingTimer = this.resetTypingTimer.bind(this);
+        this.updateDropdownResults = this.updateDropdownResults.bind(this);
+    }
+
+    // typingTimer: change search results 200ms AFTER user stops typing
+    resetTypingTimer() {
+        if (this.state.typingTimer != null) {
+            clearTimeout(this.state.typingTimer);
+        }
+        this.setState({
+            typingTimer: setTimeout(this.updateDropdownResults, 200)
+        });
     }
 
     // When the page loads
@@ -31,6 +44,7 @@ export default class SearchBar extends React.Component {
             orderby =>          population (that's the default)
         */
         //this.updateDropdownResults();
+        this.resetTypingTimer();
     }
 
     // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
@@ -39,19 +53,23 @@ export default class SearchBar extends React.Component {
     }
 
     // Update dropdown results based on search
-    updateDropdownResults(query) {
+    updateDropdownResults() {
         var that = this;
 
-        var searchQuery = this.state.search.trim();
-        console.log(this.state.search);
+        //
+        clearTimeout(that.state.typingTimer);
 
-        if (searchQuery === this.state.search) {
-             that.setState({fetch: null});
+        var searchQuery = that.state.search.trim();
+        console.log(that.state.search);
+
+        // Clear the timeout
+        if (searchQuery === that.state.search) {
+             that.setState({fetchTimeout: null});
         }
 
         // If nothing in the search bar, clear search results
         if (searchQuery === '') {
-            this.setState({suggestedCities: []});
+            that.setState({suggestedCities: []});
         } else {
 
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
@@ -83,6 +101,8 @@ export default class SearchBar extends React.Component {
                                     name += ', ' + state;
                                     cityNames.push(name);
                                     resultCount++;
+
+                                    // Stop at the 10th vallid result (city, state pair)
                                     if (resultCount >= 10) {
                                         break;
                                     }
@@ -119,7 +139,8 @@ export default class SearchBar extends React.Component {
                 search: e.target.value
             }
         );
-        this.updateDropdownResults(e.target.value);
+        clearTimeout(this.typingTimer);
+        this.resetTypingTimer();//.updateDropdownResults(e.target.value);
     }
 
     //onChange={(e) => this.onChange(e)}

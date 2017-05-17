@@ -52,7 +52,7 @@ export default class SearchBar extends React.Component {
         */
         //this.updateDropdownResults();
         this.resetTypingTimer();
-        this.getCurrentLocation();
+        //this.getCurrentLocation();
     }
 
     // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
@@ -168,7 +168,7 @@ export default class SearchBar extends React.Component {
             alert("Geolocation not supported in your browser");
         }
         var location = navigator.geolocation.getCurrentPosition(this.showPosition);
-        console.log(location);
+        //console.log(location);
     }
     showPosition(position) {
         console.log("Latitude: " + position.coords.latitude + 
@@ -191,6 +191,7 @@ export default class SearchBar extends React.Component {
                 <div>
                     {dropdown}
                 </div>
+                <button className="btn" onClick={this.getCurrentLocation}>LPI</button>
             </section>
         );
     }

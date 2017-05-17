@@ -6,9 +6,10 @@ class SearchResults extends Component {
 
     constructor(props) {
         super(props);
+        this.componentDidlMount();
     }
 
-    componentWillMount() {
+    componentDidlMount() {
         const yelp = require('yelp-fusion');
         // Place holders for Yelp Fusion's OAuth 2.0 credentials. Grab them
         // from https://www.yelp.com/developers/v3/manage_app

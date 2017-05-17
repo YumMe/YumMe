@@ -3,17 +3,38 @@
 /*For subtitle*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
+
+/*overall app*/
+.app {
+  padding: 50px;
+  background-image: url("../img/pasta.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+}
+
+.homepage {
+  text-align: right;
+  vertical-align: right;
+}
+
 .title{
   font-family: 'Pacifico', cursive;
+  font-size: 100px;
+  color: #333333;
 }
 
 .light{
   font-family: 'Open Sans', sans-serif;
+  
 }
 
 h2{
-  padding: 10px;
   align-content: right;
+}
+
+h2.light{
+  font-size: 50px;
 }
 
 body {

@@ -75,7 +75,28 @@ export default class SearchBar extends React.Component {
         return (
             <section role="region" id="searchBar">
                 {/*<div>search bar place holder</div>*/}
-                <input type="text" name="search" className="light" placeholder="Where do you want to eat?"></input>
+
+            {/*<div id="custom-search-input" className="form-control">
+                <div className="input-group col-md-12">
+                    <input type="text" className="form-control input-l light" placeholder="Where do you want to eat?" />
+                    <span className="input-group-btn">
+                        <button className="btn btn-info btn-lg" type="button">
+                            <i className="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>*/}
+<form>
+  <div className="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email"></input>
+  </div>
+  <button type="submit" className="btn btn-default">Submit</button>
+</form>
+
+
+
+
 
                 <div>
                     {this.state.suggestedCities}

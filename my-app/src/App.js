@@ -5,10 +5,12 @@ import SearchBar from './SearchBar';
 class App extends Component {
   render() {
     return (
-      <div className="title">
-        YumMe!
-        <h2 className="light">See what tastes good</h2>
-        <SearchBar />
+      <div className="app">
+        <div className="title homepage">
+          YumMe!
+        <h2 className="light homepage">See what tastes good</h2>
+          <SearchBar />
+        </div>
       </div>
     );
   }

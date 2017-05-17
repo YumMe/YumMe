@@ -74,7 +74,9 @@ export default class SearchBar extends React.Component {
     render() {
         return (
             <section role="region" id="searchBar">
-                <div>search bar</div>
+                {/*<div>search bar place holder</div>*/}
+                <input type="text" name="search" className="light" placeholder="Where do you want to eat?"></input>
+
                 <div>
                     {this.state.suggestedCities}
                 </div>

@@ -7,6 +7,7 @@ class App extends Component {
     return (
       <div className="title">
         YumMe!
+        <h2 className="light">See what tastes good</h2>
         <SearchBar />
       </div>
     );

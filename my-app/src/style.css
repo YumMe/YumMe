@@ -1,7 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+/*For title*/
+@import url('https://fonts.googleapis.com/css?family=Pacifico'); 
+/*For subtitle*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
 .title{
   font-family: 'Pacifico', cursive;
+}
+
+.light{
+  font-family: 'Open Sans', sans-serif;
+}
+
+h2{
+  padding: 10px;
+  align-content: right;
 }
 
 body {

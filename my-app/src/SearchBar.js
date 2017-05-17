@@ -19,15 +19,20 @@ export default class SearchBar extends React.Component {
         this.stringIsOnlyLetters = this.stringIsOnlyLetters.bind(this);
         this.resetTypingTimer = this.resetTypingTimer.bind(this);
         this.updateDropdownResults = this.updateDropdownResults.bind(this);
+        this.clickSearchResult = this.clickSearchResult.bind(this);
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
-    resetTypingTimer() {
+    resetTypingTimer(fast) {
         if (this.state.typingTimer != null) {
             clearTimeout(this.state.typingTimer);
         }
+        var time = 200;
+        if (fast === true) {
+            time = 100;
+        }
         this.setState({
-            typingTimer: setTimeout(this.updateDropdownResults, 200)
+            typingTimer: setTimeout(this.updateDropdownResults, time)
         });
     }
 
@@ -130,17 +135,41 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer();
     }
 
-    //onChange={(e) => this.onChange(e)}
+    // Replace search bar text
+
+
+    // Click search result, replacing text of search bar with what was clicked
+    clickSearchResult(e, that) {
+        
+        var searchResultText = e.currentTarget.textContent;
+        console.log(searchResultText);
+        //document.getElementById("searchbar").innerHTML(searchResultText);
+        
+        var searchbar = that.refs.searchbar;
+        searchbar.value = searchResultText;
+
+        // Set new state
+        this.setState(
+            {
+                search: searchResultText
+            }
+        );
+        clearTimeout(this.typingTimer);
+        this.resetTypingTimer(true);
+    }
+
     // Render in dom
     render() {
+        var that = this;
+
         var dropdown =
             this.state.suggestedCities.map(function(city, i) {
-                return <div key={i}>{city}</div>;
+                return <div key={i} onClick={(e) => that.clickSearchResult(e, that)}>{city}</div>;
             });
 
         return (
             <section role="region" id="searchBar">
-                <input type="text" name="search" placeholder="Where do you want to eat?" onKeyUp={(e) => this.onChange(e)}>
+                <input type="text" name="search" ref="searchbar" id="searchbar" placeholder="Where do you want to eat?" onKeyUp={(e) => this.onChange(e)}>
                 </input>
                 <div>
                     {dropdown}

@@ -74,13 +74,22 @@ export default class SearchBar extends React.Component {
     render() {
         return (
             <div>
-                <span className="search">
-                    <i className="fa fa-map-marker" aria-hidden="true"></i>
-                    <input type="text" className="form-control input-l light" id="searchbar" placeholder="Where do you want to eat?" />
-                </span>
-                <div>
-                    {this.state.suggestedCities}
+                <div className="search">
+                    <div className="location-pointer">
+                        <i className="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <div className="search-form">
+                        <form action="#">
+                            <div className="mdl-textfield mdl-js-textfield">
+                                <input className="mdl-textfield__input" type="text" id="sample1"/>
+                                <label className="mdl-textfield__label" for="sample1">Text...</label>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+                {/*<div>
+                    {this.state.suggestedCities}
+                </div>*/}
             </div>
         );
     }

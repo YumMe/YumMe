@@ -8,8 +8,10 @@
 .app {
   padding: 50px;
   background-image: url("../img/pasta.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
+  max-width: 100vw;
+  max-height: 100vh;
 
 }
 
@@ -50,11 +52,14 @@ body {
 #searchbar {
   background: transparent;
   border: none;
-  width: 50%;
-  float: right;
+  width: 30vw;
 }
 
-.fa-map-marker{
+.fa-map-marker {
   font-size: 3rem;
-  display: inline;
+  padding-right: 10px;
+}
+
+.search-form, .location-pointer {
+    display: inline-block;
 }

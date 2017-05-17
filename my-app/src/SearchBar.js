@@ -21,7 +21,7 @@ export default class SearchBar extends React.Component {
 
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
-        
+
         // example endpoint: http://api.geonames.org/search?q=london&maxRows=10&username=demo
         /*
             name_startsWith =>  whatever is in the search bar
@@ -36,7 +36,7 @@ export default class SearchBar extends React.Component {
                     console.log('Looks like there was a problem. Status Code: ' +
                         response.status);
                     // Clear suggested cities
-                    this.setState({suggestedCities: []});
+                    this.setState({ suggestedCities: [] });
                     return;
                 }
 
@@ -49,7 +49,7 @@ export default class SearchBar extends React.Component {
                             cityNames.push(data.geonames[k].name);
                         };
                     }
-                    that.setState({suggestedCities: cityNames});
+                    that.setState({ suggestedCities: cityNames });
                 });
             }
             )
@@ -73,35 +73,14 @@ export default class SearchBar extends React.Component {
 
     render() {
         return (
-            <section role="region" id="searchBar">
-                {/*<div>search bar place holder</div>*/}
-
-            {/*<div id="custom-search-input" className="form-control">
-                <div className="input-group col-md-12">
+            <div>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
                     <input type="text" className="form-control input-l light" placeholder="Where do you want to eat?" />
-                    <span className="input-group-btn">
-                        <button className="btn btn-info btn-lg" type="button">
-                            <i className="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>*/}
-<form>
-  <div className="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email"></input>
-  </div>
-  <button type="submit" className="btn btn-default">Submit</button>
-</form>
-
-
-
-
 
                 <div>
                     {this.state.suggestedCities}
                 </div>
-            </section>
+            </div>
         );
     }
 }

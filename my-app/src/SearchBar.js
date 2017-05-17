@@ -74,9 +74,10 @@ export default class SearchBar extends React.Component {
     render() {
         return (
             <div>
-                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    <input type="text" className="form-control input-l light" placeholder="Where do you want to eat?" />
-
+                <span className="search">
+                    <i className="fa fa-map-marker" aria-hidden="true"></i>
+                    <input type="text" className="form-control input-l light" id="searchbar" placeholder="Where do you want to eat?" />
+                </span>
                 <div>
                     {this.state.suggestedCities}
                 </div>

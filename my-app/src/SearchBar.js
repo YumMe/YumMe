@@ -56,7 +56,7 @@ export default class SearchBar extends React.Component {
     updateDropdownResults() {
         var that = this;
 
-        //
+        // Clear any previous API call requests
         clearTimeout(that.state.typingTimer);
 
         var searchQuery = that.state.search.trim();
@@ -73,8 +73,7 @@ export default class SearchBar extends React.Component {
         } else {
 
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?q=' + searchQuery +
-                '&maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?&maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {
@@ -119,18 +118,6 @@ export default class SearchBar extends React.Component {
             }
     }
 
-    // When the user types into the search bar,
-    // change search results in dropdown
-    // todo
-    handleChange(event) {
-        var field = event.target.name;
-        var value = event.target.value;
-
-        var changes = {}; //object to hold changes
-        changes[field] = value; //change this field
-        this.setState(changes); //update state
-    }
-
     // Type into search bar
     onChange(e) {
         //e.preventDefault();
@@ -140,18 +127,23 @@ export default class SearchBar extends React.Component {
             }
         );
         clearTimeout(this.typingTimer);
-        this.resetTypingTimer();//.updateDropdownResults(e.target.value);
+        this.resetTypingTimer();
     }
 
     //onChange={(e) => this.onChange(e)}
     // Render in dom
     render() {
+        var dropdown =
+            this.state.suggestedCities.map(function(city, i) {
+                return <div key={i}>{city}</div>;
+            });
+
         return (
             <section role="region" id="searchBar">
                 <input type="text" name="search" placeholder="Where do you want to eat?" onKeyUp={(e) => this.onChange(e)}>
                 </input>
                 <div>
-                    {this.state.suggestedCities}
+                    {dropdown}
                 </div>
             </section>
         );

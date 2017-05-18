@@ -81,4 +81,15 @@ body {
 
 .button{
   border:.75px solid black;
+  /*padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+  display: inline-block;*/
+}
+
+.button:hover{
+  background-color: black;
+  color: white;
 }

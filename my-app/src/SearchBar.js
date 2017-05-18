@@ -75,22 +75,28 @@ export default class SearchBar extends React.Component {
         return (
             <div>
                 <div className="search">
-                    <div className="location-pointer">
-                        <i className="fa fa-map-marker" aria-hidden="true"></i>
-                    </div>
                     <div className="search-form">
                         <form action="#">
+                            <i className="fa fa-map-marker location-pointer" aria-hidden="true"></i>
                             <div className="mdl-textfield mdl-js-textfield">
-                                <input className="mdl-textfield__input" type="text" id="sample1"/>
-                                <label className="mdl-textfield__label" for="sample1">Text...</label>
+                                <input className="mdl-textfield__input" type="text" id="sample1" />
+                                <label className="mdl-textfield__label" for="sample1">
+                                    <div className="location-pointer light placeholder">
+                                        Where do you want to eat?
+                                    </div>
+                                </label>
                             </div>
                         </form>
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light">
+                            Go!
+                        </button>
+
                     </div>
-                </div>
-                {/*<div>
+                    </div>
+                    {/*<div>
                     {this.state.suggestedCities}
                 </div>*/}
-            </div>
-        );
+                </div>
+                );
     }
 }

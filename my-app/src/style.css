@@ -5,38 +5,47 @@
 
 
 /*overall app*/
-.app {
+
+
+.homepage {
+  height: 100vh;
   padding: 50px;
   background-image: url("../img/pasta.png");
   background-size: cover;
   background-repeat: no-repeat;
-  max-width: 100vw;
-  max-height: 100vh;
-
+  /*max-width: 100vw;
+  max-height: 100vh;*/
+  display: flex;
+  text-align: center;
+  align-items: center;
 }
 
-.homepage {
-  text-align: right;
-  vertical-align: right;
+.text{
+  margin-left: 60%;
 }
 
 .title{
   font-family: 'Pacifico', cursive;
   font-size: 7rem;
   color: #333333;
+  
 }
 
 .light{
   font-family: 'Open Sans', sans-serif;
-  
+  color: black;
 }
+
+
 
 h2{
   align-content: right;
+  padding: 10px;
+  margin: 0px;
 }
 
 h2.light{
-  font-size: 50px;
+  font-size: 3rem;
 }
 
 body {
@@ -52,7 +61,7 @@ body {
 #searchbar {
   background: transparent;
   border: none;
-  width: 30vw;
+  width: 2rem;
 }
 
 .fa-map-marker {
@@ -62,4 +71,14 @@ body {
 
 .search-form, .location-pointer {
     display: inline-block;
+    color: black;
+    
+}
+
+.placeholder {
+  font-size: 1.7rem;
+}
+
+.button{
+  border:.75px solid black;
 }

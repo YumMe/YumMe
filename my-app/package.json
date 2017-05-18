@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "author": "YumMe team",
-  "homepage": "https://set this later/build",
+  "homepage": "https://yumme.github.io/YumMe/my-app/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

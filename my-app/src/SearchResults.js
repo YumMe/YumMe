@@ -10,27 +10,25 @@ class SearchResults extends Component {
     }
 
     componentDidlMount() {
-        const yelp = require('yelp-fusion');
-        // Place holders for Yelp Fusion's OAuth 2.0 credentials. Grab them
-        // from https://www.yelp.com/developers/v3/manage_app
-        const clientId = '-TEl59_tdP6IVt5oFziseA';
-        const clientSecret = 'UiRibnj9ucjfMQU54nNc0IF3Ad2CqW8m7L7XXq3nfZhgbPpzoLJw1XslfRPpWUFH';
+       var data = "client_id=-TEl59_tdP6IVt5oFziseA&client_secret=UiRibnj9ucjfMQU54nNc0IF3Ad2CqW8m7L7XXq3nfZhgbPpzoLJw1XslfRPpWUFH&grant_type=client_credentials";
 
-        const searchRequest = {
-            term:'Meesum',
-            location: 'seattle, wa'
-        };
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 
-        yelp.accessToken(clientId, clientSecret).then(response => {
-        const client = yelp.client(response.jsonBody.access_token);
-        client.search(searchRequest).then(response => {
-            const firstResult = response.jsonBody.businesses[0];
-            const prettyJson = JSON.stringify(firstResult, null, 4);
-            console.log(prettyJson);
+        xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            console.log(this.responseText);
+        }
         });
-        }).catch(e => {
-            console.log(e);
-        });
+
+        xhr.open("GET", "https://api.yelp.com/v3/businesses/search?term=Meesum&location=seattle%2C%20wa");
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("authorization", "Bearer mFx9GawCOq_cHnJvJ03aPdCGXyZMQCluSNVVFJ6Exb9nftJaIUTyXiukKT19_86n3P13wV_lbaNOyxUhoyXspWEWPeJ-8YjKIzDzHp9yPaY3zb2IAHs5f5adRl8WWXYx");
+        xhr.setRequestHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
+        xhr.setRequestHeader("cache-control", "no-cache");
+        xhr.setRequestHeader("postman-token", "13dc087b-69b6-539d-241b-9f0c12423a19");
+
+        xhr.send(data);
     }
 
   render() {

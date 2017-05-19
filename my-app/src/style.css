@@ -121,21 +121,21 @@ body {
   }
 
   .location-pointer {
-    font-size: 7vw;
+    font-size: 6vw;
   }
 
   .placeholder{
     font-size: 4vw;
-    width: 850%;
   }
-
+/*
 .search-form, .location-pointer {
     display: inline-block;
     width: 100%''    
-}
+}*/
 
 form{
-  width: 100%;
+  display: inline-block;
+  width: 50vw;
 }
 
 

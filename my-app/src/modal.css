@@ -1,0 +1,17 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+.exit{
+  float: right;
+  background-color: transparent;
+  border: 0px;
+  padding: 0px;
+  font-size: 3vw;
+}
+
+.exit:focus{
+  outline: none;
+}
+
+.modal.light {
+  font-size: 3vw;
+}

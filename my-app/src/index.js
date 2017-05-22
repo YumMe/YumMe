@@ -6,6 +6,8 @@ import SearchResults from './SearchResults';
 import Restaurant from './Restaurant';
 import './style.css';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import 'react-mdl/extra/material.css';
+import 'react-mdl/extra/material.js';
 
 ReactDOM.render(
   // <App />,

@@ -232,7 +232,7 @@ export default class SearchBar extends React.Component {
         return (
             <div>
                 <div className="search">
-                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)}>
+                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
                             <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
                             <div className="mdl-textfield mdl-js-textfield">

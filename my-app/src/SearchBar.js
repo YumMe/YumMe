@@ -1,6 +1,7 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 
+
 /*
     ping @michael if you have questions
 
@@ -203,15 +204,38 @@ export default class SearchBar extends React.Component {
 
         var usingCurrentLocation = false;
 
+        // Parameters:
+
+        // 1) city = city name
+        //      ignored if lat and long are specified
+        // 2) lat = latitude
+        // 3) long = longitude
+        //      ignored if mylocation = false
+
+        var lat = '';
+        if (this.state.latitude !== '') {
+            lat = this.state.latitude;
+        }
+        var long = '';
+        if (this.state.longitude !== '') {
+            long = this.state.longitude;
+        }
+        var city = '';
+        if (this.state.search.trim() !== '') {
+            city = this.state.search;
+        } else {
+            usingCurrentLocation = true;
+        }
+
         if (usingCurrentLocation === true) {
             console.log('Going to search results page for current location');
-            hashHistory.push('/searchresults');
+            hashHistory.push('/search?lat=' + lat + '&long=' + long);
         } else if (usingCurrentLocation === false) {
             console.log('Going to search results page for "' + this.state.search + '"');
-            hashHistory.push('searchresults');
+            hashHistory.push('/search?city=' + this.state.search);
         }
-        hashHistory.push('searchresults');
     }
+
 
 
     // Render in dom
@@ -232,7 +256,7 @@ export default class SearchBar extends React.Component {
         return (
             <div>
                 <div className="search">
-                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)}>
+                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
                             <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
                             <div className="mdl-textfield mdl-js-textfield">

@@ -173,7 +173,7 @@ form{
   width: 100%;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown .dropdown-content {
     display: block;
 }
 /* end of michael's css rules */

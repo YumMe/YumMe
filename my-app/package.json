@@ -5,16 +5,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "bootstrap": "^3.3.7",
     "enzyme": "^2.6.0",
+    "moment": "^2.8.3",
+    "react": "^15.5.4",
     "react-bootstrap": "^0.30.6",
+    "react-dom": "^15.5.4",
     "react-loader": "^2.4.0",
     "react-router": "^3.0.0",
     "react-time": "^4.2.0",
-    "whatwg-fetch": "^1.0.0",
-    "moment": "^2.8.3"
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5",

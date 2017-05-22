@@ -6,6 +6,14 @@ class SearchResults extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      city: '',
+      lat: '',
+      long: '',
+      searchType: ''
+    };
+
     this.componentDidlMount();
     this.queryParametersAreValid = this.queryParametersAreValid.bind(this);
   }
@@ -57,22 +65,16 @@ class SearchResults extends Component {
     return false;
   }
 
-
-  render() {
-
+  componentDidMount() {
     console.log('memes');
     console.log(this.props.location.query);
 
     var query = this.props.location.query;
-
-
     var valid = true;
 
     var searchType = ''; // 'coords' or 'city'
 
     if (query !== undefined) {
-
-      
 
       // 1) Latitude and longitude, takes priority (current position)
       if (query.lat !== undefined && query.long !== undefined) {
@@ -80,42 +82,68 @@ class SearchResults extends Component {
         console.log('Longitude: ' + query.long);
 
         // Validate long, lat
-        if (!this.queryParametersAreValid(query.lat, query.long)) {
-          valid = false;
+        if (this.queryParametersAreValid(query.lat, query.long)) {
+          this.setState({
+            lat: query.lat,
+            long: query.long,
+            searchType: 'coords'
+          });
         } else {
-          searchType = 'coords';
+          valid = false;
         }
       }
 
       // 2) OR Specified city
       else if (query.city !== undefined) {
         console.log('City: ' + query.city);
-        searchType = 'city';
+
+        if (query.city.length > 0) {
+          this.setState({
+            city: query.city,
+            searchType: 'city'
+          });
+        } else {
+          valid = false;
+        }
       }
-      // 3) OR errors in query parameters
+      // 3) OR errors in query parameters, default to Seattle
       else {
         console.log('invalid or missing query parameters');
         valid = false;
       }
-    }
+      if (!valid) {
+        // Invalid or missing input = default to Seattle (let city = seattle):
+        console.log('Defaulting to city=Seattle, WA');
 
+        this.setState({
+          city: 'Seattle, WA',
+          searchType: 'city'
+        });
+      }
+    }
+  }
+
+  render() {
     var queryInfoDiv = (<div></div>);
+
+    var searchType = this.state.searchType;
+    var valid = this.state.searchType !== '';
+
 
     if (valid) {
       if (searchType === 'city') {
         queryInfoDiv = (
-          <div>{this.props.location.query.city}</div>
+          <div>{this.state.city}</div>
         );
       } else if (searchType === 'coords') {
         queryInfoDiv = (
           <div>
-            <div>{this.props.location.query.lat}</div>
-            <div>{this.props.location.query.long}</div>
+            <div>{this.state.lat}</div>
+            <div>{this.state.long}</div>
           </div>
         );
       }
     }
-    // Default: current location
 
     return (
       <div className="title">

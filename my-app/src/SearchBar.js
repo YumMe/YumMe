@@ -32,6 +32,7 @@ export default class SearchBar extends React.Component {
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
         this.getLatitudeAndLongitude = this.getLatitudeAndLongitude.bind(this);
+        this.searchCurrentLocation = this.searchCurrentLocation.bind(this);
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -197,10 +198,18 @@ export default class SearchBar extends React.Component {
         });
     }
 
+    // Get coords and go to search results page
+    searchCurrentLocation() {
+        this.getCurrentLocation();
+        this.goToSearchResultsPage();
+    }
+
     // Go to search results page, using either city name or state
     goToSearchResultsPage(e) {
 
-        e.preventDefault;
+        if (e !== undefined) {
+            e.preventDefault;
+        }
 
         var usingCurrentLocation = false;
 
@@ -215,10 +224,12 @@ export default class SearchBar extends React.Component {
         var lat = '';
         if (this.state.latitude !== '') {
             lat = this.state.latitude;
+            usingCurrentLocation = true;
         }
         var long = '';
         if (this.state.longitude !== '') {
             long = this.state.longitude;
+            usingCurrentLocation = true;
         }
         var city = '';
         if (this.state.search.trim() !== '') {
@@ -258,7 +269,7 @@ export default class SearchBar extends React.Component {
                 <div className="search">
                     <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
-                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
+                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.searchCurrentLocation}></i>
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
 
@@ -280,7 +291,7 @@ export default class SearchBar extends React.Component {
                         </form>
 
                         <br />
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={(e) => this.goToSearchResultsPage(e)}>
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.searchCurrentLocation}>
                             Go!
                         </button>
 

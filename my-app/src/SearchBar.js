@@ -22,7 +22,7 @@ export default class SearchBar extends React.Component {
         this.clickSearchResult = this.clickSearchResult.bind(this);
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.showPosition = this.showPosition.bind(this);
-}
+    }
 
     // typingTimer: change search results 200ms AFTER user stops typing
     resetTypingTimer(fast) {
@@ -42,7 +42,7 @@ export default class SearchBar extends React.Component {
     componentWillMount() {
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
-        
+
         // example endpoint: http://api.geonames.org/search?q=london&maxRows=10&username=demo
         /*
             name_startsWith =>  whatever is in the search bar
@@ -72,12 +72,12 @@ export default class SearchBar extends React.Component {
 
         // Clear the timeout
         if (searchQuery === that.state.search) {
-             that.setState({fetchTimeout: null});
+            that.setState({ fetchTimeout: null });
         }
 
         // If nothing in the search bar, clear search results
         if (searchQuery === '') {
-            that.setState({suggestedCities: []});
+            that.setState({ suggestedCities: [] });
         } else {
             // featureCode=PPL
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
@@ -87,7 +87,7 @@ export default class SearchBar extends React.Component {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         // Clear suggested cities
-                        this.setState({suggestedCities: ["An error occurred"]});
+                        this.setState({ suggestedCities: ["An error occurred"] });
                         return;
                     }
 
@@ -95,14 +95,14 @@ export default class SearchBar extends React.Component {
                     response.json().then(function (data) {
                         console.log(data);
                         if (data) {
-                            var cityNames = ["[Results for " + searchQuery + "]"];
+                            var cityNames = [];//["[Results for " + searchQuery + "]"];
                             var resultCount = 0;
-                            
+
                             // Cities
                             for (var k in data.geonames) {
                                 var name = data.geonames[k].name;
                                 var state = data.geonames[k].adminCode1;
-                                
+
                                 // Ignore non-letter state codes
                                 if (state !== undefined && that.stringIsOnlyLetters(state)) {
                                     name += ', ' + state;
@@ -120,14 +120,14 @@ export default class SearchBar extends React.Component {
                                 }
                             };
                         }
-                        that.setState({suggestedCities: cityNames});
+                        that.setState({ suggestedCities: cityNames });
                     });
                 }
                 )
                 .catch(function (err) {
                     console.log('Fetch Error :-S', err);
                 });
-            }
+        }
     }
 
     // Type into search bar
@@ -144,11 +144,11 @@ export default class SearchBar extends React.Component {
 
     // Click search result, replacing text of search bar with what was clicked
     clickSearchResult(e, that) {
-        
+
         var searchResultText = e.currentTarget.textContent;
         console.log(searchResultText);
         //document.getElementById("searchbar").innerHTML(searchResultText);
-        
+
         var searchbar = that.refs.searchbar;
         searchbar.value = searchResultText;
 
@@ -162,7 +162,7 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer(true);
     }
 
-    // Location pointer icon
+    // Location pointer icon: get user's current latitude, longitude
     getCurrentLocation() {
         if (!navigator.geolocation) {
             alert("Geolocation not supported in your browser");
@@ -171,8 +171,8 @@ export default class SearchBar extends React.Component {
         //console.log(location);
     }
     showPosition(position) {
-        console.log("Latitude: " + position.coords.latitude + 
-        "<br>Longitude: " + position.coords.longitude); 
+        console.log("Latitude: " + position.coords.latitude +
+            " || Longitude: " + position.coords.longitude);
     }
 
     // Render in dom
@@ -180,19 +180,38 @@ export default class SearchBar extends React.Component {
         var that = this;
 
         var dropdown =
-            this.state.suggestedCities.map(function(city, i) {
+            this.state.suggestedCities.map(function (city, i) {
                 return <div key={i} onClick={(e) => that.clickSearchResult(e, that)}>{city}</div>;
             });
 
         return (
-            <section role="region" id="searchBar">
-                <input type="text" name="search" ref="searchbar" id="searchbar" placeholder="Where do you want to eat?" onKeyUp={(e) => this.onChange(e)}>
-                </input>
-                <div>
-                    {dropdown}
+            <div>
+                <div className="search">
+                    <div className="search-form" onKeyUp={(e) => this.onChange(e)}>
+                        <form action="#" className="dropdown">
+                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
+                            <div className="mdl-textfield mdl-js-textfield">
+                                <input className="mdl-textfield__input" type="text" id="sample1" ref="searchbar"/>
+                                <div className="dropdown-content">
+                                    {dropdown}
+                                </div>
+                                <label className="mdl-textfield__label" for="sample1">
+                                    <div className="location-pointer light placeholder">
+                                        Where do you want to eat?
+                                    </div>
+                                </label>
+                            </div>
+                            
+                        </form>
+                        
+                        <br />
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button">
+                            Go!
+                        </button>
+                        
+                    </div>
                 </div>
-                <button className="btn" onClick={this.getCurrentLocation}>LPI</button>
-            </section>
+            </div>
         );
     }
 }

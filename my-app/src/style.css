@@ -1,7 +1,50 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+/*For title*/
+@import url('https://fonts.googleapis.com/css?family=Pacifico'); 
+/*For subtitle*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+
+
+/*overall app*/
+
+
+.homepage {
+  height: 100vh;
+  padding: 50px;
+  background-image: url("../img/pasta.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+/*hompage text*/
+.text{
+  margin-left: 60%;
+}
 
 .title{
   font-family: 'Pacifico', cursive;
+  font-size: 7vw;
+  color: #333333;
+  
+}
+
+.light{
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+}
+
+
+
+h2{
+  align-content: right;
+  padding: 8px;
+  margin: 0px;
+}
+
+h2.light{
+  font-size: 3vw;
 }
 
 body {
@@ -9,3 +52,127 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.search{
+  display: inline;
+}
+
+#searchbar {
+  background: transparent;
+  border: none;
+  width: 2rem;
+}
+
+.fa-map-marker {
+  font-size: 3rem;
+  padding-right: 10px;
+}
+
+.search-form, .location-pointer {
+    display: inline-block;
+    color: black;
+    
+}
+
+.placeholder {
+  font-size: 1.7rem;
+}
+
+.button{
+  border:.75px solid black;
+  /*padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+  display: inline-block;*/
+}
+
+.button:hover{
+  background-color: black;
+  color: white;
+}
+
+/*phone*/
+@media screen and (max-width: 600px){
+  .homepage {
+    background-image: url("../img/pasta-mobile.png");
+    align-items: initial;
+  }
+
+  .title{
+    font-size: 12vw;
+    margin-bottom: 0px;
+  }
+
+  h2.light{
+    font-size:6vw;
+  }
+
+  .text{
+    width: 85%;
+    margin-left: 0px;
+    margin: 0 auto;
+  }
+
+  .search-form {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .location-pointer {
+    font-size: 6vw;
+  }
+
+  .placeholder{
+    font-size: 4vw;
+  }
+/*
+.search-form, .location-pointer {
+    display: inline-block;
+    width: 100%''    
+}*/
+
+form{
+  display: inline-block;
+  width: 50vw;
+}
+
+
+
+  
+
+}
+
+/* Michael's CSS rules */
+.location-pointer {
+  cursor: pointer;
+  cursor: hand;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  font-family: arial;
+  font-size: 14px;
+  display: block;
+
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.go-button {
+  display: inline-block;
+}
+
+/* end of michael's css rules */

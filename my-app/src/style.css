@@ -139,6 +139,47 @@ form{
 }
 
 
+
   
 
 }
+
+/* Michael's CSS rules */
+.location-pointer {
+  cursor: pointer;
+  cursor: hand;
+}
+.change-cursor-to-pointer-on-hover {
+  cursor: pointer;
+  cursor: hand;
+}
+.dropdown-result {
+  padding: 4px;
+}
+.highlight-on-hover:hover {
+  background-color: rgb(0, 115, 187);
+  color: white;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  font-family: arial;
+  font-size: 14px;
+  display: block;
+
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  text-align: left;
+  padding: 5px;
+  width: 100%;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/* end of michael's css rules */

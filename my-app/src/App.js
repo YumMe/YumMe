@@ -12,12 +12,15 @@ class App extends Component {
   render() {
     return (
       <div >
-        <Frontpage/>
-      <div className="title">
-        YumMe!
-        <SearchResults />
-        <SearchBar />
+      <div>{this.props.children}</div>
+        {/*<Frontpage/>
+        <div className="title">
+          YumMe!
+          <SearchResults />
+          <SearchBar />
 
+        </div>
+        */}
       </div>
     );
   }

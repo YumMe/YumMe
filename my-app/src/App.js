@@ -12,8 +12,9 @@ class App extends Component {
   render() {
     return (
       <div >
-        <Frontpage/>
-        {/*<div className="title">
+      <div>{this.props.children}</div>
+        {/*<Frontpage/>
+        <div className="title">
           YumMe!
           <SearchResults />
           <SearchBar />

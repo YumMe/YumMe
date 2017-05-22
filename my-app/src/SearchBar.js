@@ -1,4 +1,5 @@
 import React from 'react';
+import { hashHistory } from 'react-router';
 
 /*
     ping @michael if you have questions
@@ -11,7 +12,14 @@ export default class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            // By city name
             search: '',
+
+            // By latitude/longitude
+            latitude: '',
+            longitude: '',
+
+            // Search results
             suggestedCities: [],
             fetch: [],
             typingTimer: null
@@ -21,7 +29,8 @@ export default class SearchBar extends React.Component {
         this.updateDropdownResults = this.updateDropdownResults.bind(this);
         this.clickSearchResult = this.clickSearchResult.bind(this);
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
-        this.showPosition = this.showPosition.bind(this);
+        this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
+        this.getLatitudeAndLongitude = this.getLatitudeAndLongitude.bind(this);
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -113,8 +122,8 @@ export default class SearchBar extends React.Component {
                                         resultCount++;
                                     }
 
-                                    // Stop at the 10th vallid result (city, state pair)
-                                    if (resultCount >= 10) {
+                                    // Stop at the 5th vallid result (city, state pair)
+                                    if (resultCount >= 5) {
                                         break;
                                     }
                                 }
@@ -146,8 +155,7 @@ export default class SearchBar extends React.Component {
     clickSearchResult(e, that) {
 
         var searchResultText = e.currentTarget.textContent;
-        console.log(searchResultText);
-        //document.getElementById("searchbar").innerHTML(searchResultText);
+        console.log('clicked: ' + searchResultText);
 
         var searchbar = that.refs.searchbar;
         searchbar.value = searchResultText;
@@ -162,53 +170,96 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer(true);
     }
 
-    // Location pointer icon: get user's current latitude, longitude
+    // Location pointer icon: get user's current latitude, longitude, set it in search bar
     getCurrentLocation() {
+        var that = this;
+
         if (!navigator.geolocation) {
             alert("Geolocation not supported in your browser");
+            return;
         }
-        var location = navigator.geolocation.getCurrentPosition(this.showPosition);
-        //console.log(location);
+        navigator.geolocation.getCurrentPosition(this.getLatitudeAndLongitude);
+
+        // Set new state
+        this.setState(
+            {
+                currentLocationSearch: true
+            }
+        );
     }
-    showPosition(position) {
-        console.log("Latitude: " + position.coords.latitude +
-            " || Longitude: " + position.coords.longitude);
+    getLatitudeAndLongitude(position) {
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+        this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        });
     }
+
+    // Go to search results page, using either city name or state
+    goToSearchResultsPage(e) {
+
+        e.preventDefault;
+
+        var usingCurrentLocation = false;
+
+        if (usingCurrentLocation === true) {
+            console.log('Going to search results page for current location');
+            hashHistory.push('/searchresults');
+        } else if (usingCurrentLocation === false) {
+            console.log('Going to search results page for "' + this.state.search + '"');
+            hashHistory.push('searchresults');
+        }
+        hashHistory.push('searchresults');
+    }
+
 
     // Render in dom
     render() {
         var that = this;
 
-        var dropdown =
-            this.state.suggestedCities.map(function (city, i) {
-                return <div key={i} onClick={(e) => that.clickSearchResult(e, that)}>{city}</div>;
-            });
+        var showDropdown = false;
+        var dropdown = null;
+
+        if (this.state.suggestedCities.length > 0) {
+            showDropdown = true;
+            dropdown =
+                this.state.suggestedCities.map(function (city, i) {
+                    return <div key={i} onClick={(e) => that.clickSearchResult(e, that)} className="highlight-on-hover dropdown-result">{city}</div>;
+                });
+        }
 
         return (
             <div>
                 <div className="search">
-                    <div className="search-form" onKeyUp={(e) => this.onChange(e)}>
+                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)}>
                         <form action="#" className="dropdown">
                             <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
                             <div className="mdl-textfield mdl-js-textfield">
-                                <input className="mdl-textfield__input" type="text" id="sample1" ref="searchbar"/>
-                                <div className="dropdown-content">
-                                    {dropdown}
-                                </div>
-                                <label className="mdl-textfield__label" for="sample1">
+                                <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
+
+                                {
+                                    showDropdown === true &&
+                                    <div className="dropdown-content change-cursor-to-pointer-on-hover">
+                                        {dropdown}
+                                    </div>
+                                }
+                                {/*
+                                <label className="mdl-textfield__label" htmlFor="sample1">
                                     <div className="location-pointer light placeholder">
                                         Where do you want to eat?
                                     </div>
                                 </label>
+                                */}
                             </div>
-                            
+
                         </form>
-                        
+
                         <br />
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button">
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={(e) => this.goToSearchResultsPage(e)}>
                             Go!
                         </button>
-                        
+
                     </div>
                 </div>
             </div>

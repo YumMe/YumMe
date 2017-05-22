@@ -79,9 +79,9 @@ export default class SearchBar extends React.Component {
         if (searchQuery === '') {
             that.setState({suggestedCities: []});
         } else {
-
+            // featureCode=PPL
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&featureCode=PPL&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {

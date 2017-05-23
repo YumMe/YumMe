@@ -63,8 +63,30 @@ class SearchResults extends Component {
             .catch(function (err) {
                 console.log('Fetch Error :-S', err);
             });
+
+  // Validates query parameters (optional, add this if necessary)
+  queryParametersAreValid(lat, long) {
+
+    // If there is a city
+    // Latitude should be a number
+    if (lat !== undefined) {
+      if (long === undefined) {
+        // If there is a lat, there must be a long, so this is wrong
+        return false;
+      }
     }
 
+    var isNumbers = new RegExp('/^\d+$/');
+
+    var validLat = lat.match(isNumbers) && lat.length > 0;
+    var validLong = long.match(isNumbers) && lat.length > 0;
+
+    // If both lat and long are only numbers
+    if (validLat && validLong) {
+      return true;
+    }
+    return false;
+  }
     render() {
         return (
             <div>

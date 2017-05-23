@@ -48,7 +48,7 @@ class SearchResults extends Component {
 
         foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?ll='
           + latAndLong
-          + '&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
+          + '&intent=checkin&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
       }
     }
     // (2) If using a specified city
@@ -60,7 +60,7 @@ class SearchResults extends Component {
 
         foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?near='
           + query.city
-          + '&intent=checkin&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
+          + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
       }
     }
     // (3) If invalid query parameters, default to city=Seattle, WA
@@ -72,7 +72,7 @@ class SearchResults extends Component {
 
       foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?near='
           + 'Seattle, WA'
-          + '&intent=checkin&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
+          + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
     }
 
     console.log(foursquareApiCall);

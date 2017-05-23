@@ -4,8 +4,9 @@ import logo from './logo.svg';
 class SearchSquare extends Component {
   render() {
     return (
-      <div className="title">
-        YumMe! This is the search results page
+      <div className="searchSquare">
+        <img src ={this.props.image} />
+        The venue id: {this.props.venueId}
       </div>
     );
   }

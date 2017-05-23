@@ -23,7 +23,9 @@ export default class SearchBar extends React.Component {
             // Search results
             suggestedCities: [],
             fetch: [],
-            typingTimer: null
+            typingTimer: null,
+
+            locationServicesAllowed: null
         };
         this.stringIsOnlyLetters = this.stringIsOnlyLetters.bind(this);
         this.resetTypingTimer = this.resetTypingTimer.bind(this);
@@ -31,6 +33,9 @@ export default class SearchBar extends React.Component {
         this.clickSearchResult = this.clickSearchResult.bind(this);
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
+        this.requestLocationServices = this.requestLocationServices.bind(this);
+
+        this.requestLocationServices();
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -168,6 +173,35 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer(true);
     }
 
+
+    // Request permission for getting current location
+    requestLocationServices() {
+
+        var that = this;
+
+        if (!navigator.geolocation) {
+            alert("Geolocation not supported in your browser");
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log('ur tracked hehe');
+            that.setState({
+                locationServicesAllowed: true
+            });
+        },
+        function (error) {
+            if (error.code === error.PERMISSION_DENIED) {
+                console.log('ur not tracked lol');
+                that.setState({
+                    locationServicesAllowed: false
+                });
+            }
+        });
+
+        // Check if user has allowed location services
+
+    }
+
     // Location pointer icon: get user's current latitude, longitude
     getCurrentLocation() {
 
@@ -276,7 +310,12 @@ export default class SearchBar extends React.Component {
                 <div className="search">
                     <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
-                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
+                            {this.state.locationServicesAllowed === true &&
+                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
+                            }
+                            {this.state.locationServicesAllowed === false &&
+                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); }}></i>
+                            }
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
 

@@ -176,4 +176,10 @@ form{
 .dropdown .dropdown-content {
     display: block;
 }
+.error-message {
+  color: red;
+  font-family: arial;
+  font-size: 10pt;
+  text-align: left;
+}
 /* end of michael's css rules */

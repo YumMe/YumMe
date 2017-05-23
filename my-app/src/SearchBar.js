@@ -25,7 +25,8 @@ export default class SearchBar extends React.Component {
             fetch: [],
             typingTimer: null,
 
-            locationServicesAllowed: null
+            locationServicesAllowed: true,
+            showingErrorMessage: false
         };
         this.stringIsOnlyLetters = this.stringIsOnlyLetters.bind(this);
         this.resetTypingTimer = this.resetTypingTimer.bind(this);
@@ -247,15 +248,25 @@ export default class SearchBar extends React.Component {
         var delay = 0;
 
         if (currentLocation === true || this.state.search.trim() === '') {
-            latAndLong = this.getCurrentLocation();
 
-            // delay 500ms
-            console.log('moo');
-            console.log(latAndLong);
+            if (this.state.locationServicesAllowed === true) {
+                latAndLong = this.getCurrentLocation();
 
-            usingCurrentLocation = true;
+                // delay 500ms
+                console.log('moo');
+                console.log(latAndLong);
 
-            delay = 500;
+                usingCurrentLocation = true;
+
+                delay = 500;
+            } else {
+                // Make this a text below instead
+                console.log('Please enter a city!');
+                this.setState({
+                    showingErrorMessage: true
+                });
+                return;
+            }
         }
 
         // Parameters:
@@ -326,6 +337,12 @@ export default class SearchBar extends React.Component {
                                     </div>
                                 }
                             </div>
+                            {this.state.showingErrorMessage === true &&
+                                <div className="error-message">Please enter a city!</div>    
+                            }
+                            {this.state.showingErrorMessage === false &&
+                                <div></div>    
+                            }
 
                         </form>
 

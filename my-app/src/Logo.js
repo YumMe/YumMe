@@ -6,7 +6,7 @@ import { hashHistory } from 'react-router';
 export default class Logo extends Component {
   render() {
     return (
-      <div className="title pointer-on-hover" onClick={function() { hashHistory.push('/'); }}>
+      <div className="title change-cursor-to-pointer-on-hover" onClick={function() { hashHistory.push('/'); }}>
         YumMe!
       </div>
     );

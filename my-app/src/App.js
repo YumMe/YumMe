@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 // import SearchBar from './SearchBar'; uneeded now
-import Frontpage from './Frontpage';
+//import Frontpage from './Frontpage';
 
-import SearchResults from './SearchResults';
-import SearchBar from './SearchBar';
+//import SearchResults from './SearchResults';
+//import SearchBar from './SearchBar';
 
 //import logo from './logo.svg';
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 
-
 /*
     ping @michael if you have questions
 

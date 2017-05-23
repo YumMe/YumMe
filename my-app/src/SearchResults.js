@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import SearchResultsGrid from './SearchResultsGrid';
 import SearchBar from './SearchBar';
+import Logo from './Logo';
 
 class SearchResults extends Component {
 
@@ -176,7 +177,7 @@ class SearchResults extends Component {
   render() {
     return (
       <div>
-        <div className="title">YumMe!</div>
+        <Logo />
         <SearchBar />
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />

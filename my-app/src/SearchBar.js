@@ -31,7 +31,6 @@ export default class SearchBar extends React.Component {
         this.clickSearchResult = this.clickSearchResult.bind(this);
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
-        this.getLatitudeAndLongitude = this.getLatitudeAndLongitude.bind(this);
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -60,9 +59,7 @@ export default class SearchBar extends React.Component {
             country =>          US
             orderby =>          population (that's the default)
         */
-        //this.updateDropdownResults();
         this.resetTypingTimer();
-        //this.getCurrentLocation();
     }
 
     // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
@@ -171,43 +168,61 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer(true);
     }
 
-    // Location pointer icon: get user's current latitude, longitude, set it in search bar
+    // Location pointer icon: get user's current latitude, longitude
     getCurrentLocation() {
+
+        var that = this;
 
         if (!navigator.geolocation) {
             alert("Geolocation not supported in your browser");
             return;
         }
-        navigator.geolocation.getCurrentPosition(this.getLatitudeAndLongitude);
+        console.log('woop');
 
-        // Set new state
-        this.setState(
-            {
-                currentLocationSearch: true
-            }
+        var latAndLong = [];
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+              var lat = position.coords.latitude;
+              var long = position.coords.longitude;
+
+              that.setState({
+                  lat: lat,
+                  long: long,
+                  currentLocationSearch: true,
+              });
+              latAndLong.push(lat, long);
+          }
         );
+        return latAndLong;
     }
-    getLatitudeAndLongitude(position) {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
-        this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        });
-    }
-
     // Go to search results page, using either city name or state
     goToSearchResultsPage(e, currentLocation) {
+
+        var that = this;
 
         if (e !== undefined && e !== false) {
             e.preventDefault();
         }
 
-        if (currentLocation === true) {
-            this.getCurrentLocation();
-        }
+        // if not false, then we are using current location
+        var latAndLong = false;
 
         var usingCurrentLocation = false;
+
+        // since current location is asynchronous, delay a bit at first if using current location
+        var delay = 0;
+
+        if (currentLocation === true || this.state.search.trim() === '') {
+            latAndLong = this.getCurrentLocation();
+
+            // delay 500ms
+            console.log('moo');
+            console.log(latAndLong);
+
+            usingCurrentLocation = true;
+
+            delay = 500;
+        }
 
         // Parameters:
 
@@ -217,28 +232,26 @@ export default class SearchBar extends React.Component {
         // 3) long = longitude
         //      ignored if mylocation = false
 
-        var lat = '';
-        if (this.state.latitude !== '') {
-            lat = this.state.latitude;
-            usingCurrentLocation = true;
-        }
-        var long = '';
-        if (this.state.longitude !== '') {
-            long = this.state.longitude;
-            usingCurrentLocation = true;
-        }
-        // No input in search bar => use current location
-        if (this.state.search.trim() === '') {
-            usingCurrentLocation = true;
-        }
-
-        if (usingCurrentLocation === true) {
-            console.log('Going to search results page for current location');
-            hashHistory.push('/search?lat=' + lat + '&long=' + long);
-        } else if (usingCurrentLocation === false) {
-            console.log('Going to search results page for "' + this.state.search + '"');
-            hashHistory.push('/search?city=' + this.state.search.trim());
-        }
+        setTimeout(function() {
+            var lat = '';
+            var long = '';
+            if (latAndLong !== false && usingCurrentLocation === true) {
+                lat = latAndLong[0];
+            
+                long = latAndLong[1];
+            }
+            if (usingCurrentLocation === true) {
+                console.log('Going to search results page for current location');
+                // kinda bad, find a different solution instead of reload
+                console.log('/search?lat=' + lat + '&long=' + long);
+                window.location.reload();
+                hashHistory.push('/search?lat=' + lat + '&long=' + long);
+            } else if (usingCurrentLocation === false) {
+                console.log('Going to search results page for "' + that.state.search + '"');
+                window.location.reload();
+                hashHistory.push('/search?city=' + that.state.search.trim());
+            }
+        }, delay);
     }
 
 

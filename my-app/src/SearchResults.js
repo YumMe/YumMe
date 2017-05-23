@@ -8,16 +8,15 @@ class SearchResults extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            top50Venues: undefined,
             location: this.props.location,
-            isCityString: this.props.isCityString,
-            test: "test"
+            isCityString: this.props.isCityString
         }
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     componentDidMount() {
-        fetch('https://api.foursquare.com/v2/venues/search?near=Seattle,WA&query=meesum&v=20170605&oauth_token=BDZNBZTLKPWYMKVBHHSZSJJ2J0XJOGPBAT0P1QS0HLVNIQFA')
+        // Grab venues
+        fetch('https://api.foursquare.com/v2/venues/search?near=Seattle,WA&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL')
             .then(
             (response) => {
                 if (response.status !== 200) {
@@ -25,10 +24,39 @@ class SearchResults extends Component {
                         response.status);
                     return;
                 }
-                // Examine the text in the response  
                 response.json().then((data) => {
-                    this.setState({top50Venues: data});
-                    //console.log(JSON.stringify(this.state));
+                    // Grab images
+                    var venues = data["response"]["venues"];
+                    //console.log(JSON.stringify(venues));
+                    var imagesArray = [];
+                    var idArray = [];
+                    for (var i = 0; i < venues.length; i ++) {
+                        let currId = venues[i]["id"];
+                        //console.log(currId);
+                        fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
+                            .then(
+                            (response) => {
+                                if (response.status !== 200) {
+                                    console.log('Looks like there was a problem. Status Code: ' +
+                                        response.status);
+                                    return;
+                                }
+                                response.json().then((data) => {
+                                    //console.log(JSON.stringify(data));
+                                    if (data["response"]["photos"]["items"][0] != undefined){
+                                        var venueImage = data["response"]["photos"]["items"][0]["prefix"] + "300x300" + data["response"]["photos"]["items"][0]["suffix"];
+                                        imagesArray.push(venueImage);
+                                        //console.log(currId);
+                                        idArray.push(currId);
+                                        this.setState({venueImages: imagesArray, venueIds: idArray});
+                                    }
+                                });
+                            }
+                            )
+                            .catch(function (err) {
+                                console.log('Fetch Error :-S', err);
+                            })
+                    }
                 });
             }
             )
@@ -44,7 +72,9 @@ class SearchResults extends Component {
                     YumMe!
                 </div>
                 <SearchBar />
-                <SearchResultsGrid topVenues = {this.state.top50Venues} test = {this.state.test}/>
+                {this.state.venueImages != undefined && this.state.venueIds !=undefined &&
+                    <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
+                }
             </div>
         );
     }

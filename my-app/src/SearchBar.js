@@ -32,7 +32,6 @@ export default class SearchBar extends React.Component {
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
         this.getLatitudeAndLongitude = this.getLatitudeAndLongitude.bind(this);
-        this.searchCurrentLocation = this.searchCurrentLocation.bind(this);
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -50,7 +49,7 @@ export default class SearchBar extends React.Component {
     }
 
     // When the page loads
-    componentWillMount() {
+    componentDidMount() {
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
 
@@ -174,7 +173,6 @@ export default class SearchBar extends React.Component {
 
     // Location pointer icon: get user's current latitude, longitude, set it in search bar
     getCurrentLocation() {
-        var that = this;
 
         if (!navigator.geolocation) {
             alert("Geolocation not supported in your browser");
@@ -198,17 +196,15 @@ export default class SearchBar extends React.Component {
         });
     }
 
-    // Get coords and go to search results page
-    searchCurrentLocation() {
-        this.getCurrentLocation();
-        this.goToSearchResultsPage();
-    }
-
     // Go to search results page, using either city name or state
-    goToSearchResultsPage(e) {
+    goToSearchResultsPage(e, currentLocation) {
 
-        if (e !== undefined) {
-            e.preventDefault;
+        if (e !== undefined && e !== false) {
+            e.preventDefault();
+        }
+
+        if (currentLocation === true) {
+            this.getCurrentLocation();
         }
 
         var usingCurrentLocation = false;
@@ -231,10 +227,8 @@ export default class SearchBar extends React.Component {
             long = this.state.longitude;
             usingCurrentLocation = true;
         }
-        var city = '';
-        if (this.state.search.trim() !== '') {
-            city = this.state.search;
-        } else {
+        // No input in search bar => use current location
+        if (this.state.search.trim() === '') {
             usingCurrentLocation = true;
         }
 
@@ -243,7 +237,7 @@ export default class SearchBar extends React.Component {
             hashHistory.push('/search?lat=' + lat + '&long=' + long);
         } else if (usingCurrentLocation === false) {
             console.log('Going to search results page for "' + this.state.search + '"');
-            hashHistory.push('/search?city=' + this.state.search);
+            hashHistory.push('/search?city=' + this.state.search.trim());
         }
     }
 
@@ -269,7 +263,7 @@ export default class SearchBar extends React.Component {
                 <div className="search">
                     <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
-                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.searchCurrentLocation}></i>
+                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
 
@@ -279,19 +273,12 @@ export default class SearchBar extends React.Component {
                                         {dropdown}
                                     </div>
                                 }
-                                {/*
-                                <label className="mdl-textfield__label" htmlFor="sample1">
-                                    <div className="location-pointer light placeholder">
-                                        Where do you want to eat?
-                                    </div>
-                                </label>
-                                */}
                             </div>
 
                         </form>
 
                         <br />
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.searchCurrentLocation}>
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
 

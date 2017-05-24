@@ -8,7 +8,7 @@ class SearchSquare extends Component {
         <img className="search-image" src ={this.props.image} />
         {/*The venue id: {this.props.venueId}*/}
         <div className="overlay">
-          <div className="overlay-text">{this.props.venueId}</div>
+          <div className="overlay-text">{this.props.venueName}</div>
         </div>
       </div>
     );

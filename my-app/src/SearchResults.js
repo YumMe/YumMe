@@ -93,6 +93,7 @@ class SearchResults extends Component {
           //console.log(JSON.stringify(venues));
           var imagesArray = [];
           var idArray = [];
+          var nameArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -110,6 +111,7 @@ class SearchResults extends Component {
 
           for (var i = 0; i < venues.length; i++) {
             let currId = venues[i]["id"];
+            let currName = venues[i]["name"];
             //console.log(currId);
             fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
@@ -126,7 +128,8 @@ class SearchResults extends Component {
                     imagesArray.push(venueImage);
                     //console.log(currId);
                     idArray.push(currId);
-                    this.setState({ venueImages: imagesArray, venueIds: idArray });
+                    nameArray.push(currName);
+                    this.setState({ venueImages: imagesArray, venueIds: idArray , venueNames: nameArray});
                   }
                 });
               }
@@ -179,8 +182,8 @@ class SearchResults extends Component {
       <div>
         <Logo />
         <SearchBar />
-        {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
-          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
+        {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
+          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }
       </div>
     );

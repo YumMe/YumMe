@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      loaded: false // not done making API call yet
     }
   }
 
@@ -125,6 +125,26 @@ class App extends Component {
                 console.log(fs_foursquarePageUrl);
                 console.log(fs_additionalPhotos);
 
+                this.setState({
+                  fs_id: fs_id,
+                  fs_name: fs_name,
+                  fs_mainImage: fs_mainImage,
+                  fs_rating: fs_rating,
+                  fs_ratingColor: fs_ratingColor,
+                  fs_ratingSignals: fs_ratingSignals,
+                  fs_address: fs_address,
+                  fs_crossStreet: fs_crossStreet,
+                  fs_lat: fs_lat,
+                  fs_long: fs_long,
+                  fs_phone: fs_hours,
+                  fs_days: fs_isOpen,
+                  fs_url: fs_url,
+                  fs_foursquarePageUrl: fs_foursquarePageUrl,
+                  fs_additionalPhotos: fs_additionalPhotos,
+
+                  loaded: true
+                });
+
                 // may need to convert photos to format: https://igx.4sqi.net/img/general/300x300/761900_L2J3Uc1XzzRux8Gxn09zxRFBE803uyKnf_DwvkU1lVQ.jpg
 
 
@@ -159,6 +179,13 @@ class App extends Component {
         <div>Memes</div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
+        }
+
+        {this.state.loaded === true &&
+          <div>
+            <div>{this.state.fs_name}</div>
+            <div>{this.state.fs_url}</div>
+          </div>
         }
       </div>
     );

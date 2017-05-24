@@ -19,12 +19,19 @@ class App extends Component {
     // Get restaurant ID (venue_id)
     if (query.venue_id !== undefined) {
 
+      // example endpoint:
+      // https://api.foursquare.com/v2/venues/49ed594df964a520e3671fe3?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622
+
       var imagesArray = [];
       var idArray = [];
 
       // Query restaurant from foursquare
       var currId = query.venue_id;
-      fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
+
+      this.setState({venue_id: currId});
+
+      // Fetch restaurant
+      fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
         .then(
         (response) => {
           if (response.status !== 200) {
@@ -32,14 +39,104 @@ class App extends Component {
               response.status);
             return;
           }
+
+          // Example endpoint: 
           response.json().then((data) => {
-            console.log(data);
-            if (data["response"]["photos"]["items"][0] !== undefined) {
-              var venueImage = data["response"]["photos"]["items"][0]["prefix"] + "300x300" + data["response"]["photos"]["items"][0]["suffix"];
-              imagesArray.push(venueImage);
-              //console.log(currId);
-              idArray.push(currId);
-              this.setState({ venueImages: imagesArray, venueIds: idArray });
+            //console.log(JSON.stringify(data));
+            if (data["response"] !== undefined) {//["photos"]["items"][0] !== undefined) {
+              
+              // Get information from the returned
+              if (data["response"]["venue"] !== undefined) {
+
+                var venue = data['response']['venue'];
+                
+
+                //_____________________
+                // Restaurant information
+                var fs_id = venue['id'];
+                var fs_name = venue['name'];
+
+                //_____________________
+                //  foursquare number rating
+                var fs_rating = venue['rating'];
+                var fs_ratingColor = venue['ratingColor'];
+                var fs_ratingSignals = venue['ratingSignals'];
+
+                //  restaurant address
+                var fs_address = venue['location']['address'];
+                var fs_crossStreet = venue['location']['crossStreet'];
+
+                //  map preview (could also use the address for the google maps thingy i guess)
+                var fs_lat = venue['location']['lat'];
+                var fs_long = venue['location']['lng'];
+
+                //  restaurant phone number
+                var fs_phone = venue['contact'].formattedPhone;
+
+                //  hours of operation
+                var fs_hours = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                var fs_days = venue['hours']['timeframes'][0]['days'];
+                var fs_isOpen = venue['hours']['isOpen'];
+
+                //  website if available
+                var fs_url = venue['url'];
+
+                // foursquare page for the restaurant
+                var fs_foursquarePageUrl = venue['canonicalUrl'];
+
+                
+                // The image from before (search results page)
+                var fs_mainImage = '';
+
+                //  2 additional photos
+                var fs_additionalPhotos = [];
+
+                var maxPhotoCount = 2;
+                var photos = venue['photos']['groups'][0]['items'];
+
+                console.log(venue['photos']['groups'][0]['items']);
+
+                for (var i = 0; i < photos.length; i++) {
+                  if (i == 0) {
+                    fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
+                  }
+                  else if (fs_additionalPhotos.length < maxPhotoCount) {
+                    fs_additionalPhotos.push(photos[i]['prefix'] + photos[i]['suffix']);
+                  } else {
+                    break;
+                  }
+                }
+                // print stuff to test
+                console.log(fs_id);
+                console.log(fs_name);
+                console.log(fs_mainImage);
+                console.log(fs_rating);
+                console.log(fs_ratingColor);
+                console.log(fs_ratingSignals);
+                console.log(fs_address);
+                console.log(fs_crossStreet);
+                console.log(fs_lat);
+                console.log(fs_long);
+                console.log(fs_phone);
+                console.log(fs_hours);
+                console.log(fs_days);
+                console.log(fs_isOpen);
+                console.log(fs_url);
+                console.log(fs_foursquarePageUrl);
+                console.log(fs_additionalPhotos);
+
+                // may need to convert photos to format: https://igx.4sqi.net/img/general/300x300/761900_L2J3Uc1XzzRux8Gxn09zxRFBE803uyKnf_DwvkU1lVQ.jpg
+
+
+
+                // end printing stuff
+
+              }
+              // var venueImage = data["response"]["photos"]["items"][0]["prefix"] + "300x300" + data["response"]["photos"]["items"][0]["suffix"];
+              // imagesArray.push(venueImage);
+              // //console.log(currId);
+              // idArray.push(currId);
+              // this.setState({ venueImages: imagesArray, venueIds: idArray });
             }
           });
         }

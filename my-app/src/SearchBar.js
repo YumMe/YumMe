@@ -22,7 +22,10 @@ export default class SearchBar extends React.Component {
             // Search results
             suggestedCities: [],
             fetch: [],
-            typingTimer: null
+            typingTimer: null,
+
+            locationServicesAllowed: true,
+            showingErrorMessage: false
         };
         this.stringIsOnlyLetters = this.stringIsOnlyLetters.bind(this);
         this.resetTypingTimer = this.resetTypingTimer.bind(this);
@@ -30,7 +33,9 @@ export default class SearchBar extends React.Component {
         this.clickSearchResult = this.clickSearchResult.bind(this);
         this.getCurrentLocation = this.getCurrentLocation.bind(this);
         this.goToSearchResultsPage = this.goToSearchResultsPage.bind(this);
-        this.getLatitudeAndLongitude = this.getLatitudeAndLongitude.bind(this);
+        this.requestLocationServices = this.requestLocationServices.bind(this);
+
+        this.requestLocationServices();
     }
 
     // typingTimer: change search results 200ms AFTER user stops typing
@@ -48,7 +53,7 @@ export default class SearchBar extends React.Component {
     }
 
     // When the page loads
-    componentWillMount() {
+    componentDidMount() {
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
 
@@ -59,9 +64,7 @@ export default class SearchBar extends React.Component {
             country =>          US
             orderby =>          population (that's the default)
         */
-        //this.updateDropdownResults();
         this.resetTypingTimer();
-        //this.getCurrentLocation();
     }
 
     // Verifies that a string is only letters (e.g. WA or CA but not 99 or WA99)
@@ -170,48 +173,131 @@ export default class SearchBar extends React.Component {
         this.resetTypingTimer(true);
     }
 
-    // Location pointer icon: get user's current latitude, longitude, set it in search bar
-    getCurrentLocation() {
+
+    // Request permission for getting current location
+    requestLocationServices() {
+
         var that = this;
 
         if (!navigator.geolocation) {
             alert("Geolocation not supported in your browser");
             return;
         }
-        navigator.geolocation.getCurrentPosition(this.getLatitudeAndLongitude);
-
-        // Set new state
-        this.setState(
-            {
-                currentLocationSearch: true
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log('ur tracked hehe');
+            that.setState({
+                locationServicesAllowed: true
+            });
+        },
+        function (error) {
+            if (error.code === error.PERMISSION_DENIED) {
+                console.log('ur not tracked lol');
+                that.setState({
+                    locationServicesAllowed: false
+                });
             }
-        );
-    }
-    getLatitudeAndLongitude(position) {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
-        this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
         });
+
+        // Check if user has allowed location services
+
     }
 
-    // Go to search results page, using either city name or state
-    goToSearchResultsPage(e) {
+    // Location pointer icon: get user's current latitude, longitude
+    getCurrentLocation() {
 
-        e.preventDefault;
+        var that = this;
+
+        if (!navigator.geolocation) {
+            alert("Geolocation not supported in your browser");
+            return;
+        }
+        console.log('woop');
+
+        var latAndLong = [];
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+              var lat = position.coords.latitude;
+              var long = position.coords.longitude;
+
+              that.setState({
+                  lat: lat,
+                  long: long,
+                  currentLocationSearch: true,
+              });
+              latAndLong.push(lat, long);
+          }
+        );
+        return latAndLong;
+    }
+    // Go to search results page, using either city name or state
+    goToSearchResultsPage(e, currentLocation) {
+
+        var that = this;
+
+        if (e !== undefined && e !== false) {
+            e.preventDefault();
+        }
+
+        // if not false, then we are using current location
+        var latAndLong = false;
 
         var usingCurrentLocation = false;
 
-        if (usingCurrentLocation === true) {
-            console.log('Going to search results page for current location');
-            hashHistory.push('/searchresults');
-        } else if (usingCurrentLocation === false) {
-            console.log('Going to search results page for "' + this.state.search + '"');
-            hashHistory.push('searchresults');
+        // since current location is asynchronous, delay a bit at first if using current location
+        var delay = 0;
+
+        if (currentLocation === true || this.state.search.trim() === '') {
+
+            if (this.state.locationServicesAllowed === true) {
+                latAndLong = this.getCurrentLocation();
+
+                // delay 500ms
+                console.log('moo');
+                console.log(latAndLong);
+
+                usingCurrentLocation = true;
+
+                delay = 500;
+            } else {
+                // Make this a text below instead
+                console.log('Please enter a city!');
+                this.setState({
+                    showingErrorMessage: true
+                });
+                return;
+            }
         }
-        hashHistory.push('searchresults');
+
+        // Parameters:
+
+        // 1) city = city name
+        //      ignored if lat and long are specified
+        // 2) lat = latitude
+        // 3) long = longitude
+        //      ignored if mylocation = false
+
+        setTimeout(function() {
+            var lat = '';
+            var long = '';
+            if (latAndLong !== false && usingCurrentLocation === true) {
+                lat = latAndLong[0];
+            
+                long = latAndLong[1];
+            }
+            if (usingCurrentLocation === true) {
+                console.log('Going to search results page for current location');
+                // kinda bad, find a different solution instead of reload
+                console.log('/search?lat=' + lat + '&long=' + long);
+                window.location.reload();
+                hashHistory.push('/search?lat=' + lat + '&long=' + long);
+            } else if (usingCurrentLocation === false) {
+                console.log('Going to search results page for "' + that.state.search + '"');
+                window.location.reload();
+                hashHistory.push('/search?city=' + that.state.search.trim());
+            }
+        }, delay);
     }
+
 
 
     // Render in dom
@@ -232,9 +318,14 @@ export default class SearchBar extends React.Component {
         return (
             <div>
                 <div className="search">
-                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)}>
+                    <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
-                            <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={this.getCurrentLocation}></i>
+                            {this.state.locationServicesAllowed === true &&
+                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
+                            }
+                            {this.state.locationServicesAllowed === false &&
+                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); }}></i>
+                            }
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
 
@@ -244,19 +335,18 @@ export default class SearchBar extends React.Component {
                                         {dropdown}
                                     </div>
                                 }
-                                {/*
-                                <label className="mdl-textfield__label" htmlFor="sample1">
-                                    <div className="location-pointer light placeholder">
-                                        Where do you want to eat?
-                                    </div>
-                                </label>
-                                */}
                             </div>
+                            {this.state.showingErrorMessage === true &&
+                                <div className="error-message">Please enter a city!</div>    
+                            }
+                            {this.state.showingErrorMessage === false &&
+                                <div></div>    
+                            }
 
                         </form>
 
                         <br />
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={(e) => this.goToSearchResultsPage(e)}>
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
 

@@ -2,49 +2,47 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico'); 
 /*For subtitle*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400');
 
 /*overall app*/
-
 
 .homepage {
   height: 100vh;
   padding: 50px;
-  background-image: url("../img/pasta.png");
+  background-image: url("../img/pasta-flip-big.png");
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   text-align: center;
-  align-items: center;
+  align-items: center; 
 }
 
 /*hompage text*/
 .text{
-  margin-left: 60%;
+ margin-left: 5%;
 }
 
 .title{
   font-family: 'Pacifico', cursive;
-  font-size: 7vw;
+  font-size: 2.5em;
   color: #333333;
   
 }
 
 .light{
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300; /* Roboto Light*/
   color: black;
 }
 
-
-
 h2{
-  align-content: right;
+  align-content: center;
   padding: 8px;
   margin: 0px;
 }
 
 h2.light{
-  font-size: 3vw;
+  font-size: 0.9em;
 }
 
 body {
@@ -71,7 +69,6 @@ body {
 .search-form, .location-pointer {
     display: inline-block;
     color: black;
-    
 }
 
 .placeholder {
@@ -127,21 +124,16 @@ body {
   .placeholder{
     font-size: 4vw;
   }
-/*
-.search-form, .location-pointer {
+  /*
+  .search-form, .location-pointer {
+      display: inline-block;
+      width: 100%''    
+  }*/
+
+  form{
     display: inline-block;
-    width: 100%''    
-}*/
-
-form{
-  display: inline-block;
-  width: 50vw;
-}
-
-
-
-  
-
+    width: 50vw;
+  }
 }
 
 /* Michael's CSS rules */
@@ -179,7 +171,22 @@ form{
   width: 100%;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown .dropdown-content {
     display: block;
 }
+.error-message {
+  color: red;
+  font-family: arial;
+  font-size: 10pt;
+  text-align: left;
+}
 /* end of michael's css rules */
+
+/*Search Results*/
+.logo, .search-results{
+  padding: 20px;
+}
+
+.search-form, .search-results{
+  padding: 30px;
+}

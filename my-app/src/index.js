@@ -15,7 +15,7 @@ ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Frontpage} />
-      <Route path="searchresults" component={SearchResults} />
+      <Route path="search" component={SearchResults} />
       <Route path="restaurant" component={Restaurant} />
     </Route>
   </Router>,

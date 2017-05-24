@@ -183,3 +183,54 @@ form{
   text-align: left;
 }
 /* end of michael's css rules */
+
+/* search results grid css*/
+
+/*flex container*/
+.search-grid {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: space-around;
+}
+
+/* flex child*/
+.search-image {
+  margin: 20px 20px;
+  width: 240px;
+  height: 240px;
+  flex-grow: 1;
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.search-square {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
+
+.search-square:hover .overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300; /* Roboto Light*/
+  font-size: 20px;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}

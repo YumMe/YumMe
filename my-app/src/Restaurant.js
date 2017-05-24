@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import SearchResultsGrid from './SearchResultsGrid';
@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      loaded: false // not done making API call yet
     }
   }
 
@@ -22,8 +22,8 @@ class App extends Component {
       // example endpoint:
       // https://api.foursquare.com/v2/venues/49ed594df964a520e3671fe3?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622
 
-      var imagesArray = [];
-      var idArray = [];
+      //var imagesArray = [];
+      //var idArray = [];
 
       // Query restaurant from foursquare
       var currId = query.venue_id;
@@ -97,7 +97,7 @@ class App extends Component {
                 console.log(venue['photos']['groups'][0]['items']);
 
                 for (var i = 0; i < photos.length; i++) {
-                  if (i == 0) {
+                  if (i === 0) {
                     fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {
@@ -125,6 +125,26 @@ class App extends Component {
                 console.log(fs_foursquarePageUrl);
                 console.log(fs_additionalPhotos);
 
+                this.setState({
+                  fs_id: fs_id,
+                  fs_name: fs_name,
+                  fs_mainImage: fs_mainImage,
+                  fs_rating: fs_rating,
+                  fs_ratingColor: fs_ratingColor,
+                  fs_ratingSignals: fs_ratingSignals,
+                  fs_address: fs_address,
+                  fs_crossStreet: fs_crossStreet,
+                  fs_lat: fs_lat,
+                  fs_long: fs_long,
+                  fs_phone: fs_hours,
+                  fs_days: fs_isOpen,
+                  fs_url: fs_url,
+                  fs_foursquarePageUrl: fs_foursquarePageUrl,
+                  fs_additionalPhotos: fs_additionalPhotos,
+
+                  loaded: true
+                });
+
                 // may need to convert photos to format: https://igx.4sqi.net/img/general/300x300/761900_L2J3Uc1XzzRux8Gxn09zxRFBE803uyKnf_DwvkU1lVQ.jpg
 
 
@@ -151,7 +171,17 @@ class App extends Component {
   }
 
 
+
+
   render() {
+
+    var customColor = '';
+
+    if (this.state.loaded === true) {
+      customColor = "#" + this.state.fs_ratingColor;
+    }
+    console.log('CC: ' + customColor);
+
     return (
       <div>
         <Logo />
@@ -159,6 +189,14 @@ class App extends Component {
         <div>Memes</div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
+        }
+
+        {this.state.loaded === true &&
+          <div>
+            <div>{this.state.fs_name}</div>
+            <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
+            <div>{this.state.fs_url}</div>
+          </div>
         }
       </div>
     );

@@ -36,6 +36,10 @@ class SearchSquare extends Component {
               <h1 clssName="light">{this.props.venueId}</h1>
             </DialogContent>
           </Dialog>
+          {/*The venue id: {this.props.venueId}*/}
+          <div className="overlay">
+            <div className="overlay-text">{this.props.venueName}</div>
+          </div>
         </div>
       </div>
     );

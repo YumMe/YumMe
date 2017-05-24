@@ -92,10 +92,10 @@ export default class SearchBar extends React.Component {
             that.setState({ suggestedCities: [] });
         } else {
             // featureCode=PPL
-            // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
+            // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
-                function (response) {
+                function(response) {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         // Clear suggested cities
@@ -104,7 +104,7 @@ export default class SearchBar extends React.Component {
                     }
 
                     // Examine the text in the response
-                    response.json().then(function (data) {
+                    response.json().then(function(data) {
                         console.log(data);
                         if (data) {
                             var cityNames = [];//["[Results for " + searchQuery + "]"];
@@ -136,7 +136,7 @@ export default class SearchBar extends React.Component {
                     });
                 }
                 )
-                .catch(function (err) {
+                .catch(function(err) {
                     console.log('Fetch Error :-S', err);
                 });
         }
@@ -189,14 +189,14 @@ export default class SearchBar extends React.Component {
                 locationServicesAllowed: true
             });
         },
-        function (error) {
-            if (error.code === error.PERMISSION_DENIED) {
-                console.log('ur not tracked lol');
-                that.setState({
-                    locationServicesAllowed: false
-                });
-            }
-        });
+            function(error) {
+                if (error.code === error.PERMISSION_DENIED) {
+                    console.log('ur not tracked lol');
+                    that.setState({
+                        locationServicesAllowed: false
+                    });
+                }
+            });
 
         // Check if user has allowed location services
 
@@ -215,17 +215,17 @@ export default class SearchBar extends React.Component {
 
         var latAndLong = [];
         navigator.geolocation.getCurrentPosition(
-          function(position) {
-              var lat = position.coords.latitude;
-              var long = position.coords.longitude;
+            function(position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
 
-              that.setState({
-                  lat: lat,
-                  long: long,
-                  currentLocationSearch: true,
-              });
-              latAndLong.push(lat, long);
-          }
+                that.setState({
+                    lat: lat,
+                    long: long,
+                    currentLocationSearch: true,
+                });
+                latAndLong.push(lat, long);
+            }
         );
         return latAndLong;
     }
@@ -257,7 +257,62 @@ export default class SearchBar extends React.Component {
 
                 usingCurrentLocation = true;
 
-                delay = 500;
+                delay = 1200;
+                // get city from lat and long
+                function getCityFromCoords(latAndLong, that) {
+                    var apiCall =
+                    'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                    + latAndLong[0]
+                    + '&lng='
+                    + latAndLong[1]
+                    + '&username=greycabb&cities=cities1000';
+                    console.log(apiCall);
+                    // http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery
+
+                    that.state.fetch = fetch(apiCall)
+                        .then(
+                        function(response) {
+                            if (response.status !== 200) {
+                                return;
+                            }
+
+                            // Examine the text in the response
+                            response.json().then(function(data) {
+                                console.log(data);
+                                if (data) {
+                                    var resultCount = 0;
+
+                                    // Cities
+                                    if (data.geonames !== undefined) {
+                                        for (var i = 0; i < data.geonames.length; i++) {
+                                            var name = data.geonames[0].name;
+                                            var state = data.geonames[0].adminCode1;
+
+                                            var searchbar = that.refs.searchbar;
+                                            searchbar.value = 'your current location: ' + name;
+
+                                            // Ignore non-letter state codes
+                                            if (state !== undefined && that.stringIsOnlyLetters(state)) {
+                                                name += ', ' + state;
+
+                                                var searchbar = that.refs.searchbar;
+                                                searchbar.value = 'your current location: ' + name;
+                                                break;
+                                            }
+                                        }
+                                    };
+                                }
+                                //that.setState({ suggestedCities: cityNames });
+                            });
+                        }
+                        )
+                        .catch(function(err) {
+                            console.log('Fetch Error :-S', err);
+                        });
+
+                }
+                setTimeout(function() { getCityFromCoords(latAndLong, that)}, 200);
+
             } else {
                 // Make this a text below instead
                 console.log('Please enter a city!');
@@ -281,7 +336,7 @@ export default class SearchBar extends React.Component {
             var long = '';
             if (latAndLong !== false && usingCurrentLocation === true) {
                 lat = latAndLong[0];
-            
+
                 long = latAndLong[1];
             }
             if (usingCurrentLocation === true) {
@@ -310,7 +365,7 @@ export default class SearchBar extends React.Component {
         if (this.state.suggestedCities.length > 0) {
             showDropdown = true;
             dropdown =
-                this.state.suggestedCities.map(function (city, i) {
+                this.state.suggestedCities.map(function(city, i) {
                     return <div key={i} onClick={(e) => that.clickSearchResult(e, that)} className="highlight-on-hover dropdown-result">{city}</div>;
                 });
         }
@@ -324,10 +379,10 @@ export default class SearchBar extends React.Component {
                                 <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
                             }
                             {this.state.locationServicesAllowed === false &&
-                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); }}></i>
+                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); } }></i>
                             }
                             <div className="mdl-textfield mdl-js-textfield">
-                                <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off"/>
+                                <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off" />
 
                                 {
                                     showDropdown === true &&
@@ -337,10 +392,10 @@ export default class SearchBar extends React.Component {
                                 }
                             </div>
                             {this.state.showingErrorMessage === true &&
-                                <div className="error-message">Please enter a city!</div>    
+                                <div className="error-message">Please enter a city!</div>
                             }
                             {this.state.showingErrorMessage === false &&
-                                <div></div>    
+                                <div></div>
                             }
 
                         </form>

@@ -171,6 +171,10 @@ export default class SearchBar extends React.Component {
         );
         clearTimeout(this.typingTimer);
         this.resetTypingTimer(true);
+
+        setTimeout(function() {
+            that.goToSearchResultsPage();
+        }, 600);
     }
 
 

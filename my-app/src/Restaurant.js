@@ -171,7 +171,17 @@ class App extends Component {
   }
 
 
+
+
   render() {
+
+    var customColor = '';
+
+    if (this.state.loaded === true) {
+      customColor = "#" + this.state.fs_ratingColor;
+    }
+    console.log('CC: ' + customColor);
+
     return (
       <div>
         <Logo />
@@ -184,6 +194,7 @@ class App extends Component {
         {this.state.loaded === true &&
           <div>
             <div>{this.state.fs_name}</div>
+            <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
             <div>{this.state.fs_url}</div>
           </div>
         }

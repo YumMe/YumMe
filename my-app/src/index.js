@@ -8,8 +8,6 @@ import './style.css';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
 ReactDOM.render(
-  // <App />,
-  // document.getElementById('root')
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Frontpage} />

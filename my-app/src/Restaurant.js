@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import SearchResultsGrid from './SearchResultsGrid';
@@ -22,8 +22,8 @@ class App extends Component {
       // example endpoint:
       // https://api.foursquare.com/v2/venues/49ed594df964a520e3671fe3?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622
 
-      var imagesArray = [];
-      var idArray = [];
+      //var imagesArray = [];
+      //var idArray = [];
 
       // Query restaurant from foursquare
       var currId = query.venue_id;
@@ -97,7 +97,7 @@ class App extends Component {
                 console.log(venue['photos']['groups'][0]['items']);
 
                 for (var i = 0; i < photos.length; i++) {
-                  if (i == 0) {
+                  if (i === 0) {
                     fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {

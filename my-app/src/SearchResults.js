@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import SearchResultsGrid from './SearchResultsGrid';
 import SearchBar from './SearchBar';
 import Logo from './Logo';
@@ -103,6 +103,9 @@ class SearchResults extends Component {
                 break;
               case 'coords':
                 console.log("No results found for coords: " + param);
+                break;
+              default:
+                console.log("invalid search parameters");
                 break;
             }
           }

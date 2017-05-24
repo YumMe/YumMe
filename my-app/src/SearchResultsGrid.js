@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import SearchSquare from './SearchSquare';
 
 class SearchGrid extends Component {
@@ -23,7 +23,7 @@ class SearchGrid extends Component {
   render() {
     var array = [];
     for (var i = 0; i < (15 * this.state.loaded); i++) {
-      if(this.props.venueImages[i] != undefined) {
+      if(this.props.venueImages[i] !== undefined) {
         array.push(<SearchSquare image={this.props.venueImages[i]} venueId={this.props.venueIds[i]} key={i} />);
       }
     }

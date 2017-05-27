@@ -400,7 +400,7 @@ export default class SearchBar extends React.Component {
 
                         </form>
 
-                        <br />
+                        {/*<br />*/}
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>

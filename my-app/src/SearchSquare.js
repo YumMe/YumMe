@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 
 class SearchSquare extends Component {
   render() {
     return (
-      // All of this still needs to be properly formatted 
-      <div className="searchSquare">
-        <img src ={this.props.image} />
-        The venue id: {this.props.venueId}
+      <div className="search-square">
+        <img className="search-image" src={this.props.image} alt={this.props.venueId} />
+        {/*The venue id: {this.props.venueId}*/}
+        <div className="overlay">
+          <div className="overlay-text">{this.props.venueName}</div>
+        </div>
       </div>
     );
   }

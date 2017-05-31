@@ -136,10 +136,20 @@ body {
   }
 } 
 
+
+.fa.location-pointer {
+  font-size: 30px;
+}
 /* Michael's CSS rules */
 .location-pointer {
+  padding-right: 10px;
   cursor: pointer;
   cursor: hand;
+}
+
+.location-pointer:hover {
+  color: green;
+  transition: color 0.3s ease;
 }
 .change-cursor-to-pointer-on-hover {
   cursor: pointer;

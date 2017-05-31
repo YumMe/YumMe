@@ -94,7 +94,7 @@ class App extends Component {
                 //  restaurant address
                 if (venue['location'] !== undefined) {
                   if (venue['location']['address'] !== undefined) {
-                    fs_address = venue['location']['address'];
+                    fs_address = venue['location']['city'] + ', ' + venue['location']['state'] + ' ' + venue['location']['address'];
                   }
                   if (venue['location']['crossStreet'] !== undefined) {
                     fs_crossStreet = venue['location']['crossStreet'];
@@ -120,23 +120,46 @@ class App extends Component {
 
                 //  hours of operation
                 if (venue['hours'] !== undefined) {
-                  if (venue['hours']['timeframes'][0] !== undefined) {
-                    if (venue['hours']['timeframes'][0]['open'] !== undefined) {
-                      var hrs = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
-                      fs_hours = [];
-                      console.log(hrs);
-                      Object.keys(hrs).forEach(function(key) {
-                        fs_hours.push(hrs[key].renderedTime);  
+                  if (venue['hours']['timeframes'] !== undefined) {
+                    var tfKeys = Object.keys(venue['hours']['timeframes']);
+
+                    fs_hours = [];
+                    fs_days = [];
+
+                    console.log(venue['hours']['timeframes']);
+
+                    tfKeys.forEach(function(key) {
+                      
+                      var opens = Object.keys(venue['hours']['timeframes'][key]['open']);
+                      var this_fsHours = [];
+                      opens.forEach(function(key2) {
+                        this_fsHours.push(venue['hours']['timeframes'][key]['open'][key2]['renderedTime']);
                       });
-                    }
-                    if (venue['hours']['timeframes'][0]['days'] !== undefined) {
-                      fs_days = venue['hours']['timeframes'][0]['days'];//;['renderedTime'][0];
-                      console.log(fs_days);
-                    }
+                      fs_hours.push(this_fsHours);//['renderedTime']);
+                      fs_days.push(venue['hours']['timeframes'][key]['days']);
+                    });
                   }
-                  if (venue['hours']['isOpen'] !== undefined) {
-                    fs_isOpen = venue['hours']['isOpen'];
-                  }
+                  //   if (venue['hours']['timeframes'][0]['open'] !== undefined) {
+
+
+                  //     var hrs = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                  //     fs_hours = [];
+                  //     console.log(hrs);
+                  //     Object.keys(hrs).forEach(function(key) {
+                  //       fs_hours.push(hrs[key].renderedTime);  
+                  //     });
+                  //   }
+                  //   if (venue['hours']['timeframes'][0]['days'] !== undefined) {
+                  //     var days = venue['hours']['timeframes'];//[0]['days'];//;['renderedTime'][0];
+
+                      
+
+                  //     console.log(venue['hours']['timeframes']);
+                  //   }
+                  // }
+                  // if (venue['hours']['isOpen'] !== undefined) {
+                  //   fs_isOpen = venue['hours']['isOpen'];
+                  // }
                 }
 
                 //  website if available
@@ -268,18 +291,18 @@ class App extends Component {
 
             {/*Pictures*/}
             <div>
-              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name}></img>
+              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
             </div>
             <div>
               {/* Replace with grid with modals */}
               {this.state.fs_additionalPhotos.length > 0 &&
-                <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
               }
               {this.state.fs_additionalPhotos.length > 1 &&
-                <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter"></img>
               }
               {this.state.fs_additionalPhotos.length > 2 &&
-                <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter"></img>
               }
             </div>
 

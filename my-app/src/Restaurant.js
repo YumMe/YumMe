@@ -291,18 +291,18 @@ class App extends Component {
 
             {/*Pictures*/}
             <div>
-              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name}></img>
+              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
             </div>
             <div>
               {/* Replace with grid with modals */}
               {this.state.fs_additionalPhotos.length > 0 &&
-                <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
               }
               {this.state.fs_additionalPhotos.length > 1 &&
-                <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter"></img>
               }
               {this.state.fs_additionalPhotos.length > 2 &&
-                <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name}></img>
+                <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter"></img>
               }
             </div>
 

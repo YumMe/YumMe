@@ -50,49 +50,107 @@ class App extends Component {
 
                 var venue = data['response']['venue'];
                 
+                var fs_id;
+                var fs_name;
+                var fs_rating;
+                var fs_ratingColor;
+                var fs_ratingSignals;
+                var fs_address;
+                var fs_crossStreet;
+                var fs_lat;
+                var fs_long;
+                var fs_phone;
+                var fs_hours;
+                var fs_days;
+                var fs_isOpen;
+                var fs_url;
+                var fs_foursquarePageUrl;
+                var fs_mainImage;
+                var fs_additionalPhotos;
 
                 //_____________________
                 // Restaurant information
-                var fs_id = venue['id'];
-                var fs_name = venue['name'];
+                if (venue['id'] !== undefined) {
+                  fs_id = venue['id'];
+                }
+                
+                if (venue['name'] !== undefined) {
+                  fs_name = venue['name'];
+                }
 
                 //_____________________
                 //  foursquare number rating
-                var fs_rating = venue['rating'];
-                var fs_ratingColor = venue['ratingColor'];
-                var fs_ratingSignals = venue['ratingSignals'];
+                if (venue['rating'] !== undefined) {
+                  fs_rating = venue['rating'];
+                }
+
+                if (venue['ratingColor'] !== undefined) {
+                  fs_ratingColor = venue['ratingColor'];
+                }
+                if (venue['ratingSignals'] !== undefined) {
+                  fs_ratingSignals = venue['ratingSignals'];
+                }
 
                 //  restaurant address
-                var fs_address = venue['location']['address'];
-                var fs_crossStreet = venue['location']['crossStreet'];
+                if (venue['location'] !== undefined) {
+                  if (venue['location']['address'] !== undefined) {
+                    fs_address = venue['location']['address'];
+                  }
+                  if (venue['location']['crossStreet'] !== undefined) {
+                    fs_crossStreet = venue['location']['crossStreet'];
+                  }
+                }
 
                 //  map preview (could also use the address for the google maps thingy i guess)
-                var fs_lat = venue['location']['lat'];
-                var fs_long = venue['location']['lng'];
+                if (venue['location'] !== undefined) {
+                  if (venue['location']['lat'] !== undefined) {
+                    fs_lat = venue['location']['lat'];
+                  }
+                  if (venue['location']['lng'] !== undefined) {
+                    fs_long = venue['location']['lng'];
+                  }
+                }
 
                 //  restaurant phone number
-                var fs_phone = venue['contact'].formattedPhone;
+                if (venue['contact'] !== undefined) {
+                  if (venue['contact']['formattedPhone'] !== undefined) {
+                    fs_phone = venue['contact']['formattedPhone'];
+                  }
+                }
 
                 //  hours of operation
-                var fs_hours = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
-                var fs_days = venue['hours']['timeframes'][0]['days'];
-                var fs_isOpen = venue['hours']['isOpen'];
+                if (venue['hours'] !== undefined) {
+                  if (venue['hours']['timeframes'][0] !== undefined) {
+                    if (venue['hours']['timeframes'][0]['open'] !== undefined) {
+                      fs_hours = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                    }
+                    if (venue['hours']['timeframes'][0]['days'] !== undefined) {
+                      fs_days = venue['hours']['timeframes'][0]['days'];
+                    }
+                  }
+                  if (venue['hours']['isOpen'] !== undefined) {
+                    fs_isOpen = venue['hours']['isOpen'];
+                  }
+                }
 
                 //  website if available
-                var fs_url = venue['url'];
+                fs_url = venue['url'];
 
                 // foursquare page for the restaurant
-                var fs_foursquarePageUrl = venue['canonicalUrl'];
+                fs_foursquarePageUrl = venue['canonicalUrl'];
 
-                
                 // The image from before (search results page)
-                var fs_mainImage = '';
+                fs_mainImage = '';
 
                 //  2 additional photos
-                var fs_additionalPhotos = [];
+                fs_additionalPhotos = [];
 
                 var maxPhotoCount = 2;
-                var photos = venue['photos']['groups'][0]['items'];
+                var photos = [];
+                
+                if (venue['photos']['groups'][0]['items'] !== undefined) {
+                  photos = venue['photos']['groups'][0]['items'];
+                }
 
                 console.log(venue['photos']['groups'][0]['items']);
 
@@ -186,7 +244,6 @@ class App extends Component {
       <div>
         <Logo />
         <SearchBar />
-        <div>Memes</div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         }
@@ -196,6 +253,7 @@ class App extends Component {
             <div>{this.state.fs_name}</div>
             <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
             <div>{this.state.fs_url}</div>
+            <button className="btn">BACK</button>
           </div>
         }
       </div>

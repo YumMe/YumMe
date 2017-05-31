@@ -183,8 +183,14 @@ class SearchResults extends Component {
   render() {
     return (
       <div>
-        <Logo />
-        <SearchBar />
+        <div className="navigation">
+          <div className="logo-navigation">
+            <Logo />
+          </div>
+          <div className="search-navigation">
+            <SearchBar />
+          </div>
+        </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }

@@ -174,7 +174,7 @@ class App extends Component {
                 //  2 additional photos
                 fs_additionalPhotos = [];
 
-                var maxPhotoCount = 3;
+                var maxPhotoCount = 2;
                 var photos = [];
                 
                 if (venue['photos']['groups'][0]['items'] !== undefined) {

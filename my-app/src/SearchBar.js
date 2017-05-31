@@ -376,10 +376,10 @@ export default class SearchBar extends React.Component {
                     <div className="search-form" onKeyUp={(e) => this.onChange(e)} onSubmit={(e) => this.goToSearchResultsPage(e)} onChange={(e) => this.onChange(e)}>
                         <form action="#" className="dropdown">
                             {this.state.locationServicesAllowed === true &&
-                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
+                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
                             }
                             {this.state.locationServicesAllowed === false &&
-                                <i className="fa fa-map-marker location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); } }></i>
+                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); } }></i>
                             }
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off" />

@@ -14,7 +14,7 @@
   background-repeat: no-repeat;
   display: flex;
   text-align: center;
-  align-items: center; 
+  align-items: center;
 }
 
 /*hompage text*/
@@ -92,6 +92,9 @@ body {
 
 /*phone*/
 @media screen and (max-width: 600px){
+  .search-grid {
+    top: 150px;
+  }
   .homepage {
     background-image: url("../img/pasta-mobile.png");
     align-items: initial;
@@ -201,6 +204,8 @@ body {
 
 /*flex container*/
 .search-grid {
+  position: absolute;
+  top: 100px;
   display: flex;
   flex-flow: row wrap;
   align-content: center;
@@ -253,6 +258,12 @@ body {
 
 /* messing around with navigation top*/
 .navigation {
+  padding: 10px;
+  padding-bottom: 20px;
+  position: fixed;
+  z-index: 3;
+  background-color: white;
+  width: 100%;
 }
 .logo-navigation {
   margin-top: 30px;

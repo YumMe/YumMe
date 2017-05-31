@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchResultsGrid from './SearchResultsGrid';
 import SearchBar from './SearchBar';
 import Logo from './Logo';
+import ScrollToTop from 'react-scroll-up';
 
 class SearchResults extends Component {
 
@@ -194,6 +195,11 @@ class SearchResults extends Component {
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }
+        <ScrollToTop showUnder={160}>
+          <button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i className="fa fa-angle-up" aria-hidden="true"></i>
+          </button>
+        </ScrollToTop>
       </div>
     );
   }

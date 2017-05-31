@@ -50,23 +50,23 @@ class App extends Component {
 
                 var venue = data['response']['venue'];
                 
-                var fs_id;
-                var fs_name;
-                var fs_rating;
-                var fs_ratingColor;
-                var fs_ratingSignals;
-                var fs_address;
-                var fs_crossStreet;
-                var fs_lat;
-                var fs_long;
-                var fs_phone;
-                var fs_hours;
-                var fs_days;
-                var fs_isOpen;
-                var fs_url;
-                var fs_foursquarePageUrl;
-                var fs_mainImage;
-                var fs_additionalPhotos;
+                var fs_id = "not available";
+                var fs_name = "not available";
+                var fs_rating = "not available";
+                var fs_ratingColor = "not available";
+                var fs_ratingSignals = "not available";
+                var fs_address = "not available";
+                var fs_crossStreet = "not available";
+                var fs_lat = "not available";
+                var fs_long = "not available";
+                var fs_phone = "not available";
+                var fs_hours = "not available";
+                var fs_days = "not available";
+                var fs_isOpen = "not available";
+                var fs_url = "not available";
+                var fs_foursquarePageUrl = "not available";
+                var fs_mainImage = "not available";
+                var fs_additionalPhotos = "not available";
 
                 //_____________________
                 // Restaurant information
@@ -122,10 +122,16 @@ class App extends Component {
                 if (venue['hours'] !== undefined) {
                   if (venue['hours']['timeframes'][0] !== undefined) {
                     if (venue['hours']['timeframes'][0]['open'] !== undefined) {
-                      fs_hours = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                      var hrs = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                      fs_hours = [];
+                      console.log(hrs);
+                      Object.keys(hrs).forEach(function(key) {
+                        fs_hours.push(hrs[key].renderedTime);  
+                      });
                     }
                     if (venue['hours']['timeframes'][0]['days'] !== undefined) {
-                      fs_days = venue['hours']['timeframes'][0]['days'];
+                      fs_days = venue['hours']['timeframes'][0]['days'];//;['renderedTime'][0];
+                      console.log(fs_days);
                     }
                   }
                   if (venue['hours']['isOpen'] !== undefined) {
@@ -145,7 +151,7 @@ class App extends Component {
                 //  2 additional photos
                 fs_additionalPhotos = [];
 
-                var maxPhotoCount = 2;
+                var maxPhotoCount = 3;
                 var photos = [];
                 
                 if (venue['photos']['groups'][0]['items'] !== undefined) {
@@ -156,10 +162,13 @@ class App extends Component {
 
                 for (var i = 0; i < photos.length; i++) {
                   if (i === 0) {
-                    fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
+                    //fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
+                    fs_mainImage = photos[i]["prefix"] + "300x300" + photos[i]["suffix"];
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {
-                    fs_additionalPhotos.push(photos[i]['prefix'] + photos[i]['suffix']);
+                    fs_additionalPhotos.push(
+                      photos[i]["prefix"] + "200x200" + photos[i]["suffix"]
+                    );
                   } else {
                     break;
                   }
@@ -194,8 +203,10 @@ class App extends Component {
                   fs_crossStreet: fs_crossStreet,
                   fs_lat: fs_lat,
                   fs_long: fs_long,
-                  fs_phone: fs_hours,
-                  fs_days: fs_isOpen,
+                  fs_phone: fs_phone,
+                  fs_hours: fs_hours,
+                  fs_days: fs_days,
+                  fs_isOpen: fs_isOpen,
                   fs_url: fs_url,
                   fs_foursquarePageUrl: fs_foursquarePageUrl,
                   fs_additionalPhotos: fs_additionalPhotos,
@@ -244,16 +255,118 @@ class App extends Component {
       <div>
         <Logo />
         <SearchBar />
-        {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
+        {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
-        }
+        */}
+
+        <button className="btn" onClick={function() { history.back() }}>{'<'} Back</button>
 
         {this.state.loaded === true &&
           <div>
-            <div>{this.state.fs_name}</div>
-            <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
-            <div>{this.state.fs_url}</div>
-            <button className="btn" onClick={function() { history.back() }}>BACK</button>
+            {/*Restaurant Name*/}
+            <h1>{this.state.fs_name}</h1>
+
+            {/*Pictures*/}
+            <div>
+              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name}></img>
+            </div>
+            <div>
+              {/* Replace with grid with modals */}
+              {this.state.fs_additionalPhotos.length > 0 &&
+                <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name}></img>
+              }
+              {this.state.fs_additionalPhotos.length > 1 &&
+                <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name}></img>
+              }
+              {this.state.fs_additionalPhotos.length > 2 &&
+                <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name}></img>
+              }
+            </div>
+
+            {/*Restaurant address*/}
+            {this.state.fs_address !== undefined &&
+            <div>
+              Restaurant address: {this.state.fs_address}
+            </div>
+            }
+
+            {/*Rating*/}
+            {this.state.fs_rating !== undefined &&
+              <div>
+                <div style={{color: customColor}}>
+                  Rating: {this.state.fs_rating}
+                </div>
+                <div>
+                  {this.state.fs_ratingSignals} reviews
+                </div>
+              </div>
+            }
+            {this.state.fs_rating === undefined &&
+              <div>
+                No ratings
+              </div>
+            }
+
+            {/*Foursquare website link*/}
+            {this.state.fs_foursquarePageUrl !== undefined &&
+              <div>
+                <a href={this.state.fs_foursquarePageUrl} target="_blank" >Foursquare Page</a>
+              </div>
+            }
+            {this.state.fs_foursquarePageUrl === undefined &&
+              <div>
+                No Foursquare page
+              </div>
+            }
+
+            {/*Restaurant website*/}
+            {this.state.fs_url !== undefined &&
+            <div>
+              <a href={this.state.fs_url} target="_blank">Website</a>
+            </div>
+            }
+            {this.state.fs_url === undefined &&
+              <div>No restaurant URL</div>
+            }
+
+            {/* Hours of operation */}
+            <div>
+              <h3>Hours of operation:</h3>
+              {this.state.fs_hours !== undefined &&
+                <div>Hours: {this.state.fs_hours}</div>
+              }
+              {this.state.fs_hours === undefined &&
+                <div>No hours data</div>
+              }
+              {this.state.fs_days !== undefined &&
+                <div>Days: {this.state.fs_days}</div>
+              }
+              {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
+                <div>No days data</div>
+              }
+              {this.state.fs_isOpen === true &&
+                <div>Open now!</div>
+              }
+              {this.state.fs_isOpen === false &&
+                <div>Closed now</div>
+              }
+              {this.state.fs_isOpen === undefined &&
+                <div>No open/closed data</div>  
+              }
+            </div>
+
+            {/* Map */}
+            {this.state.fs_lat !== null && this.state.fs_long !== null &&
+              <div>
+                <a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>
+              </div>
+            }
+            {this.state.fs_lat === null || this.state.fs_long === null &&
+              <div>
+                No location data
+              </div>  
+            }
+            
           </div>
         }
       </div>

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from 'react-mdl';
 import './modal.css';
 
+
 class SearchSquare extends Component {
 
   constructor(props) {

@@ -129,12 +129,17 @@ body {
       display: inline-block;
       width: 100%''    
   }*/
+/*
+.search-form, .location-pointer {
+    display: inline-block;
+    width: 100%''    
+}*/
 
   form{
     display: inline-block;
     width: 50vw;
   }
-}
+
 
 /* Michael's CSS rules */
 .location-pointer {
@@ -155,6 +160,7 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-right: 10px;
 }
 .dropdown-content {
   font-family: arial;
@@ -179,6 +185,10 @@ body {
   font-family: arial;
   font-size: 10pt;
   text-align: left;
+}
+
+.go-button {
+  border-radius: 5px;
 }
 /* end of michael's css rules */
 
@@ -233,4 +243,18 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+}
+
+/* messing around with navigation top*/
+.navigation {
+}
+.logo-navigation {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+
+.search-navigation {
+  margin-left: 35vw;
+  margin-top: -30px;
 }

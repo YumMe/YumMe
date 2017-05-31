@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import Modal from './Modal';
 import SearchResultsGrid from './SearchResultsGrid';
 import SearchBar from './SearchBar';
 import Logo from './Logo';
@@ -131,6 +129,9 @@ class SearchResults extends Component {
               case 'coords':
                 console.log("No results found for coords: " + param);
                 break;
+              default:
+                console.log("invalid search parameters");
+                break;
             }
           }
 
@@ -206,8 +207,14 @@ class SearchResults extends Component {
   render() {
     return (
       <div>
-        <Logo />
-        <SearchBar />
+        <div className="navigation">
+          <div className="logo-navigation">
+            <Logo />
+          </div>
+          <div className="search-navigation">
+            <SearchBar />
+          </div>
+        </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }

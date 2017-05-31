@@ -284,16 +284,12 @@ export default class SearchBar extends React.Component {
                             response.json().then(function(data) {
                                 console.log(data);
                                 if (data) {
-                                    var resultCount = 0;
 
                                     // Cities
                                     if (data.geonames !== undefined) {
                                         for (var i = 0; i < data.geonames.length; i++) {
                                             var name = data.geonames[0].name;
                                             var state = data.geonames[0].adminCode1;
-
-                                            var searchbar = that.refs.searchbar;
-                                            searchbar.value = 'your current location: ' + name;
 
                                             // Ignore non-letter state codes
                                             if (state !== undefined && that.stringIsOnlyLetters(state)) {
@@ -404,7 +400,7 @@ export default class SearchBar extends React.Component {
 
                         </form>
 
-                        <br />
+                        {/*<br />*/}
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>

@@ -10,8 +10,6 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 
 ReactDOM.render(
-  // <App />,
-  // document.getElementById('root')
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Frontpage} />

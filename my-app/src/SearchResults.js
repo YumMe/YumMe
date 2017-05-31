@@ -196,7 +196,7 @@ class SearchResults extends Component {
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }
         <ScrollToTop showUnder={160}>
-          <button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+          <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
             <i className="fa fa-angle-up" aria-hidden="true"></i>
           </button>
         </ScrollToTop>

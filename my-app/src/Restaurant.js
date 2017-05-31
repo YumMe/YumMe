@@ -253,7 +253,7 @@ class App extends Component {
             <div>{this.state.fs_name}</div>
             <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
             <div>{this.state.fs_url}</div>
-            <button className="btn">BACK</button>
+            <button className="btn" onClick={function() { history.back() }}>BACK</button>
           </div>
         }
       </div>

@@ -276,14 +276,19 @@ class App extends Component {
 
     return (
       <div>
-        <Logo />
-        <SearchBar />
+        <div className="navigation">
+          <div className="logo-navigation">
+            <Logo />
+          </div>
+          <div className="search-navigation">
+            <SearchBar />
+          </div>
+          <button className="btn" onClick={function() { history.back() }}>{'<'} Back</button>
+        </div>
         {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         */}
-
-        <button className="btn" onClick={function() { history.back() }}>{'<'} Back</button>
-
+        <div className="restaurant-view">
         {this.state.loaded === true &&
           <div>
             {/*Restaurant Name*/}
@@ -392,6 +397,7 @@ class App extends Component {
             
           </div>
         }
+        </div>
       </div>
     );
   }

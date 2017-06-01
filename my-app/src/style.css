@@ -146,8 +146,12 @@ body {
   text-align: left;
 }
 
-.go-button {
+.go-button, .back-button {
   border-radius: 5px;
+}
+
+.back-button {
+  margin-left: 4vw;
 }
 /* end of michael's css rules */
 
@@ -249,6 +253,11 @@ body {
 
 .restaurant-view {
   margin-top: 20vh;
+}
+
+.current-results {
+  text-align: center;
+  font-size: 16px;
 }
 
 /*phone*/

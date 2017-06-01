@@ -297,6 +297,9 @@ export default class SearchBar extends React.Component {
 
                                                 var searchbar = that.refs.searchbar;
                                                 searchbar.value = 'your current location: ' + name;
+                                                this.setState({
+                                                    city: name
+                                                });
                                                 break;
                                             }
                                         }
@@ -404,7 +407,6 @@ export default class SearchBar extends React.Component {
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
-
                     </div>
                 </div>
             </div>

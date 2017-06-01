@@ -23,7 +23,7 @@ class SearchResults extends Component {
     this.queryParametersAreValid = this.queryParametersAreValid.bind(this);
   }
 
-
+  
   componentDidMount() {
 
     // Get query parameters
@@ -77,8 +77,11 @@ class SearchResults extends Component {
           + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
     }
 
-    console.log(foursquareApiCall);
+    this.setState({ city: param });
 
+    console.log(foursquareApiCall);
+    console.log(param);
+    
     // Grab venues
     fetch(foursquareApiCall)
       .then(
@@ -149,7 +152,7 @@ class SearchResults extends Component {
         console.log('Fetch Error :-S', err);
       });
   }
-
+  
   // Validates query parameters
   queryParametersAreValid(lat, long) {
 
@@ -181,6 +184,8 @@ class SearchResults extends Component {
   }
 
 
+
+
   render() {
     return (
       <div>
@@ -191,6 +196,7 @@ class SearchResults extends Component {
           <div className="search-navigation">
             <SearchBar />
           </div>
+          <p className="current-results light">Now viewing results for: {this.state.city}</p>
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />

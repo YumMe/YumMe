@@ -283,7 +283,7 @@ class App extends Component {
           <div className="search-navigation">
             <SearchBar />
           </div>
-          <button className="btn" onClick={function() { history.back() }}>{'<'} Back</button>
+          <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light back-button" onClick={function() { history.back() }}>{'<'} Back</button>
         </div>
         {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />

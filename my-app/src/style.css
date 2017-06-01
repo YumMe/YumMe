@@ -262,3 +262,20 @@ body {
   margin-left: 35vw;
   margin-top: -30px;
 }
+
+/*modal*/
+.modal{
+  width: 50vw;
+}
+
+.photo{
+  display: inline-block;
+}
+
+.info{
+  display: inline-block;
+}
+
+h1.info{
+  font-size: 3rem;
+}

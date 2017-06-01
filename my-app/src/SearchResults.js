@@ -72,8 +72,8 @@ class SearchResults extends Component {
       param = 'default location: Seattle, WA';
 
       foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?near='
-          + 'Seattle, WA'
-          + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
+        + 'Seattle, WA'
+        + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
     }
 
     console.log(foursquareApiCall);
@@ -94,6 +94,8 @@ class SearchResults extends Component {
           var imagesArray = [];
           var idArray = [];
           var nameArray = [];
+          var webArray = [];
+          var menuArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -115,6 +117,9 @@ class SearchResults extends Component {
           for (var i = 0; i < venues.length; i++) {
             let currId = venues[i]["id"];
             let currName = venues[i]["name"];
+            let currMenu = venues[i]["menu"]["url"];
+            console.log(currMenu);
+            let currWebsite = venues[i];
             //console.log(currId);
             fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
@@ -126,14 +131,26 @@ class SearchResults extends Component {
                 }
                 response.json().then((data) => {
                   //console.log(JSON.stringify(data));
-                  if (data["response"]["photos"]["items"][0] !== undefined) {
+                  if (data["response"]["photos"] !== undefined && data["response"]["photos"]["items"][0] !== undefined) {
                     var venueImage = data["response"]["photos"]["items"][0]["prefix"] + "300x300" + data["response"]["photos"]["items"][0]["suffix"];
                     imagesArray.push(venueImage);
+
                     //console.log(currId);
                     idArray.push(currId);
                     nameArray.push(currName);
-                    this.setState({ venueImages: imagesArray, venueIds: idArray , venueNames: nameArray});
                   }
+                  console.log("entering menu if statement");
+                  if (data["response"]["venues"] !== undefined && data["response"]["venues"][i] !== undefined && data["response"]["venues"][i]["menu"] !== undefined) {
+                    console.log("true");
+                    menuArray.push(currMenu);
+                  }
+
+
+                  // if(data["respones"]["venues"][i]["menu"] != undefined)
+                  //  webArray.push(currWebsite);
+                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueMenus: menuArray });
+                  // venueWebsite: webArray, 
+
                 });
               }
               )

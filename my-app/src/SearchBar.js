@@ -14,6 +14,7 @@ export default class SearchBar extends React.Component {
         this.state = {
             // By city name
             search: '',
+            city: '',
 
             // By latitude/longitude
             latitude: '',
@@ -290,16 +291,19 @@ export default class SearchBar extends React.Component {
                                         for (var i = 0; i < data.geonames.length; i++) {
                                             var name = data.geonames[0].name;
                                             var state = data.geonames[0].adminCode1;
-
+                                            
                                             // Ignore non-letter state codes
                                             if (state !== undefined && that.stringIsOnlyLetters(state)) {
                                                 name += ', ' + state;
 
-                                                var searchbar = that.refs.searchbar;
-                                                searchbar.value = 'your current location: ' + name;
                                                 this.setState({
                                                     city: name
                                                 });
+
+                                                var searchbar = that.refs.searchbar;
+                                                searchbar.value = 'your current location: ' + name;
+
+
                                                 break;
                                             }
                                         }
@@ -325,7 +329,7 @@ export default class SearchBar extends React.Component {
                 return;
             }
         }
-
+        
         // Parameters:
 
         // 1) city = city name
@@ -339,7 +343,6 @@ export default class SearchBar extends React.Component {
             var long = '';
             if (latAndLong !== false && usingCurrentLocation === true) {
                 lat = latAndLong[0];
-
                 long = latAndLong[1];
             }
             if (usingCurrentLocation === true) {
@@ -361,7 +364,7 @@ export default class SearchBar extends React.Component {
     // Render in dom
     render() {
         var that = this;
-
+        
         var showDropdown = false;
         var dropdown = null;
 
@@ -407,6 +410,7 @@ export default class SearchBar extends React.Component {
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
+                        <p>{this.state.city}</p>
                     </div>
                 </div>
             </div>

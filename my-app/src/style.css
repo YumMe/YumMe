@@ -220,7 +220,7 @@ body {
 /* messing around with navigation top*/
 .navigation {
   padding: 10px;
-  padding-bottom: 20px;
+  /*padding-bottom: 20px;*/
   position: fixed;
   top: 0;
   left: 0;
@@ -239,6 +239,13 @@ body {
   margin-top: -30px;
 }
 
+.current-results {
+  margin-left: 40vw;
+  margin-top: -65px;
+  text-align: center;
+  font-size: 16px;
+}
+
 .mdl-button--fab.mdl-button--colored{
   background-color: black;
 }
@@ -253,11 +260,6 @@ body {
 
 .restaurant-view {
   margin-top: 20vh;
-}
-
-.current-results {
-  text-align: center;
-  font-size: 16px;
 }
 
 /*phone*/

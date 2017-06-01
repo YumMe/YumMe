@@ -38,6 +38,9 @@ class SearchResults extends Component {
     // For logging purposes: either the city name, or lat,long
     var param = '';
 
+    // Converting lat, long to city name
+    var cityApiCall = null;
+
     // (1) If using current location (takes priority over city)
     if (query.lat !== undefined && query.long !== undefined) {
       if (this.queryParametersAreValid(query.lat, query.long)) {
@@ -46,7 +49,13 @@ class SearchResults extends Component {
         // https://developer.foursquare.com/docs/venues/search
         var latAndLong = query.lat + ',' + query.long;
 
-        param = latAndLong;
+        // param = latAndLong;
+
+        cityApiCall = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                    + query.lat
+                    + '&lng='
+                    + query.long
+                    + '&username=greycabb&cities=cities1000';
 
         foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?ll='
           + latAndLong
@@ -82,6 +91,39 @@ class SearchResults extends Component {
     console.log(foursquareApiCall);
     console.log(param);
     
+  
+
+    // Convert lat, long to city
+    fetch(cityApiCall)
+      .then(
+        (response) => {
+          if (response.status !== 200) {
+            return;
+          }
+          response.json().then((data) => {
+            console.log(data);
+            if (data.geonames !== undefined) {
+              for (var i = 0; i < data.geonames.length; i++) {
+                var name = data.geonames[0].name;
+                var state = data.geonames[0].adminCode1;
+
+                // Ignore non-letter state codes
+                if (state !== undefined) {
+                  name += ', ' + state;
+                  
+                  this.setState({
+                    city: name
+                  })
+
+                  break;
+                }
+              }
+            };
+          });
+        }
+      )
+
+
     // Grab venues
     fetch(foursquareApiCall)
       .then(
@@ -195,8 +237,8 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
+            <p className="current-results light">Now viewing results for: {this.state.city}</p>
           </div>
-          <p className="current-results light">Now viewing results for: {this.state.city}</p>
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />

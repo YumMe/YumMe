@@ -296,10 +296,6 @@ export default class SearchBar extends React.Component {
                                             if (state !== undefined && that.stringIsOnlyLetters(state)) {
                                                 name += ', ' + state;
 
-                                                this.setState({
-                                                    city: name
-                                                });
-
                                                 var searchbar = that.refs.searchbar;
                                                 searchbar.value = 'your current location: ' + name;
 
@@ -319,6 +315,9 @@ export default class SearchBar extends React.Component {
 
                 }
                 setTimeout(function() { getCityFromCoords(latAndLong, that)}, 200);
+                this.setState({
+                    city: name
+                })
 
             } else {
                 // Make this a text below instead
@@ -410,7 +409,7 @@ export default class SearchBar extends React.Component {
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
-                        <p>{this.state.city}</p>
+                        <h1>{this.state.name}</h1>
                     </div>
                 </div>
             </div>

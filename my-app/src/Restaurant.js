@@ -295,10 +295,10 @@ class App extends Component {
             <h1>{this.state.fs_name}</h1>
 
             {/*Pictures*/}
-            <div>
+            <div className="restaurant-pic">
               <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
             </div>
-            <div>
+            <div className="restaurant-pics">
               {/* Replace with grid with modals */}
               {this.state.fs_additionalPhotos.length > 0 &&
                 <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
@@ -311,20 +311,13 @@ class App extends Component {
               }
             </div>
 
-            {/*Restaurant address*/}
-            {this.state.fs_address !== undefined &&
-            <div>
-              Restaurant address: {this.state.fs_address}
-            </div>
-            }
-
             {/*Rating*/}
             {this.state.fs_rating !== undefined &&
               <div>
-                <div style={{color: customColor}}>
-                  Rating: {this.state.fs_rating}
+                <div className="rating" style={{color: customColor}}>
+                  {this.state.fs_rating} / 10
                 </div>
-                <div>
+                <div className="review">
                   {this.state.fs_ratingSignals} reviews
                 </div>
               </div>
@@ -335,9 +328,28 @@ class App extends Component {
               </div>
             }
 
+            {/*Restaurant address*/}
+            {this.state.fs_address !== undefined &&
+            <div className="address">
+              {this.state.fs_address}
+            </div>
+            }
+
+            {/* Map */}
+            {this.state.fs_lat !== null && this.state.fs_long !== null &&
+              <div className="map">
+                <a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>
+              </div>
+            }
+            {this.state.fs_lat === null || this.state.fs_long === null &&
+              <div>
+                No location data
+              </div>  
+            }
+
             {/*Foursquare website link*/}
             {this.state.fs_foursquarePageUrl !== undefined &&
-              <div>
+              <div className = "fsite">
                 <a href={this.state.fs_foursquarePageUrl} target="_blank" >Foursquare Page</a>
               </div>
             }
@@ -349,7 +361,7 @@ class App extends Component {
 
             {/*Restaurant website*/}
             {this.state.fs_url !== undefined &&
-            <div>
+            <div className = "rsite">
               <a href={this.state.fs_url} target="_blank">Website</a>
             </div>
             }
@@ -358,8 +370,8 @@ class App extends Component {
             }
 
             {/* Hours of operation */}
-            <div>
-              <h3>Hours of operation:</h3>
+            <div className="hours">
+              <h4>Hours of operation:</h4>
               {this.state.fs_hours !== undefined &&
                 <div>Hours: {this.state.fs_hours}</div>
               }
@@ -382,19 +394,6 @@ class App extends Component {
                 <div>No open/closed data</div>  
               }
             </div>
-
-            {/* Map */}
-            {this.state.fs_lat !== null && this.state.fs_long !== null &&
-              <div>
-                <a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>
-              </div>
-            }
-            {this.state.fs_lat === null || this.state.fs_long === null &&
-              <div>
-                No location data
-              </div>  
-            }
-            
           </div>
         }
         </div>

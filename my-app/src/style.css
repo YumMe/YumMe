@@ -96,7 +96,7 @@ body {
 }
 /* Michael's CSS rules */
 .location-pointer {
-  padding-right: 10px;
+  padding-right: 20px;
   cursor: pointer;
   cursor: hand;
 }
@@ -147,13 +147,19 @@ body {
 }
 
 .go-button, .back-button {
-  border-radius: 5px;
+  border-radius: 3px;
 }
+
+/* end of michael's css rules */
 
 .back-button {
   margin-left: 4vw;
+  margin-bottom: 10px;
 }
-/* end of michael's css rules */
+
+.go-button {
+  margin-left: 1vw;
+}
 
 /* search results grid css*/
 
@@ -240,10 +246,11 @@ body {
 }
 
 .current-results {
-  margin-left: 40vw;
-  margin-top: -65px;
+  margin-left: 45vw;
+  margin-top: -75px;
   text-align: center;
   font-size: 16px;
+  width: 200px;
 }
 
 .mdl-button--fab.mdl-button--colored{
@@ -256,10 +263,6 @@ body {
 
 .mdl-button--fab.mdl-button--colored:hover {
   background-color: green;
-}
-
-.restaurant-view {
-  margin-top: 20vh;
 }
 
 /*phone*/
@@ -316,3 +319,61 @@ body {
     width: 50vw;
   }
 } 
+
+/* RESTAURANT */
+
+.restaurant-view {
+  margin-top: 30vh;
+  padding-left: 100px;
+}
+
+.restaurant-pic {
+  margin-bottom: 5px;
+}
+
+.image-filter {
+  padding: 5px;
+}
+
+.rating {
+  margin-top: 30px;
+  font-size: 28pt;
+  float: left;
+}
+
+.review {
+  font-size: 14pt;
+  margin-top: 36px;
+  margin-left: 30px;
+  color: #b7b7b7;
+  float: left;
+}
+
+.address {
+  margin: 32px;
+  font-size: 24pt;
+  float: left;
+}
+
+.map {
+  margin-top: 36px;
+  font-size: 12pt;
+  float: left;
+}
+
+/* Foursquare website */
+.fsite {
+  clear: both;
+  margin-left: 0px;
+  float: left;
+}
+
+/* Restaurant website */
+.rsite {
+  clear: both;
+}
+
+.hours {
+  position: absolute;
+  margin-bottom: 50px;
+}

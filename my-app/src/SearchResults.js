@@ -96,6 +96,8 @@ class SearchResults extends Component {
           var nameArray = [];
           var webArray = [];
           var menuArray = [];
+          var addressArray= [];
+          var phoneArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -118,8 +120,12 @@ class SearchResults extends Component {
             let currId = venues[i]["id"];
             let currName = venues[i]["name"];
             let currMenu = venues[i]["menu"]["url"];
+            let currNumber = venues[i]["contact"]["formattedPhone"];
             console.log(currMenu);
-            let currWebsite = venues[i];
+            console.log(venues[i]["contact"]["formattedPhone"]);
+            let currWebsite = venues[i]["url"];
+            console.log(venues[i]["location"]);
+            let currAdress = venues[i]["location"]["formattedAddress"];
             //console.log(currId);
             fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
@@ -129,6 +135,7 @@ class SearchResults extends Component {
                     response.status);
                   return;
                 }
+                console.log("phoen number:" + currNumber);
                 response.json().then((data) => {
                   //console.log(JSON.stringify(data));
                   if (data["response"]["photos"] !== undefined && data["response"]["photos"]["items"][0] !== undefined) {
@@ -138,17 +145,24 @@ class SearchResults extends Component {
                     //console.log(currId);
                     idArray.push(currId);
                     nameArray.push(currName);
+                    webArray.push(currWebsite);
+                    
                   }
+                  phoneArray.push(currNumber);
+                  console.log("phoneArray:" + phoneArray);
                   console.log("entering menu if statement");
                   if (data["response"]["venues"] !== undefined && data["response"]["venues"][i] !== undefined && data["response"]["venues"][i]["menu"] !== undefined) {
                     console.log("true");
                     menuArray.push(currMenu);
+                  } else {
+                    console.log("false");
                   }
+                  addressArray.push(currAdress);
 
 
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
-                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueMenus: menuArray });
+                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray});
                   // venueWebsite: webArray, 
 
                 });
@@ -209,7 +223,7 @@ class SearchResults extends Component {
           </div>
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
-          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
+          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}/>
         }
       </div>
     );

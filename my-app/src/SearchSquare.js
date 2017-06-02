@@ -81,13 +81,15 @@ class SearchSquare extends Component {
 
             {/* onClick={this.handleClose}*/}
             <button type='button' className='exit light'onClick={this.handleCloseDialog}>X</button>
-            <DialogContent>
+            <DialogContent className="ligth">
               
               <img className="photo" src={this.props.image} alt={this.props.venueID}/>
               <div className="info">
-              <h1 className="light">{this.props.venueName}</h1>
-              <p>Website: {this.props.venueWebsite}</p>
-              <p>Menue: {this.props.venueMenus}</p>
+              <h1 className="light modal-heading">{this.props.venueName}</h1>
+              <p><span className="subheading">Website: </span>{this.props.venueWebsite}</p>
+              <p><span className="subheading">Menu: </span>{this.props.venueMenus}</p>
+              <p><span className="subheading">Address: </span>{this.props.venueAddress}</p>
+              <p><span className="subheading">Phone: </span>{this.props.venuePhone}</p>
               </div>
             </DialogContent>
           </Dialog>

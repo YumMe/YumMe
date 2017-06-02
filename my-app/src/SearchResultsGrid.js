@@ -24,7 +24,15 @@ class SearchGrid extends Component {
     var array = [];
     for (var i = 0; i < (15 * this.state.loaded); i++) {
       if(this.props.venueImages[i] != undefined) {
-        array.push(<SearchSquare image={this.props.venueImages[i]} venueId={this.props.venueIds[i]} venueName={this.props.venueNames[i]} key={i} />);
+        array.push(<SearchSquare 
+        image={this.props.venueImages[i]} 
+        venueId={this.props.venueIds[i]} 
+        venueName={this.props.venueNames[i]} 
+        venueAddress={this.props.venueAddress[i]} 
+        venuePhone={this.props.venuePhone[i]} 
+        venueMenu={this.props.venueMenus[i]} 
+        venueWebsite={this.props.venueWebsite[i]} 
+        key={i} />);
         //array.push(<SearchSquare image={this.props.venueImages[i]} key={i} />);
       }
     }

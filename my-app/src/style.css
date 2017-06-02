@@ -276,6 +276,10 @@ body {
   display: inline-block;
 }
 
-h1.info{
-  font-size: 3rem;
+.modal-heading{
+  font-size: 2rem;
+}
+
+.subheading{
+  font-weight: 400;
 }

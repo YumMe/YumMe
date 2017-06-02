@@ -281,5 +281,24 @@ body {
 }
 
 .subheading{
-  font-weight: 400;
+  font-weight: bold;
+}
+
+a.button{
+  border: 1px solid black;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.links{
+  padding-bottom: 10px;
+}
+
+button.exit{
+  padding-left: 98%;
 }

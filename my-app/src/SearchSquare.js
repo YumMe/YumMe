@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import { Dialog, DialogContent } from 'react-mdl';
-import {Modal} from 'react-modal';
+import { Modal } from 'react-modal';
 
 class SearchSquare extends Component {
 
   // constructor(props) {
-    // super(props);
-    //   this.state = {};
-    //   this.handleOpenDialog = this.handleOpenDialog.bind(this);
-    //   this.handleCloseDialog = this.handleCloseDialog.bind(this);
-    // }
+  // super(props);
+  //   this.state = {};
+  //   this.handleOpenDialog = this.handleOpenDialog.bind(this);
+  //   this.handleCloseDialog = this.handleCloseDialog.bind(this);
+  // }
 
-    // handleOpenDialog() {
-    //   this.setState({
-    //     openDialog: true
-    //   });
-    // }
+  // handleOpenDialog() {
+  //   this.setState({
+  //     openDialog: true
+  //   });
+  // }
 
-    // handleCloseDialog() {
-    //   this.setState({
-    //     openDialog: false
-    //   });
-    // }
+  // handleCloseDialog() {
+  //   this.setState({
+  //     openDialog: false
+  //   });
+  // }
   constructor(props) {
     super(props);
     this.state = {};
@@ -42,7 +42,7 @@ class SearchSquare extends Component {
     });
   }
 
-//idk
+  //idk
   //   this.state = {
   //     isShowingModal: false,
   //   }
@@ -76,23 +76,25 @@ class SearchSquare extends Component {
         </div>
 
 
-        
-          <Dialog open={this.state.openDialog} className="modal">
 
-            {/* onClick={this.handleClose}*/}
-            <button type='button' className='exit light'onClick={this.handleCloseDialog}>X</button>
-            <DialogContent className="ligth">
-              
-              <img className="photo" src={this.props.image} alt={this.props.venueID}/>
-              <div className="info">
+        <Dialog open={this.state.openDialog} className="modal light">
+
+          {/* onClick={this.handleClose}*/}
+          <button type='button' className='exit light' onClick={this.handleCloseDialog}>X</button>
+          <DialogContent className="light">
+
+            <img className="photo" src={this.props.image} alt={this.props.venueID} />
+            <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
-              <p><span className="subheading">Website: </span>{this.props.venueWebsite}</p>
-              <p><span className="subheading">Menu: </span>{this.props.venueMenus}</p>
+              <span className="links">
+                <a href={this.props.venueWebsite} className="button">Website</a>
+                <a className="button" href={this.props.venueMenus}>Menu</a>
+              </span>
               <p><span className="subheading">Address: </span>{this.props.venueAddress}</p>
               <p><span className="subheading">Phone: </span>{this.props.venuePhone}</p>
-              </div>
-            </DialogContent>
-          </Dialog>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }

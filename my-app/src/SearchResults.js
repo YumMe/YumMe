@@ -121,12 +121,10 @@ class SearchResults extends Component {
             let currName = venues[i]["name"];
             let currMenu = venues[i]["menu"]["url"];
             let currNumber = venues[i]["contact"]["formattedPhone"];
-            console.log(currMenu);
-            console.log(venues[i]["contact"]["formattedPhone"]);
+            console.log("venues[i][\"menu\":");
+            console.log(venues[i]["menu"]["url"]);
             let currWebsite = venues[i]["url"];
-            console.log(venues[i]["location"]);
             let currAdress = venues[i]["location"]["formattedAddress"];
-            //console.log(currId);
             fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
               (response) => {
@@ -135,7 +133,6 @@ class SearchResults extends Component {
                     response.status);
                   return;
                 }
-                console.log("phoen number:" + currNumber);
                 response.json().then((data) => {
                   //console.log(JSON.stringify(data));
                   if (data["response"]["photos"] !== undefined && data["response"]["photos"]["items"][0] !== undefined) {
@@ -149,7 +146,6 @@ class SearchResults extends Component {
                     
                   }
                   phoneArray.push(currNumber);
-                  console.log("phoneArray:" + phoneArray);
                   console.log("entering menu if statement");
                   if (data["response"]["venues"] !== undefined && data["response"]["venues"][i] !== undefined && data["response"]["venues"][i]["menu"] !== undefined) {
                     console.log("true");

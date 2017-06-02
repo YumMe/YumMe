@@ -377,3 +377,12 @@ body {
   position: absolute;
   margin-bottom: 50px;
 }
+
+/* leanne's restaurant view rules */
+.left-pics {
+  float: left;
+}
+
+.right-information {
+  float: right;
+}

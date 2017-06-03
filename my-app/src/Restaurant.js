@@ -355,39 +355,46 @@ class App extends Component {
                       <div>No restaurant URL</div>
                     }
 
-                  {/* Hours of operation */}
-                  <div className="hours">
-                    <h4>Hours of operation:</h4>
-                    {this.state.fs_hours !== undefined &&
-                      <div>Hours: {this.state.fs_hours}</div>
+                    {/*Phone*/}
+                    {this.state.fs_phone !== undefined &&
+                    <div className="phone">
+                      {this.state.fs_phone}
+                    </div>
                     }
-                    {this.state.fs_hours === undefined &&
-                      <div>No hours data</div>
-                    }
-                    {this.state.fs_days !== undefined &&
-                      <div>Days: {this.state.fs_days}</div>
-                    }
-                    {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
-                      <div>No days data</div>
-                    }
-                    {this.state.fs_isOpen === true &&
-                      <div>Open now!</div>
-                    }
-                    {this.state.fs_isOpen === false &&
-                      <div>Closed now</div>
-                    }
-                    {this.state.fs_isOpen === undefined &&
-                      <div>No open/closed data</div>
-                    }
-                </div>
 
-                {/*Restaurant address*/}
-                    {this.state.fs_address !== undefined &&
-                      <div className="address">
-                        <h4>Restaurant address:</h4>
-                        {this.state.fs_address}
-                      </div>
-                    }
+                    {/* Hours of operation */}
+                    <div className="hours">
+                      <h4>Hours of operation:</h4>
+                      {this.state.fs_hours !== undefined &&
+                        <div>Hours: {this.state.fs_hours}</div>
+                      }
+                      {this.state.fs_hours === undefined &&
+                        <div>No hours data</div>
+                      }
+                      {this.state.fs_days !== undefined &&
+                        <div>Days: {this.state.fs_days}</div>
+                      }
+                      {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
+                        <div>No days data</div>
+                      }
+                      {this.state.fs_isOpen === true &&
+                        <div>Open now!</div>
+                      }
+                      {this.state.fs_isOpen === false &&
+                        <div>Closed now</div>
+                      }
+                      {this.state.fs_isOpen === undefined &&
+                        <div>No open/closed data</div>
+                      }
+                  </div>
+
+                      {/*Restaurant address*/}
+                      {this.state.fs_address !== undefined &&
+                        <div className="address">
+                          <h4>Restaurant address:</h4>
+                          {this.state.fs_address}
+                        </div>
+                      }
 
                     {/* Map */}
                     {this.state.fs_lat !== null && this.state.fs_long !== null &&

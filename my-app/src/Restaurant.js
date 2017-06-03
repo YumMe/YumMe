@@ -28,7 +28,7 @@ class App extends Component {
       // Query restaurant from foursquare
       var currId = query.venue_id;
 
-      this.setState({venue_id: currId});
+      this.setState({ venue_id: currId });
 
       // Fetch restaurant
       fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
@@ -44,12 +44,12 @@ class App extends Component {
           response.json().then((data) => {
             //console.log(JSON.stringify(data));
             if (data["response"] !== undefined) {//["photos"]["items"][0] !== undefined) {
-              
+
               // Get information from the returned
               if (data["response"]["venue"] !== undefined) {
 
                 var venue = data['response']['venue'];
-                
+
                 var fs_id = "not available";
                 var fs_name = "not available";
                 var fs_rating = "not available";
@@ -73,7 +73,7 @@ class App extends Component {
                 if (venue['id'] !== undefined) {
                   fs_id = venue['id'];
                 }
-                
+
                 if (venue['name'] !== undefined) {
                   fs_name = venue['name'];
                 }
@@ -128,11 +128,11 @@ class App extends Component {
 
                     console.log(venue['hours']['timeframes']);
 
-                    tfKeys.forEach(function(key) {
-                      
+                    tfKeys.forEach(function (key) {
+
                       var opens = Object.keys(venue['hours']['timeframes'][key]['open']);
                       var this_fsHours = [];
-                      opens.forEach(function(key2) {
+                      opens.forEach(function (key2) {
                         this_fsHours.push(venue['hours']['timeframes'][key]['open'][key2]['renderedTime']);
                       });
                       fs_hours.push(this_fsHours);//['renderedTime']);
@@ -152,7 +152,7 @@ class App extends Component {
                   //   if (venue['hours']['timeframes'][0]['days'] !== undefined) {
                   //     var days = venue['hours']['timeframes'];//[0]['days'];//;['renderedTime'][0];
 
-                      
+
 
                   //     console.log(venue['hours']['timeframes']);
                   //   }
@@ -176,7 +176,7 @@ class App extends Component {
 
                 var maxPhotoCount = 3;
                 var photos = [];
-                
+
                 if (venue['photos']['groups'][0]['items'] !== undefined) {
                   photos = venue['photos']['groups'][0]['items'];
                 }
@@ -186,11 +186,11 @@ class App extends Component {
                 for (var i = 0; i < photos.length; i++) {
                   if (i === 0) {
                     //fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
-                    fs_mainImage = photos[i]["prefix"] + "300x300" + photos[i]["suffix"];
+                    fs_mainImage = photos[i]["prefix"] + "450x450" + photos[i]["suffix"];
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {
                     fs_additionalPhotos.push(
-                      photos[i]["prefix"] + "200x200" + photos[i]["suffix"]
+                      photos[i]["prefix"] + "143x143" + photos[i]["suffix"]
                     );
                   } else {
                     break;
@@ -283,122 +283,133 @@ class App extends Component {
           <div className="search-navigation">
             <SearchBar />
           </div>
-          <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light back-button" onClick={function() { history.back() }}>{'<'} Back</button>
         </div>
         {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         */}
+
         <div className="restaurant-view">
-        {this.state.loaded === true &&
-          <div>
-            {/*Restaurant Name*/}
-            <h1>{this.state.fs_name}</h1>
-            
-            <div className="left-pics">
-              {/*Pictures*/}
-              <div className="restaurant-pic">
-                <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
+          {this.state.loaded === true &&
+            <div>
+
+
+              <div className="left-pics">
+                    {/*Pictures*/}
+                    <div className="restaurant-pic">
+                      <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
+                    </div>
+
+                    <div className="restaurant-pics">
+                      {/* Replace with grid with modals */}
+                      {this.state.fs_additionalPhotos.length > 0 &&
+                        <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
+                      }
+                      {this.state.fs_additionalPhotos.length > 1 &&
+                        <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter"></img>
+                      }
+                      {this.state.fs_additionalPhotos.length > 2 &&
+                        <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter"></img>
+                      }
+                    </div>
               </div>
-              <div className="restaurant-pics">
-                {/* Replace with grid with modals */}
-                {this.state.fs_additionalPhotos.length > 0 &&
-                  <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
-                }
-                {this.state.fs_additionalPhotos.length > 1 &&
-                  <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter"></img>
-                }
-                {this.state.fs_additionalPhotos.length > 2 &&
-                  <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter"></img>
-                }
+
+              <div className="right-information">
+                    {/*Restaurant Name*/}
+                    <h1 className="restaurant-title">{this.state.fs_name}</h1>
+
+                    {/*Rating*/}
+                    {this.state.fs_rating !== undefined &&
+                      <div>
+                        <div className="rating" style={{ color: customColor }}>
+                          {this.state.fs_rating} / 10
+                        </div>
+                        <div className="review">
+                          {this.state.fs_ratingSignals} reviews
+                        </div>
+                    </div>
+                    }
+                    {this.state.fs_rating === undefined &&
+                      <div>
+                        No ratings
+                      </div>
+                    }
+
+                    
+                    {/*Foursquare website link*/}
+                    {this.state.fs_foursquarePageUrl !== undefined &&
+                       <a href={this.state.fs_foursquarePageUrl} target="_blank" >Foursquare Page</a>
+                    }
+                    {this.state.fs_foursquarePageUrl === undefined &&
+                      <div>
+                        No Foursquare page
+                      </div>
+                    }
+
+                    {/*Restaurant website*/}
+                    {this.state.fs_url !== undefined &&
+                      <div className="rsite">
+                        <a href={this.state.fs_url} target="_blank">Website</a>
+                      </div>
+                    }
+                    {this.state.fs_url === undefined &&
+                      <div>No restaurant URL</div>
+                    }
+
+                  {/* Hours of operation */}
+                  <div className="hours">
+                    <h4>Hours of operation:</h4>
+                    {this.state.fs_hours !== undefined &&
+                      <div>Hours: {this.state.fs_hours}</div>
+                    }
+                    {this.state.fs_hours === undefined &&
+                      <div>No hours data</div>
+                    }
+                    {this.state.fs_days !== undefined &&
+                      <div>Days: {this.state.fs_days}</div>
+                    }
+                    {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
+                      <div>No days data</div>
+                    }
+                    {this.state.fs_isOpen === true &&
+                      <div>Open now!</div>
+                    }
+                    {this.state.fs_isOpen === false &&
+                      <div>Closed now</div>
+                    }
+                    {this.state.fs_isOpen === undefined &&
+                      <div>No open/closed data</div>
+                    }
+                </div>
+
+                {/*Restaurant address*/}
+                    {this.state.fs_address !== undefined &&
+                      <div className="address">
+                        <h4>Restaurant address:</h4>
+                        {this.state.fs_address}
+                      </div>
+                    }
+
+                    {/* Map */}
+                    {this.state.fs_lat !== null && this.state.fs_long !== null &&
+                      <div className="map">
+                            <iframe src={'//www.google.com/maps/embed/v1/place?q=' + 
+                            this.state.fs_lat + 
+                            ',' +
+                            this.state.fs_long + 
+                            '&zoom=17&key=AIzaSyCPYUmzO3MqBwvcPjGdacMywrz06Vz8VK8'}>
+                            </iframe>
+                        {/*<a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>*/}
+                      </div>
+                    }
+                    {this.state.fs_lat === null || this.state.fs_long === null &&
+                      <div>
+                        No location data
+                      </div>
+                    }
+
               </div>
             </div>
-            <div className="right-information">
-              {/*Rating*/}
-              {this.state.fs_rating !== undefined &&
-                <div>
-                  <div className="rating" style={{ color: customColor }}>
-                    {this.state.fs_rating} / 10
-                </div>
-                  <div className="review">
-                    {this.state.fs_ratingSignals} reviews
-                </div>
-                </div>
-              }
-              {this.state.fs_rating === undefined &&
-                <div>
-                  No ratings
-              </div>
-              }
-
-              {/*Restaurant address*/}
-              {this.state.fs_address !== undefined &&
-                <div className="address">
-                  {this.state.fs_address}
-                </div>
-              }
-
-              {/* Map */}
-              {this.state.fs_lat !== null && this.state.fs_long !== null &&
-                <div className="map">
-                  <a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>
-                </div>
-              }
-              {this.state.fs_lat === null || this.state.fs_long === null &&
-                <div>
-                  No location data
-              </div>
-              }
-
-              {/*Foursquare website link*/}
-              {this.state.fs_foursquarePageUrl !== undefined &&
-                <div className="fsite">
-                  <a href={this.state.fs_foursquarePageUrl} target="_blank" >Foursquare Page</a>
-                </div>
-              }
-              {this.state.fs_foursquarePageUrl === undefined &&
-                <div>
-                  No Foursquare page
-              </div>
-              }
-
-              {/*Restaurant website*/}
-              {this.state.fs_url !== undefined &&
-                <div className="rsite">
-                  <a href={this.state.fs_url} target="_blank">Website</a>
-                </div>
-              }
-              {this.state.fs_url === undefined &&
-                <div>No restaurant URL</div>
-              }
-
-              {/* Hours of operation */}
-              <div className="hours">
-                <h4>Hours of operation:</h4>
-                {this.state.fs_hours !== undefined &&
-                  <div>Hours: {this.state.fs_hours}</div>
-                }
-                {this.state.fs_hours === undefined &&
-                  <div>No hours data</div>
-                }
-                {this.state.fs_days !== undefined &&
-                  <div>Days: {this.state.fs_days}</div>
-                }
-                {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
-                  <div>No days data</div>
-                }
-                {this.state.fs_isOpen === true &&
-                  <div>Open now!</div>
-                }
-                {this.state.fs_isOpen === false &&
-                  <div>Closed now</div>
-                }
-                {this.state.fs_isOpen === undefined &&
-                  <div>No open/closed data</div>
-                }
-              </div>
-            </div>
-          </div>
-        }
+          }
         </div>
       </div>
     );

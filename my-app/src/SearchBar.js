@@ -175,7 +175,7 @@ export default class SearchBar extends React.Component {
 
         setTimeout(function() {
             that.goToSearchResultsPage();
-        }, 2400);
+        }, 1800);
     }
 
 
@@ -262,7 +262,7 @@ export default class SearchBar extends React.Component {
 
                 usingCurrentLocation = true;
 
-                delay = 1200;
+                delay = 2000;
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =

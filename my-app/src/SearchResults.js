@@ -99,6 +99,7 @@ class SearchResults extends Component {
           var addressArray = [];
           var phoneArray = [];
           var ratingArray = [];
+          var ratingColorArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -140,6 +141,8 @@ class SearchResults extends Component {
                 response.json().then((data) => {
                   console.log(data);
                   var currRating = data["response"]["venue"]["rating"];
+                  var currRatingColor = data["response"]["venue"]["ratingColor"];
+                  console.log(currRatingColor);
                   //console.log(JSON.stringify(data));
                   if (data["response"]["venue"]["photos"] !== undefined && data["response"]["venue"]["photos"]["groups"][0]["items"][0] !== undefined) {
                     var venueImage = data["response"]["venue"]["photos"]["groups"][0]["items"][0]["prefix"] + "300x300" + data["response"]["venue"]["photos"]["groups"][0]["items"][0]["suffix"];
@@ -150,6 +153,8 @@ class SearchResults extends Component {
                     nameArray.push(currName);
                     webArray.push(currWebsite);
                     ratingArray.push(currRating);
+                    ratingColorArray.push(currRatingColor);
+                    console.log(ratingColorArray);
                   }
                   phoneArray.push(currNumber);
                   console.log("entering menu if statement");
@@ -160,7 +165,7 @@ class SearchResults extends Component {
 
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
-                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray, venueRating: ratingArray });
+                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray, venueRating: ratingArray, venueRatingColor:ratingColorArray});
                   // venueWebsite: webArray, 
 
                 });
@@ -223,7 +228,8 @@ class SearchResults extends Component {
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}
-            venueRating={this.state.venueRating} />
+            venueRating={this.state.venueRating} 
+            venueRatingColor={this.state.venueRatingColor}/>
         }
       </div >
     );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import { Dialog, DialogContent } from 'react-mdl';
-import { Modal } from 'react-modal';
 
 class SearchSquare extends Component {
 
@@ -10,6 +9,7 @@ class SearchSquare extends Component {
     this.state = {};
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
+
   }
 
   handleOpenDialog() {
@@ -24,7 +24,20 @@ class SearchSquare extends Component {
     });
   }
 
+
+
   render() {
+    console.log(this.props);
+    console.log(this.props.venueRatingColor)
+    var customColor = '';
+
+
+      customColor = "#" + this.props.venueRatingColor;
+    
+    console.log('CC: ' + customColor);
+
+
+
     return (
       <div className="search-square">
         <img className="search-image" src={this.props.image} alt={this.props.venueId} />
@@ -47,7 +60,7 @@ class SearchSquare extends Component {
             <img className="photo" src={this.props.image} alt={this.props.venueID} />
             <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
-              <div className="subheading">Rating: <span className="rating">{this.props.venueRating}</span></div>
+              <div><span className="subheading">Rating: </span><span className="rating" style={{color: customColor}}>{this.props.venueRating}/10</span></div>
               <span className="links">
                 <a href={this.props.venueWebsite} className="button">Website</a>
                 <a className="button" href={this.props.venueMenus}>Menu</a>

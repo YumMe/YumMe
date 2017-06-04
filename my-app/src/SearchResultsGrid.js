@@ -33,9 +33,13 @@ class SearchGrid extends Component {
         venueMenus={this.props.venueMenus[i]} 
         venueWebsite={this.props.venueWebsite[i]} 
         venueRating={this.props.venueRating[i]}
+        venueRatingColor={this.props.venueRatingColor[i]}
         key={i} />);
         //array.push(<SearchSquare image={this.props.venueImages[i]} key={i} />);
       }
+      
+      console.log(this.state.venueRating);
+      console.log(this.state.venueRatingColor);
     }
 
     return (
@@ -43,7 +47,6 @@ class SearchGrid extends Component {
         <div className="search-grid">
           {array}
         </div>
-        
       </div>
     );
   }

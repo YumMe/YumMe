@@ -94,7 +94,7 @@ export default class SearchBar extends React.Component {
         } else {
             // featureCode=PPL
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('https://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {

@@ -78,12 +78,12 @@ class SearchSquare extends Component {
           {/* onClick={this.handleClose}*/}
           <div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>
           <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
-          <DialogContent className="light">
+          <DialogContent className="light center">
 
             <img className="photo clickable" src={this.props.image} alt={this.props.venueID} onClick={this.goToRestaurantPage} />
             <div className="info">
               <h1 className="light modal-heading black" onClick={this.goToRestaurantPage}>{this.props.venueName}</h1>
-              <div>
+              <div classname="foursquarerating">
                 <div className="fourSquare-logo" onClick={this.goToFoursquarePage}>
                 </div>
                 <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>

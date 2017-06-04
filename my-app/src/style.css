@@ -265,7 +265,8 @@ body {
 
 /*modal*/
 .modal{
-  width: 50vw;
+  width: 80vw;
+  height: auto;
 }
 
 .photo{
@@ -274,33 +275,49 @@ body {
 
 .info{
   display: inline-block;
+  align-content: center;
+  text-align: center;
 }
 
 .modal-heading{
-  font-size: 2rem;
+  font-size: 2.7rem;
+  padding-top: 0px;
 }
 
-.subheading{
-  font-weight: bold;
-}
+.butt{
+   /*display: block;*/
+   text-align: center;
 
-a.button{
-  border: 1px solid black;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
+
+
 }
 
 .links{
   padding-bottom: 10px;
+  margin: 0 auto;
+
+}
+
+.contact{
+  padding: 10px;
+}
+
+.contact, .light {
+  padding: 5px;
+  
 }
 
 button.exit{
   margin-left: 98%;
   border: 0px transparent;
   background-color: transparent;
+}
+
+.photo, .info{
+  display: inline;
+}
+
+.photo{
+  float: left;
+  margin: 20px;
 }

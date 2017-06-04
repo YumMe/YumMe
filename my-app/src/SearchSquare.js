@@ -32,8 +32,8 @@ class SearchSquare extends Component {
     var customColor = '';
 
 
-      customColor = "#" + this.props.venueRatingColor;
-    
+    customColor = "#" + this.props.venueRatingColor;
+
     console.log('CC: ' + customColor);
 
 
@@ -60,13 +60,17 @@ class SearchSquare extends Component {
             <img className="photo" src={this.props.image} alt={this.props.venueID} />
             <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
-              <div><span className="subheading">Rating: </span><span className="rating" style={{color: customColor}}>{this.props.venueRating}/10</span></div>
+              <div>
+                <img src="../img/foursquare-logo.png" alt="foursquare-logo" />
+                <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>
               <span className="links">
-                <a href={this.props.venueWebsite} className="button">Website</a>
-                <a className="button" href={this.props.venueMenus}>Menu</a>
+                <a href={this.props.venueWebsite} className="mdl-button mdl-js-button mdl-button--raised butt">Website</a>
+                <a className="mdl-button mdl-js-button mdl-button--raised butt" href={this.props.venueMenus}>Menu</a>
               </span>
-              <p><span className="subheading">Address: </span>{this.props.venueAddress}</p>
-              <p><span className="subheading">Phone: </span>{this.props.venuePhone}</p>
+              <div className="contact">
+                <div className="light">{this.props.venueAddress}</div>
+                <div className="light">{this.props.venuePhone}</div>
+              </div>
             </div>
           </DialogContent>
         </Dialog>

@@ -149,6 +149,11 @@ body {
 .go-button, .back-button {
   border-radius: 3px;
 }
+.black-text {
+  color: black;
+  display: block;
+  opacity: 1;
+}
 
 /* end of michael's css rules */
 

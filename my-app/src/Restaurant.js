@@ -9,7 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false // not done making API call yet
+      loaded: false, // not done making API call yet
+      missingQuery: false
     }
   }
 
@@ -37,6 +38,7 @@ class App extends Component {
           if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
               response.status);
+            this.setState({missingQuery: true});
             return;
           }
 
@@ -259,6 +261,8 @@ class App extends Component {
 
     } else {
       console.log('missing param: venue_id');
+      this.setState({ missingQuery: true });
+      console.log(this.state.missingQuery);
     }
   }
 
@@ -283,12 +287,23 @@ class App extends Component {
           <div className="search-navigation">
             <SearchBar />
           </div>
+          {this.state.missingQuery === true &&
+          <div className="black-text">
+            Restaurant with specified ID not found
+          </div>
+        }
         </div>
         {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         */}
+        
+
+        
 
         <div className="restaurant-view">
+          
+          
+
           {this.state.loaded === true &&
             <div>
 

@@ -88,8 +88,8 @@ class SearchResults extends Component {
 
     this.setState({ city: param });
 
-    console.log(foursquareApiCall);
-    console.log(param);
+    //console.log(foursquareApiCall);
+    //console.log(param);
     
   
 
@@ -101,7 +101,7 @@ class SearchResults extends Component {
             return;
           }
           response.json().then((data) => {
-            console.log(data);
+            //console.log(data);
             if (data.geonames !== undefined) {
               for (var i = 0; i < data.geonames.length; i++) {
                 var name = data.geonames[0].name;
@@ -131,14 +131,14 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
-            this.setState({'noResults': true});
+            this.setState({noResults: true});
             console.log(this.state.noResults);
           return;
         }
         response.json().then((data) => {
           // Grab images
           var venues = data["response"]["venues"];
-          //console.log(JSON.stringify(venues));
+          //console.log(venues);
           var imagesArray = [];
           var idArray = [];
           var nameArray = [];
@@ -148,6 +148,7 @@ class SearchResults extends Component {
           var phoneArray = [];
           var ratingArray = [];
           var ratingColorArray = [];
+          var foursquarePageUrlArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -155,12 +156,15 @@ class SearchResults extends Component {
             switch (searchType) {
               case 'city':
                 console.log("No results found for city: " + param);
+                this.setState({noResults: true});
                 break;
               case 'coords':
                 console.log("No results found for coords: " + param);
+                this.setState({noResults: true});
                 break;
               default:
                 console.log("invalid search parameters");
+                this.setState({noResults: true});
                 break;
             }
           }
@@ -174,6 +178,7 @@ class SearchResults extends Component {
 
             let currWebsite = venues[i]["url"];
             let currAdress = venues[i]["location"]["formattedAddress"];
+
             fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
               (response) => {
@@ -185,12 +190,12 @@ class SearchResults extends Component {
                   return;
                 }
 
-                console.log(data["response"]["venue"])
+                //console.log(data["response"]["venue"])
                 response.json().then((data) => {
-                  console.log(data);
+                  //console.log(data);
                   var currRating = data["response"]["venue"]["rating"];
                   var currRatingColor = data["response"]["venue"]["ratingColor"];
-                  console.log(currRatingColor);
+                  //console.log(currRatingColor);
                   //console.log(JSON.stringify(data));
                   if (data["response"]["venue"]["photos"] !== undefined && data["response"]["venue"]["photos"]["groups"][0]["items"][0] !== undefined) {
                     var venueImage = data["response"]["venue"]["photos"]["groups"][0]["items"][0]["prefix"] + "300x300" + data["response"]["venue"]["photos"]["groups"][0]["items"][0]["suffix"];
@@ -202,18 +207,36 @@ class SearchResults extends Component {
                     webArray.push(currWebsite);
                     ratingArray.push(currRating);
                     ratingColorArray.push(currRatingColor);
-                    console.log(ratingColorArray);
+                    //console.log(ratingColorArray);
                   }
                   phoneArray.push(currNumber);
-                  console.log("entering menu if statement");
+                  //console.log("entering menu if statement");
 
                   menuArray.push(currMenu);
 
                   addressArray.push(currAdress);
 
+                  var foursquarePageUrl = currMenu;
+                  if (currMenu !== undefined) {
+                    foursquarePageUrl = currMenu.slice(0, -5);
+                  }
+
+                  foursquarePageUrlArray.push(foursquarePageUrl);
+
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
-                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray, venueRating: ratingArray, venueRatingColor:ratingColorArray});
+                  this.setState(
+                    { venueImages: imagesArray,
+                      venueIds: idArray,
+                      venueNames: nameArray,
+                      venueAddress: addressArray,
+                      venueMenus: menuArray,
+                      venuePhone: phoneArray,
+                      venueWebsite: webArray,
+                      venueRating: ratingArray,
+                      venueRatingColor:ratingColorArray,
+                      venueFoursquarePage: foursquarePageUrlArray
+                    });
                   // venueWebsite: webArray, 
 
                 });
@@ -251,8 +274,8 @@ class SearchResults extends Component {
     var validLat = isFloat.test(lat);
     var validLong = isFloat.test(long);
 
-    console.log(lat);
-    console.log(long);
+    //console.log(lat);
+    //console.log(long);
 
     // If both lat and long are only numbers
     if (validLat && validLong) {
@@ -274,17 +297,18 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
-            {this.state.noResults === undefined || this.state.noResults === false}
-            <p className="current-results light">Now viewing results for: {this.state.city}</p>
-            {this.state.noResults !== undefined && this.state.noResults === true &&
-              <div>No results for '{this.state.city}'</div>
-            }
           </div>
+          {this.state.noResults === undefined &&
+              <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
+            }
+            {this.state.noResults !== undefined && this.state.noResults === true &&
+              <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
+            }
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}
             venueRating={this.state.venueRating} 
-            venueRatingColor={this.state.venueRatingColor}/>
+            venueRatingColor={this.state.venueRatingColor} venueFoursquarePage={this.state.venueFoursquarePage}/>
         }
         <ScrollToTop showUnder={160}>
           <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">

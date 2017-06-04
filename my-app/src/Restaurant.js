@@ -53,23 +53,23 @@ class App extends Component {
 
                 var venue = data['response']['venue'];
 
-                var fs_id = "not available";
-                var fs_name = "not available";
-                var fs_rating = "not available";
-                var fs_ratingColor = "not available";
-                var fs_ratingSignals = "not available";
-                var fs_address = "not available";
-                var fs_crossStreet = "not available";
-                var fs_lat = "not available";
-                var fs_long = "not available";
-                var fs_phone = "not available";
-                var fs_hours = "not available";
-                var fs_days = "not available";
-                var fs_isOpen = "not available";
-                var fs_url = "not available";
-                var fs_foursquarePageUrl = "not available";
-                var fs_mainImage = "not available";
-                var fs_additionalPhotos = "not available";
+                var fs_id;
+                var fs_name;
+                var fs_rating;
+                var fs_ratingColor;
+                var fs_ratingSignals;
+                var fs_address;
+                var fs_crossStreet;
+                var fs_lat;
+                var fs_long;
+                var fs_phone;
+                var fs_hours;
+                var fs_days;
+                var fs_isOpen;
+                var fs_url;
+                var fs_foursquarePageUrl;
+                var fs_mainImage;
+                var fs_additionalPhotos;
 
                 //_____________________
                 // Restaurant information

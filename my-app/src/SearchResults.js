@@ -96,8 +96,9 @@ class SearchResults extends Component {
           var nameArray = [];
           var webArray = [];
           var menuArray = [];
-          var addressArray= [];
+          var addressArray = [];
           var phoneArray = [];
+          var ratingArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -121,11 +122,11 @@ class SearchResults extends Component {
             let currName = venues[i]["name"];
             let currMenu = venues[i]["menu"]["url"];
             let currNumber = venues[i]["contact"]["formattedPhone"];
-            console.log("venues[i][\"menu\":");
-            console.log(venues[i]["menu"]["url"]);
+
+            let currRating = venues[i]["rating"];
             let currWebsite = venues[i]["url"];
             let currAdress = venues[i]["location"]["formattedAddress"];
-            fetch('https://api.foursquare.com/v2/venues/' + currId + '/photos?limit=1&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
+            fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
               (response) => {
                 if (response.status !== 200) {
@@ -134,36 +135,62 @@ class SearchResults extends Component {
                   return;
                 }
                 response.json().then((data) => {
+                  console.log(data);
                   //console.log(JSON.stringify(data));
-                  if (data["response"]["photos"] !== undefined && data["response"]["photos"]["items"][0] !== undefined) {
-                    var venueImage = data["response"]["photos"]["items"][0]["prefix"] + "300x300" + data["response"]["photos"]["items"][0]["suffix"];
+                  if (data["response"]["venue"]["photos"] !== undefined && data["response"]["venue"]["photos"]["groups"][0]["items"][0] !== undefined) {
+                    var venueImage = data["response"]["venue"]["photos"]["groups"][0]["items"][0]["prefix"] + "300x300" + data["response"]["venue"]["photos"]["groups"][0]["items"][0]["suffix"];
                     imagesArray.push(venueImage);
 
                     //console.log(currId);
                     idArray.push(currId);
                     nameArray.push(currName);
                     webArray.push(currWebsite);
-                    
+                    ratingArray.push(currRating);
                   }
                   phoneArray.push(currNumber);
                   console.log("entering menu if statement");
-                  if (data["response"]["venues"] !== undefined && data["response"]["venues"][i] !== undefined && data["response"]["venues"][i]["menu"] !== undefined) {
-                    console.log("true");
-                    menuArray.push(currMenu);
-                  } else {
-                    console.log("false");
-                  }
-                  addressArray.push(currAdress);
 
+                  menuArray.push(currMenu);
+
+                  addressArray.push(currAdress);
 
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
-                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray});
+                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray, venueRating: ratingArray });
                   // venueWebsite: webArray, 
 
                 });
               }
               )
+
+              // // Sarah fucking around with a second API call
+              // // Fetch restaurant
+              // fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
+              //   .then(
+              //   (response) => {
+              //     if (response.status !== 200) {
+              //       console.log('Looks like there was a problem. Status Code: ' +
+              //         response.status);
+              //       return;
+              //     }
+              //     response.json().then((data => {
+              //       if (data["reponse"]["venue"] != undefined) {
+              //         var venue = data['response']['venue'];
+
+              //         let currRating = venue['rating'];
+              //         let currRatingColor = venue['ratingColor'];
+              //         let currRatingSignal = venue['ratingSignas'];
+              //       }
+              //     })
+
+
+
+
+              // }
+
+              // }
+              // )
+
               .catch(function (err) {
                 console.log('Fetch Error :-S', err);
               })
@@ -209,7 +236,7 @@ class SearchResults extends Component {
 
   render() {
     return (
-      <div>
+      <div >
         <div className="navigation">
           <div className="logo-navigation">
             <Logo />
@@ -219,9 +246,10 @@ class SearchResults extends Component {
           </div>
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
-          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}/>
+          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}
+            venueRating={this.state.venueRating} />
         }
-      </div>
+      </div >
     );
   }
 }

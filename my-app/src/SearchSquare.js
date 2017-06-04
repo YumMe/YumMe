@@ -5,24 +5,6 @@ import { Modal } from 'react-modal';
 
 class SearchSquare extends Component {
 
-  // constructor(props) {
-  // super(props);
-  //   this.state = {};
-  //   this.handleOpenDialog = this.handleOpenDialog.bind(this);
-  //   this.handleCloseDialog = this.handleCloseDialog.bind(this);
-  // }
-
-  // handleOpenDialog() {
-  //   this.setState({
-  //     openDialog: true
-  //   });
-  // }
-
-  // handleCloseDialog() {
-  //   this.setState({
-  //     openDialog: false
-  //   });
-  // }
   constructor(props) {
     super(props);
     this.state = {};
@@ -41,27 +23,6 @@ class SearchSquare extends Component {
       openDialog: false
     });
   }
-
-  //idk
-  //   this.state = {
-  //     isShowingModal: false,
-  //   }
-  // }
-  // handleClick = () => this.setState({ isShowingModal: true })
-  // handleClose = () => this.setState({ isShowingModal: false })
-
-  /*return <a onClick={this.handleClick}>
-    <span>Button Text</span>
-    {
-      this.state.isShowingModal &&
-      <ModalComponentHere onClose={this.handleClose}/>
-    }
-  </a>;
-}
-}*/
-
-
-
 
   render() {
     return (

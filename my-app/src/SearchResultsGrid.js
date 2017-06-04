@@ -32,6 +32,7 @@ class SearchGrid extends Component {
         venuePhone={this.props.venuePhone[i]} 
         venueMenus={this.props.venueMenus[i]} 
         venueWebsite={this.props.venueWebsite[i]} 
+        venueRating={this.props.venueRating[i]}
         key={i} />);
         //array.push(<SearchSquare image={this.props.venueImages[i]} key={i} />);
       }

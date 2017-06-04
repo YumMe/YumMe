@@ -300,7 +300,7 @@ a.button{
 }
 
 button.exit{
-  padding-left: 98%;
+  margin-left: 98%;
   border: 0px transparent;
   background-color: transparent;
 }

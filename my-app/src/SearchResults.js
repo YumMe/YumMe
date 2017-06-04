@@ -138,7 +138,7 @@ class SearchResults extends Component {
         response.json().then((data) => {
           // Grab images
           var venues = data["response"]["venues"];
-          //console.log(JSON.stringify(venues));
+          console.log(venues);
           var imagesArray = [];
           var idArray = [];
           var nameArray = [];
@@ -148,6 +148,7 @@ class SearchResults extends Component {
           var phoneArray = [];
           var ratingArray = [];
           var ratingColorArray = [];
+          var foursquarePageUrlArray = [];
 
           // If no results, then put a message up or something idk
           console.log(imagesArray.length);
@@ -174,6 +175,7 @@ class SearchResults extends Component {
 
             let currWebsite = venues[i]["url"];
             let currAdress = venues[i]["location"]["formattedAddress"];
+
             fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
               (response) => {
@@ -211,9 +213,27 @@ class SearchResults extends Component {
 
                   addressArray.push(currAdress);
 
+                  var foursquarePageUrl = currMenu;
+                  if (currMenu !== undefined) {
+                    foursquarePageUrl = currMenu.slice(0, -5);
+                  }
+
+                  foursquarePageUrlArray.push(foursquarePageUrl);
+
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
-                  this.setState({ venueImages: imagesArray, venueIds: idArray, venueNames: nameArray, venueAddress: addressArray, venueMenus: menuArray, venuePhone: phoneArray, venueWebsite: webArray, venueRating: ratingArray, venueRatingColor:ratingColorArray});
+                  this.setState(
+                    { venueImages: imagesArray,
+                      venueIds: idArray,
+                      venueNames: nameArray,
+                      venueAddress: addressArray,
+                      venueMenus: menuArray,
+                      venuePhone: phoneArray,
+                      venueWebsite: webArray,
+                      venueRating: ratingArray,
+                      venueRatingColor:ratingColorArray,
+                      venueFoursquarePage: foursquarePageUrlArray
+                    });
                   // venueWebsite: webArray, 
 
                 });
@@ -284,7 +304,7 @@ class SearchResults extends Component {
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}
             venueRating={this.state.venueRating} 
-            venueRatingColor={this.state.venueRatingColor}/>
+            venueRatingColor={this.state.venueRatingColor} venueFoursquarePage={this.state.venueFoursquarePage}/>
         }
         <ScrollToTop showUnder={160}>
           <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">

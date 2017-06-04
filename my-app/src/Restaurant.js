@@ -296,7 +296,7 @@ class App extends Component {
         {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         */}
-        
+
         <div className="restaurant-view">
           
           

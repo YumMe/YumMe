@@ -100,6 +100,12 @@ body {
   cursor: pointer;
   cursor: hand;
 }
+.clickable {
+  color: blue;
+  text-align: center;
+  margin: auto;
+}
+
 
 .location-pointer:hover {
   color: green;
@@ -294,7 +300,7 @@ margin: 20px;
 }
 
 button.exit{
-  margin-left: 98%;
+  margin-left: 97%;
   border: 0px transparent;
   background-color: transparent;
 }
@@ -335,6 +341,9 @@ button.exit{
     width: 100%;
     margin-left: 10vw;
     display: block;
+  }
+  .disappears-in-mobile {
+    display: none;
   }
   .search-grid {
     top: 150px;
@@ -414,7 +423,6 @@ button.exit{
 .address {
   margin-top: 30px;
 }
-*/
 .map {
   margin-top: 36px;
   width: 100%;
@@ -431,11 +439,11 @@ button.exit{
 .rsite {
   margin-top: 30px;
 }
-*/
 .hours {
   /*position: absolute;
-  margin-bottom: 50px;*/
+  margin-bottom: 50px;
 }
+*/
 
 /* leanne's restaurant view rules */
 .left-pics {
@@ -461,4 +469,49 @@ button.exit{
 /*All things clickable*/
 .clickable{
   cursor: pointer;
+  font-weight: bold;
 }
+
+
+
+
+
+
+/* More michael's css rules */
+.exit {
+  font-size: 24pt;
+  margin-left: -20px;
+}
+.exit:hover, .clickable:hover {
+  color:crimson;
+}
+.mdl-dialog__content {
+  z-index: 2;
+}
+.zindexone {
+  z-index: 1;
+}
+.zindextwo {
+  z-index: 2;
+}
+.black {
+  color: black;
+  font-size: 24pt;
+}
+.black:hover {
+  cursor: pointer;
+  color: crimson;
+}
+.fourSquare-logo {
+  width: 44px;
+  height: 44px;
+  background-image: url("../img/foursquare-logo.png");
+  background-size: 44px 44px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+.fourSquare-logo:hover {
+  background-image: url("../img/foursquare-logo-blue.png");
+}
+/* end */

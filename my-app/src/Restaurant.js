@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import SearchResultsGrid from './SearchResultsGrid';
+import RestaurantImageModal from './RestaurantImageModal';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false // not done making API call yet
+      loaded: false, // not done making API call yet
+      missingQuery: false
     }
   }
 
@@ -28,7 +30,7 @@ class App extends Component {
       // Query restaurant from foursquare
       var currId = query.venue_id;
 
-      this.setState({venue_id: currId});
+      this.setState({ venue_id: currId });
 
       // Fetch restaurant
       fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
@@ -37,6 +39,7 @@ class App extends Component {
           if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
               response.status);
+            this.setState({ missingQuery: true });
             return;
           }
 
@@ -44,64 +47,154 @@ class App extends Component {
           response.json().then((data) => {
             //console.log(JSON.stringify(data));
             if (data["response"] !== undefined) {//["photos"]["items"][0] !== undefined) {
-              
+
               // Get information from the returned
               if (data["response"]["venue"] !== undefined) {
 
                 var venue = data['response']['venue'];
-                
+
+                var fs_id;
+                var fs_name;
+                var fs_rating;
+                var fs_ratingColor;
+                var fs_ratingSignals;
+                var fs_address;
+                var fs_crossStreet;
+                var fs_lat;
+                var fs_long;
+                var fs_phone;
+                var fs_hours;
+                var fs_days;
+                var fs_isOpen;
+                var fs_url;
+                var fs_foursquarePageUrl;
+                var fs_mainImage;
+                var fs_additionalPhotos;
 
                 //_____________________
                 // Restaurant information
-                var fs_id = venue['id'];
-                var fs_name = venue['name'];
+                if (venue['id'] !== undefined) {
+                  fs_id = venue['id'];
+                }
+
+                if (venue['name'] !== undefined) {
+                  fs_name = venue['name'];
+                }
 
                 //_____________________
                 //  foursquare number rating
-                var fs_rating = venue['rating'];
-                var fs_ratingColor = venue['ratingColor'];
-                var fs_ratingSignals = venue['ratingSignals'];
+                if (venue['rating'] !== undefined) {
+                  fs_rating = venue['rating'];
+                }
+
+                if (venue['ratingColor'] !== undefined) {
+                  fs_ratingColor = venue['ratingColor'];
+                }
+                if (venue['ratingSignals'] !== undefined) {
+                  fs_ratingSignals = venue['ratingSignals'];
+                }
 
                 //  restaurant address
-                var fs_address = venue['location']['address'];
-                var fs_crossStreet = venue['location']['crossStreet'];
+                if (venue['location'] !== undefined) {
+                  if (venue['location']['address'] !== undefined) {
+                    fs_address = venue['location']['address'] + ' ' + venue['location']['city'] + ', ' + venue['location']['state'];
+                  }
+                  if (venue['location']['crossStreet'] !== undefined) {
+                    fs_crossStreet = venue['location']['crossStreet'];
+                  }
+                }
 
                 //  map preview (could also use the address for the google maps thingy i guess)
-                var fs_lat = venue['location']['lat'];
-                var fs_long = venue['location']['lng'];
+                if (venue['location'] !== undefined) {
+                  if (venue['location']['lat'] !== undefined) {
+                    fs_lat = venue['location']['lat'];
+                  }
+                  if (venue['location']['lng'] !== undefined) {
+                    fs_long = venue['location']['lng'];
+                  }
+                }
 
                 //  restaurant phone number
-                var fs_phone = venue['contact'].formattedPhone;
+                if (venue['contact'] !== undefined) {
+                  if (venue['contact']['formattedPhone'] !== undefined) {
+                    fs_phone = venue['contact']['formattedPhone'];
+                  }
+                }
 
                 //  hours of operation
-                var fs_hours = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
-                var fs_days = venue['hours']['timeframes'][0]['days'];
-                var fs_isOpen = venue['hours']['isOpen'];
+                if (venue['hours'] !== undefined) {
+                  if (venue['hours']['timeframes'] !== undefined) {
+                    var tfKeys = Object.keys(venue['hours']['timeframes']);
+
+                    fs_hours = [];
+                    fs_days = [];
+
+                    console.log(venue['hours']['timeframes']);
+
+                    tfKeys.forEach(function (key) {
+
+                      var opens = Object.keys(venue['hours']['timeframes'][key]['open']);
+                      var this_fsHours = [];
+                      opens.forEach(function (key2) {
+                        this_fsHours.push(venue['hours']['timeframes'][key]['open'][key2]['renderedTime']);
+                      });
+                      fs_hours.push(this_fsHours);//['renderedTime']);
+                      fs_days.push(venue['hours']['timeframes'][key]['days']);
+                    });
+                  }
+                  //   if (venue['hours']['timeframes'][0]['open'] !== undefined) {
+
+
+                  //     var hrs = venue['hours']['timeframes'][0]['open'];//['renderedTime'];
+                  //     fs_hours = [];
+                  //     console.log(hrs);
+                  //     Object.keys(hrs).forEach(function(key) {
+                  //       fs_hours.push(hrs[key].renderedTime);  
+                  //     });
+                  //   }
+                  //   if (venue['hours']['timeframes'][0]['days'] !== undefined) {
+                  //     var days = venue['hours']['timeframes'];//[0]['days'];//;['renderedTime'][0];
+
+
+
+                  //     console.log(venue['hours']['timeframes']);
+                  //   }
+                  // }
+                  if (venue['hours']['isOpen'] !== undefined) {
+                    fs_isOpen = venue['hours']['isOpen'];
+                  }
+                }
 
                 //  website if available
-                var fs_url = venue['url'];
+                fs_url = venue['url'];
 
                 // foursquare page for the restaurant
-                var fs_foursquarePageUrl = venue['canonicalUrl'];
+                fs_foursquarePageUrl = venue['canonicalUrl'];
 
-                
                 // The image from before (search results page)
-                var fs_mainImage = '';
+                fs_mainImage = '';
 
                 //  2 additional photos
-                var fs_additionalPhotos = [];
+                fs_additionalPhotos = [];
 
                 var maxPhotoCount = 2;
-                var photos = venue['photos']['groups'][0]['items'];
+                var photos = [];
+
+                if (venue['photos']['groups'][0]['items'] !== undefined) {
+                  photos = venue['photos']['groups'][0]['items'];
+                }
 
                 console.log(venue['photos']['groups'][0]['items']);
 
                 for (var i = 0; i < photos.length; i++) {
                   if (i === 0) {
-                    fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
+                    //fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
+                    fs_mainImage = photos[i]["prefix"] + "900x900" + photos[i]["suffix"];
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {
-                    fs_additionalPhotos.push(photos[i]['prefix'] + photos[i]['suffix']);
+                    fs_additionalPhotos.push(
+                      photos[i]["prefix"] + "900x900" + photos[i]["suffix"]
+                    );
                   } else {
                     break;
                   }
@@ -136,8 +229,10 @@ class App extends Component {
                   fs_crossStreet: fs_crossStreet,
                   fs_lat: fs_lat,
                   fs_long: fs_long,
-                  fs_phone: fs_hours,
-                  fs_days: fs_isOpen,
+                  fs_phone: fs_phone,
+                  fs_hours: fs_hours,
+                  fs_days: fs_days,
+                  fs_isOpen: fs_isOpen,
                   fs_url: fs_url,
                   fs_foursquarePageUrl: fs_foursquarePageUrl,
                   fs_additionalPhotos: fs_additionalPhotos,
@@ -167,6 +262,8 @@ class App extends Component {
 
     } else {
       console.log('missing param: venue_id');
+      this.setState({ missingQuery: true });
+      console.log(this.state.missingQuery);
     }
   }
 
@@ -182,22 +279,195 @@ class App extends Component {
     }
     console.log('CC: ' + customColor);
 
+    var that = this;
+
     return (
       <div>
-        <Logo />
-        <SearchBar />
-        <div>Memes</div>
-        {this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
-          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
-        }
-
-        {this.state.loaded === true &&
-          <div>
-            <div>{this.state.fs_name}</div>
-            <div style={{color: customColor}}>Stars: {this.state.fs_rating}</div>
-            <div>{this.state.fs_url}</div>
+        <div className="navigation">
+          <div className="logo-navigation">
+            <Logo />
           </div>
-        }
+          <div className="search-navigation">
+            <SearchBar />
+          </div>
+          {this.state.missingQuery === true &&
+            <div className="black-text">
+              Restaurant with specified ID not found
+          </div>
+          }
+        </div>
+        {/*this.state.venueImages !== undefined && this.state.venueIds !== undefined &&
+          <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
+        */}
+
+        <div className="restaurant-view">
+
+
+
+          {this.state.loaded === true &&
+            <div>
+
+
+              <div className="left-pics">
+                {/*Pictures*/}
+                <div className="restaurant-pic">
+                  
+                  <RestaurantImageModal image={this.state.fs_mainImage} size={900} key={0} />
+                </div>
+                
+                {/*
+                  
+              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter size900"></img>  
+              <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter size450"></img>*/}
+                <div className="restaurant-pics">
+                  {/* Replace with grid with modals */}
+                  {this.state.fs_additionalPhotos.length > 0 &&
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[0]} size={450} key={1} />
+                  }
+                  {this.state.fs_additionalPhotos.length > 1 &&
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[1]} size={450} key={2} />
+                  }
+                  {this.state.fs_additionalPhotos.length > 2 &&
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[2]} size={450} key={3} />
+                  }
+                </div>
+              </div>
+
+              <div className="right-information">
+                {/*Restaurant Name*/}
+                <h1 className="restaurant-title">{this.state.fs_name}</h1>
+                <div>
+
+                {/*Rating, Foursquare, Website */}
+                {this.state.fs_rating !== undefined &&
+                  <div>
+                    <span className="rating" style={{ color: customColor }}>
+                      {this.state.fs_rating} / 10
+                    </span>
+                    <span className="review">
+                      {this.state.fs_ratingSignals} ratings
+                    </span>
+                  </div>
+                }
+                {this.state.fs_rating === undefined &&
+                  <div>
+                    No ratings
+                      </div>
+                }
+
+                { this.state.fs_foursquarePageUrl !== undefined &&
+                  <a href={this.state.fs_foursquarePageUrl} target="_blank" className="fourSquare-logo"></a>
+                }
+                {this.state.fs_foursquarePageUrl === undefined &&
+                  <div>
+                    No Foursquare page
+                      </div>
+                }
+
+                {this.state.fs_url !== undefined &&
+                  <div>
+                    <a href={this.state.fs_url} target="_blank" className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt-web">Website</a>
+                  </div>
+                }
+                {this.state.fs_url === undefined &&
+                  <div>No restaurant URL</div>
+                }
+                
+                
+
+
+                {/*Foursquare undefined*/}
+
+                
+
+                {/*Restaurant website undefined*/}
+                
+
+                {/*Phone, address*/}
+                {this.state.fs_phone !== undefined && this.state.fs_address !== undefined && this.state.fs_lat !== null && this.state.fs_long !== null &&
+                  <div className="phone">
+                    <h4>Phone number:</h4>
+                    {this.state.fs_phone}
+                    <h4>Restaurant address:</h4>
+                    {this.state.fs_address}
+                    <iframe className="map" src={'//www.google.com/maps/embed/v1/place?q=' +
+                      this.state.fs_lat +
+                      ',' +
+                      this.state.fs_long +
+                      '&zoom=17&key=AIzaSyCPYUmzO3MqBwvcPjGdacMywrz06Vz8VK8'}>
+                    </iframe>
+                  </div>
+                }
+
+                {/* Hours of operation */}
+                <div className="hours">
+
+                  {this.state.fs_hours !== undefined && this.state.fs_days !== undefined &&
+                    <div>
+
+                      <h4>Hours of operation:</h4>
+                      <table className="mdl-data-table hours-table">
+                        <thead>
+                          <tr>
+                            <th>Day(s)</th>
+                            <th>Hours</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.fs_days.map(function(row, i) {
+                            return (
+                              <tr key={i}>
+                                  <td>
+                                    {row}
+                                  </td>
+                                  <td>
+                                    {that.state.fs_hours[i].map(function(row, j) {
+                                      return (
+                                        <span key={j}>{row}{j !== that.state.fs_hours[i].length - 1 && <span>,</span>}</span>
+                                      )
+                                    })}
+                                  </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    
+                  }
+                  {this.state.fs_hours === undefined &&
+                    <div>No hours data</div>
+                  }
+                  {this.state.fs_days === undefined || this.state.fs_days.length === 0 &&
+                    <div>No days data</div>
+                  }
+
+
+
+                  {this.state.fs_isOpen === true &&
+                    <div className="hours-status">Open now!</div>
+                  }
+                  {this.state.fs_isOpen === false &&
+                    <div className="hours-status">Currently closed</div>
+                  }
+                  {this.state.fs_isOpen === undefined &&
+                    <div className="hours-status">No open/closed data</div>
+                  }
+                </div>
+
+                {/* Map undefined */}
+                {this.state.fs_lat === null || this.state.fs_long === null &&
+                  <div>
+                    No location data
+                      </div>
+                }
+
+              </div>
+            </div>
+            </div>
+          }
+        </div>
       </div>
     );
   }

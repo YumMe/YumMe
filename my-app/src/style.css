@@ -4,8 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400');
 
-/*overall app*/
-
+/*desktop*/
 .homepage {
   height: 100vh;
   padding: 50px;
@@ -14,7 +13,7 @@
   background-repeat: no-repeat;
   display: flex;
   text-align: center;
-  align-items: center; 
+  align-items: center;
 }
 
 /*hompage text*/
@@ -90,61 +89,38 @@ body {
   color: white;
 }
 
-/*phone*/
-@media screen and (max-width: 600px){
-  .homepage {
-    background-image: url("../img/pasta-mobile.png");
-    align-items: initial;
-  }
-
-  .title{
-    font-size: 12vw;
-    margin-bottom: 0px;
-  }
-
-  h2.light{
-    font-size:6vw;
-  }
-
-  .text{
-    width: 85%;
-    margin-left: 0px;
-    margin: 0 auto;
-  }
-
-  .search-form {
-    width: 75%;
-    margin: 0 auto;
-  }
-
-  .location-pointer {
-    font-size: 6vw;
-  }
-
-  .placeholder{
-    font-size: 4vw;
-  }
-/*
-.search-form, .location-pointer {
-    display: inline-block;
-    width: 100%''    
-}*/
-
-  form{
-    display: inline-block;
-    width: 50vw;
-  }
-} 
-
 
 .fa.location-pointer {
   font-size: 30px;
 }
 /* Michael's CSS rules */
+.size1000 {
+  width: 500px;
+  height: 500px;
+  padding: 5px;
+}
+.size900 {
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+}
+.size450 {
+  width: 150px;
+  height: 150px;
+  padding: 5px;
+}
 .location-pointer {
-  padding-right: 10px;
+  padding-right: 20px;
   cursor: pointer;
   cursor: hand;
+}
+.clickable {
+  color: blue;
+  text-align: center;
+  margin: auto;
+}
+.grey {
+  color: grey;
 }
 
 .location-pointer:hover {
@@ -192,15 +168,41 @@ body {
   text-align: left;
 }
 
-.go-button {
-  border-radius: 5px;
+.go-button, .back-button {
+  border-radius: 3px;
 }
+.black-text {
+  color: black;
+  display: block;
+  opacity: 1;
+}
+
 /* end of michael's css rules */
 
+.go-button {
+  margin-left: 1vw;
+  text-align: center;
+}
+
+.view-more {
+  text-align: center;
+}
+
+.butt-web {
+  margin-left: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.hours-table {
+  margin-bottom: 10px;
+}
 /* search results grid css*/
 
 /*flex container*/
 .search-grid {
+  position: absolute;
+  top: 100px;
   display: flex;
   flex-flow: row wrap;
   align-content: center;
@@ -219,7 +221,15 @@ body {
 .search-square {
   margin: 20px 20px;
   position: relative;
+  -webkit-filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+  filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
 }
+
+.image-filter {
+  -webkit-filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+  filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+}
+
 .overlay {
   padding: none;
   position: absolute;
@@ -251,14 +261,369 @@ body {
 
 /* messing around with navigation top*/
 .navigation {
+  padding: 10px;
+  /*padding-bottom: 20px;*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
 }
 .logo-navigation {
   margin-top: 30px;
   margin-left: 50px;
 }
 
-
 .search-navigation {
-  margin-left: 35vw;
+  margin-left: 30vw;
   margin-top: -30px;
 }
+
+/*modal*/
+.modal{
+  width: 80vw;
+  height: auto;
+}
+
+.photo{
+  display: inline-block;
+}
+
+.info{
+  display: inline-block;
+  align-content: center;
+  text-align: center;
+}
+
+.modal-heading{
+  font-size: 2.7rem;
+  padding-top: 0px;
+}
+
+.butt{
+   /*display: block;*/
+   text-align: center;
+display: inline-block;
+margin: 20px;
+}
+
+.wrapper{
+  margin: 0 auto;
+}
+
+.links{
+  padding-bottom: 10px;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.contact{
+  padding: 10px;
+}
+
+
+button.exit{
+  margin-left: 97%;
+  border: 0px transparent;
+  background-color: transparent;
+}
+
+.photo, .info{
+  display: inline;
+}
+
+.photo{
+  float: left;
+  margin: 20px;
+}
+
+.current-results {
+  margin-right: 40px;
+  margin-left: auto;
+  margin-top: -80px;
+  text-align: right;
+  font-size: 16px;
+  width: 200px;
+}
+
+.mdl-button--fab.mdl-button--colored{
+  background-color: black;
+}
+
+.fa-angle-up {
+  color: white;
+}
+
+.mdl-button--fab.mdl-button--colored:hover {
+  background-color: green;
+}
+
+/* RESTAURANT */
+
+.restaurant-view {
+  margin-top: 100px;
+  padding-left: 5vw;
+}
+
+.restaurant-pic {
+  margin-bottom: 5px;
+}
+
+.hours-status {
+  text-align: center;
+  font-weight: bold;
+}
+.image-filter {
+  padding: 5px;
+}
+
+
+.rating {
+  margin-top: 10px;
+  font-size: 28px;
+
+}
+
+.review {
+  margin-left: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+  color: #b7b7b7;
+}
+
+.address {
+  float: left;
+}
+.map {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Foursquare website */
+/*
+.fsite {
+  margin-top: 30px;
+}
+
+/* Restaurant website */
+/*
+.rsite {
+  margin-top: 30px;
+}
+.hours {
+  /*position: absolute;
+  margin-bottom: 50px;
+}
+*/
+
+/* leanne's restaurant view rules */
+.left-pics {
+  float: left;
+  margin-right: 10px;;
+}
+
+.right-information {
+  display: inline-block;
+  padding-left: 20px;
+}
+
+.restaurant-title {
+  font-size: 25pt;
+}
+
+.foursquare-logo{
+  background-image: url('../img/foursquare-logo.jpg');
+  width: 100%;
+  height: auto;
+}
+
+/*All things clickable*/
+.clickable{
+  cursor: pointer;
+  font-weight: bold;
+}
+/* More michael's css rules */
+.exit {
+  font-size: 24pt;
+  margin-left: -20px;
+}
+.exit:hover, .clickable:hover {
+  color:crimson;
+}
+.mdl-dialog__content {
+  z-index: 2;
+}
+.zindexone {
+  z-index: 1;
+}
+.zindextwo {
+  z-index: 2;
+}
+.black {
+  color: black;
+  font-size: 24pt;
+}
+.black:hover {
+  cursor: pointer;
+  color: crimson;
+}
+.fourSquare-logo {
+  width: 44px;
+  height: 44px;
+  background-image: url("../img/foursquare-logo.png");
+  background-size: 44px 44px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
+.fourSquare-logo:hover {
+  background-image: url("../img/foursquare-logo-blue.png");
+}
+/*phone*/
+@media screen and (max-width: 600px){
+  .current-results {
+    margin-top: -30px;
+    margin-left: 0;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .modal{
+    width: 80vw;
+    height: 80vh;
+  }
+  .mdl-dialog__content.light.center {
+    margin: 20px;
+    width: 60vw;
+  }
+  .photo{
+    position: relative;
+    left: 20%;
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
+
+  .info{
+    font-size: 12px;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+  }
+
+  .modal-heading{
+    font-size: 16px;
+    padding-top: 0px;
+    font-weight: 800px;
+  }
+  .map iframe {
+    max-width: 50vw;
+  }
+  .right-information {
+    padding-left: 10px;
+  }
+  .search-navigation {
+    width: 100%;
+    display: block;
+    margin: 0;
+  }
+  .search-form{
+    width: 100%;
+    font-size: 10px;
+  }
+  .size1000 {
+    width: 70vw;
+    height: 70vw;
+    padding: 5px;
+  }
+  .center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+  .search-grid {
+    top: 200px;
+  }
+  .restaurant-view {
+    top: 150px;
+    position: absolute;
+   }
+  .homepage {
+    background-image: url("../img/pasta-mobile.png");
+    align-items: initial;
+  }
+
+  .title{
+    font-size: 35px;
+    margin-bottom: 0px;
+  }
+
+  h2.light{
+    font-size:6vw;
+  }
+
+  .text{
+    width: 85%;
+    margin-left: 0px;
+    margin: 0 auto;
+  }
+  .homepage {
+    padding: 20px;
+    padding-top: 150px;
+  }
+  .mdl-textfield__input {
+    font-size: 11px;
+  }
+  .mdl-textfield {
+    width: 150px;
+  }
+  /*.location-pointer {
+    font-size: 6vw;
+  }*/
+
+  .placeholder{
+    font-size: 4vw;
+  }
+/*
+.search-form, .location-pointer {
+    display: inline-block;
+    width: 100%''    
+}*/
+
+  form{
+    display: inline-block;
+    width: 50vw;
+  }
+} 
+
+.phone, .hours {
+ float: left;
+ margin-right: 20px;
+ margin-bottom: 20px;
+ padding-left: 10px;
+ padding-right: 10px;
+ padding-bottom: 10px;
+ border: 1px solid lightgrey;
+ border-radius: 3px;
+}
+/*tablet*/
+@media (max-width: 1200px) and (min-width: 600px){
+  .current-results {
+    text-align: center;
+    margin-top: -30px;
+    margin-left: 0px;
+    margin: 0 auto;
+  }
+  .mdl-textfield__input {
+    font-size: 12px;
+  }
+  .mdl-textfield {
+    width: 200px;
+  }
+}
+
+/* end */

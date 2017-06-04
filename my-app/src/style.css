@@ -120,7 +120,9 @@ body {
   text-align: center;
   margin: auto;
 }
-
+.grey {
+  color: grey;
+}
 
 .location-pointer:hover {
   color: green;

@@ -86,7 +86,13 @@ class SearchSquare extends Component {
               <div>
                 <div className="fourSquare-logo" onClick={this.goToFoursquarePage}>
                 </div>
-                <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>
+                {this.props.venueRating !== undefined &&
+                  <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span>
+                }
+                {this.props.venueRating === undefined &&
+                  <span className="rating grey">No ratings</span>
+                }
+                </div>
                 <div className="wrapper">
               <span className="links">
                 {this.props.venueWebsite !== undefined &&

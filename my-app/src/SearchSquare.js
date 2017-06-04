@@ -75,10 +75,12 @@ class SearchSquare extends Component {
                 {/*<img src="../img/foursquare-logo.jpg" alt="foursquare-logo" />*/}
                 </div>
                 <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>
+                <div className="wrapper">
               <span className="links">
                 <a href={this.props.venueWebsite} className="mdl-button mdl-js-button mdl-button--raised butt">Website</a>
                 <a className="mdl-button mdl-js-button mdl-button--raised butt" href={this.props.venueMenus}>Menu</a>
               </span>
+              </div>
               <div className="contact">
                 <div className="light">{this.props.venueAddress}</div>
                 <div className="light">{this.props.venuePhone}</div>

@@ -348,12 +348,15 @@ export default class SearchBar extends React.Component {
                 console.log('Going to search results page for current location');
                 // kinda bad, find a different solution instead of reload
                 console.log('/search?lat=' + lat + '&long=' + long);
-                window.location.reload();
+                //window.location.reload();
+
                 hashHistory.push('/search?lat=' + lat + '&long=' + long);
+                this.forceUpdate();
             } else if (usingCurrentLocation === false) {
                 console.log('Going to search results page for "' + that.state.search + '"');
-                window.location.reload();
+                //window.location.reload();
                 hashHistory.push('/search?city=' + that.state.search.trim());
+                this.forceUpdate();
             }
         }, delay);
     }

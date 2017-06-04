@@ -56,7 +56,8 @@ class SearchSquare extends Component {
 
           <div className="overlay-text">
             <div>{this.props.venueName}</div>
-            <div onClick={this.goToRestaurantPage}>{this.props.venueId}</div>
+            <div onClick={this.goToRestaurantPage}>
+            </div>
           </div>
         </div>
 
@@ -80,6 +81,7 @@ class SearchSquare extends Component {
                 <div className="light">{this.props.venueAddress}</div>
                 <div className="light">{this.props.venuePhone}</div>
               </div>
+              <p onClick={this.goToRestaurantPage}>View more</p>
             </div>
           </DialogContent>
         </Dialog>

@@ -131,6 +131,8 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
+            this.setState({'noResults': true});
+            console.log(this.state.noResults);
           return;
         }
         response.json().then((data) => {
@@ -237,12 +239,17 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
+            {this.state.noResults === undefined || this.state.noResults === false}
             <p className="current-results light">Now viewing results for: {this.state.city}</p>
+            {this.state.noResults !== undefined && this.state.noResults === true &&
+              <div>No results for '{this.state.city}'</div>
+            }
           </div>
         </div>
-        {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
+        {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueIds.length > 0 && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} />
         }
+        
         <ScrollToTop showUnder={160}>
           <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
             <i className="fa fa-angle-up" aria-hidden="true"></i>

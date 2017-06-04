@@ -51,7 +51,7 @@ class SearchResults extends Component {
 
         // param = latAndLong;
 
-        cityApiCall = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+        cityApiCall = 'https://api.geonames.org/findNearbyPlaceNameJSON?lat='
                     + query.lat
                     + '&lng='
                     + query.long
@@ -223,11 +223,9 @@ class SearchResults extends Component {
                   var foursquarePageUrl = currMenu;
                   if (currMenu !== undefined) {
                     foursquarePageUrl = currMenu.slice(0, -5);
-                    console.log('memes')
                   }
 
                   foursquarePageUrlArray.push(foursquarePageUrl);
-                  console.log("CCC" + foursquarePageUrl);
 
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);

@@ -88,8 +88,8 @@ class SearchResults extends Component {
 
     this.setState({ city: param });
 
-    console.log(foursquareApiCall);
-    console.log(param);
+    //console.log(foursquareApiCall);
+    //console.log(param);
     
   
 
@@ -101,7 +101,7 @@ class SearchResults extends Component {
             return;
           }
           response.json().then((data) => {
-            console.log(data);
+            //console.log(data);
             if (data.geonames !== undefined) {
               for (var i = 0; i < data.geonames.length; i++) {
                 var name = data.geonames[0].name;
@@ -138,7 +138,7 @@ class SearchResults extends Component {
         response.json().then((data) => {
           // Grab images
           var venues = data["response"]["venues"];
-          console.log(venues);
+          //console.log(venues);
           var imagesArray = [];
           var idArray = [];
           var nameArray = [];
@@ -187,12 +187,12 @@ class SearchResults extends Component {
                   return;
                 }
 
-                console.log(data["response"]["venue"])
+                //console.log(data["response"]["venue"])
                 response.json().then((data) => {
-                  console.log(data);
+                  //console.log(data);
                   var currRating = data["response"]["venue"]["rating"];
                   var currRatingColor = data["response"]["venue"]["ratingColor"];
-                  console.log(currRatingColor);
+                  //console.log(currRatingColor);
                   //console.log(JSON.stringify(data));
                   if (data["response"]["venue"]["photos"] !== undefined && data["response"]["venue"]["photos"]["groups"][0]["items"][0] !== undefined) {
                     var venueImage = data["response"]["venue"]["photos"]["groups"][0]["items"][0]["prefix"] + "300x300" + data["response"]["venue"]["photos"]["groups"][0]["items"][0]["suffix"];
@@ -204,10 +204,10 @@ class SearchResults extends Component {
                     webArray.push(currWebsite);
                     ratingArray.push(currRating);
                     ratingColorArray.push(currRatingColor);
-                    console.log(ratingColorArray);
+                    //console.log(ratingColorArray);
                   }
                   phoneArray.push(currNumber);
-                  console.log("entering menu if statement");
+                  //console.log("entering menu if statement");
 
                   menuArray.push(currMenu);
 
@@ -271,8 +271,8 @@ class SearchResults extends Component {
     var validLat = isFloat.test(lat);
     var validLong = isFloat.test(long);
 
-    console.log(lat);
-    console.log(long);
+    //console.log(lat);
+    //console.log(long);
 
     // If both lat and long are only numbers
     if (validLat && validLong) {

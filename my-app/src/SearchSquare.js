@@ -49,8 +49,7 @@ class SearchSquare extends Component {
       <div className="search-square">
         <img className="search-image" src={this.props.image} alt={this.props.venueId} />
         {/*The venue id: {this.props.venueId}*/}
-
-
+        
         {/*taking out overlay for testing purposes*/}
         <div className="overlay clickable" onClick={this.handleOpenDialog}  >
 

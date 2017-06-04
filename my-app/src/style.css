@@ -269,15 +269,16 @@ body {
 .butt{
    /*display: block;*/
    text-align: center;
+display: inline-block;
+margin: 0 auto;}
 
-
-
-}
 
 .links{
   padding-bottom: 10px;
   margin: 0 auto;
-
+  padding-left: 12rem;
+  text-align: center;
+  width: 100%;
 }
 
 .contact{

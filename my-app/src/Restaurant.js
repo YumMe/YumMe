@@ -297,9 +297,6 @@ class App extends Component {
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} />
         */}
         
-
-        
-
         <div className="restaurant-view">
           
           

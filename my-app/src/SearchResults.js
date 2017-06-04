@@ -302,13 +302,14 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
+            </div>
             {this.state.noResults === undefined &&
               <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
             }
           {this.state.noResults !== undefined && this.state.noResults === true &&
             <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
           }
-          </div>
+          
           
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&

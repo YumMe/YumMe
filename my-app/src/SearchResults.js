@@ -123,19 +123,23 @@ class SearchResults extends Component {
             let currMenu = venues[i]["menu"]["url"];
             let currNumber = venues[i]["contact"]["formattedPhone"];
 
-            let currRating = venues[i]["rating"];
             let currWebsite = venues[i]["url"];
             let currAdress = venues[i]["location"]["formattedAddress"];
             fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
               .then(
               (response) => {
+
+
                 if (response.status !== 200) {
                   console.log('Looks like there was a problem. Status Code: ' +
                     response.status);
                   return;
                 }
+
+                console.log(data["response"]["venue"])
                 response.json().then((data) => {
                   console.log(data);
+                  var currRating = data["response"]["venue"]["rating"];
                   //console.log(JSON.stringify(data));
                   if (data["response"]["venue"]["photos"] !== undefined && data["response"]["venue"]["photos"]["groups"][0]["items"][0] !== undefined) {
                     var venueImage = data["response"]["venue"]["photos"]["groups"][0]["items"][0]["prefix"] + "300x300" + data["response"]["venue"]["photos"]["groups"][0]["items"][0]["suffix"];
@@ -162,34 +166,6 @@ class SearchResults extends Component {
                 });
               }
               )
-
-              // // Sarah fucking around with a second API call
-              // // Fetch restaurant
-              // fetch('https://api.foursquare.com/v2/venues/' + currId + '?client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL&v=20170622')
-              //   .then(
-              //   (response) => {
-              //     if (response.status !== 200) {
-              //       console.log('Looks like there was a problem. Status Code: ' +
-              //         response.status);
-              //       return;
-              //     }
-              //     response.json().then((data => {
-              //       if (data["reponse"]["venue"] != undefined) {
-              //         var venue = data['response']['venue'];
-
-              //         let currRating = venue['rating'];
-              //         let currRatingColor = venue['ratingColor'];
-              //         let currRatingSignal = venue['ratingSignas'];
-              //       }
-              //     })
-
-
-
-
-              // }
-
-              // }
-              // )
 
               .catch(function (err) {
                 console.log('Fetch Error :-S', err);

@@ -47,6 +47,7 @@ class SearchSquare extends Component {
             <img className="photo" src={this.props.image} alt={this.props.venueID} />
             <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
+              <div className="subheading">Rating: <span className="rating">{this.props.venueRating}</span></div>
               <span className="links">
                 <a href={this.props.venueWebsite} className="button">Website</a>
                 <a className="button" href={this.props.venueMenus}>Menu</a>

@@ -336,21 +336,17 @@ class App extends Component {
               <div className="right-information">
                 {/*Restaurant Name*/}
                 <h1 className="restaurant-title">{this.state.fs_name}</h1>
+                <div>
 
                 {/*Rating, Foursquare, Website */}
-                {this.state.fs_rating !== undefined && this.state.fs_foursquarePageUrl !== undefined && this.state.fs_url !== undefined &&
+                {this.state.fs_rating !== undefined &&
                   <div>
                     <span className="rating" style={{ color: customColor }}>
                       {this.state.fs_rating} / 10
                     </span>
-                        
                     <span className="review">
                       {this.state.fs_ratingSignals} ratings
                     </span>
-
-                    <span href={this.state.fs_foursquarePageUrl} target="_blank" className="fourSquare-logo"></span>
-                    <a href={this.state.fs_url} target="_blank" className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt-web">Website</a>
-
                   </div>
                 }
                 {this.state.fs_rating === undefined &&
@@ -359,19 +355,33 @@ class App extends Component {
                       </div>
                 }
 
-
-                {/*Foursquare undefined*/}
-
+                { this.state.fs_foursquarePageUrl !== undefined &&
+                  <a href={this.state.fs_foursquarePageUrl} target="_blank" className="fourSquare-logo"></a>
+                }
                 {this.state.fs_foursquarePageUrl === undefined &&
                   <div>
                     No Foursquare page
                       </div>
                 }
 
-                {/*Restaurant website undefined*/}
+                {this.state.fs_url !== undefined &&
+                  <div>
+                    <a href={this.state.fs_url} target="_blank" className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt-web">Website</a>
+                  </div>
+                }
                 {this.state.fs_url === undefined &&
                   <div>No restaurant URL</div>
                 }
+                
+                
+
+
+                {/*Foursquare undefined*/}
+
+                
+
+                {/*Restaurant website undefined*/}
+                
 
                 {/*Phone, address*/}
                 {this.state.fs_phone !== undefined && this.state.fs_address !== undefined && this.state.fs_lat !== null && this.state.fs_long !== null &&
@@ -413,7 +423,7 @@ class App extends Component {
                                   <td>
                                     {that.state.fs_hours[i].map(function(row, j) {
                                       return (
-                                        <span>{row}{j !== that.state.fs_hours[i].length - 1 && <span>,</span>} </span>
+                                        <span key={j}>{row}{j !== that.state.fs_hours[i].length - 1 && <span>,</span>}</span>
                                       )
                                     })}
                                   </td>
@@ -423,6 +433,8 @@ class App extends Component {
                         </tbody>
                       </table>
                     </div>
+
+                    
                   }
                   {this.state.fs_hours === undefined &&
                     <div>No hours data</div>
@@ -452,6 +464,7 @@ class App extends Component {
                 }
 
               </div>
+            </div>
             </div>
           }
         </div>

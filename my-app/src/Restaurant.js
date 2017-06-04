@@ -97,7 +97,7 @@ class App extends Component {
                 //  restaurant address
                 if (venue['location'] !== undefined) {
                   if (venue['location']['address'] !== undefined) {
-                    fs_address = venue['location']['city'] + ', ' + venue['location']['state'] + ' ' + venue['location']['address'];
+                    fs_address = venue['location']['address'] + ' ' + venue['location']['city'] + ', ' + venue['location']['state'];
                   }
                   if (venue['location']['crossStreet'] !== undefined) {
                     fs_crossStreet = venue['location']['crossStreet'];
@@ -337,15 +337,20 @@ class App extends Component {
                 {/*Restaurant Name*/}
                 <h1 className="restaurant-title">{this.state.fs_name}</h1>
 
-                {/*Rating*/}
-                {this.state.fs_rating !== undefined &&
+                {/*Rating, Foursquare, Website */}
+                {this.state.fs_rating !== undefined && this.state.fs_foursquarePageUrl !== undefined && this.state.fs_url !== undefined &&
                   <div>
-                    <div className="rating" style={{ color: customColor }}>
+                    <span className="rating" style={{ color: customColor }}>
                       {this.state.fs_rating} / 10
-                        </div>
-                    <div className="review">
+                    </span>
+                        
+                    <span className="review">
                       {this.state.fs_ratingSignals} ratings
-                        </div>
+                    </span>
+
+                    <span href={this.state.fs_foursquarePageUrl} target="_blank" className="fourSquare-logo"></span>
+                    <a href={this.state.fs_url} target="_blank" className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt-web">Website</a>
+
                   </div>
                 }
                 {this.state.fs_rating === undefined &&
@@ -355,30 +360,32 @@ class App extends Component {
                 }
 
 
-                {/*Foursquare website link*/}
-                {this.state.fs_foursquarePageUrl !== undefined &&
-                  <a href={this.state.fs_foursquarePageUrl} target="_blank" className="fourSquare-logo"></a>
-                }
+                {/*Foursquare undefined*/}
+
                 {this.state.fs_foursquarePageUrl === undefined &&
                   <div>
                     No Foursquare page
                       </div>
                 }
 
-                {/*Restaurant website*/}
-                {this.state.fs_url !== undefined &&
-                  <div className="rsite">
-                    <a href={this.state.fs_url} target="_blank" className="mdl-button mdl-js-button mdl-button--raised butt">Website</a>
-                  </div>
-                }
+                {/*Restaurant website undefined*/}
                 {this.state.fs_url === undefined &&
                   <div>No restaurant URL</div>
                 }
 
-                {/*Phone*/}
-                {this.state.fs_phone !== undefined &&
+                {/*Phone, address*/}
+                {this.state.fs_phone !== undefined && this.state.fs_address !== undefined && this.state.fs_lat !== null && this.state.fs_long !== null &&
                   <div className="phone">
+                    <h4>Phone number:</h4>
                     {this.state.fs_phone}
+                    <h4>Restaurant address:</h4>
+                    {this.state.fs_address}
+                    <iframe className="map" src={'//www.google.com/maps/embed/v1/place?q=' +
+                      this.state.fs_lat +
+                      ',' +
+                      this.state.fs_long +
+                      '&zoom=17&key=AIzaSyCPYUmzO3MqBwvcPjGdacMywrz06Vz8VK8'}>
+                    </iframe>
                   </div>
                 }
 
@@ -389,7 +396,7 @@ class App extends Component {
                     <div>
 
                       <h4>Hours of operation:</h4>
-                      <table className="mdl-data-table">
+                      <table className="mdl-data-table hours-table">
                         <thead>
                           <tr>
                             <th>Day(s)</th>
@@ -437,26 +444,7 @@ class App extends Component {
                   }
                 </div>
 
-                {/*Restaurant address*/}
-                {this.state.fs_address !== undefined &&
-                  <div className="address">
-                    <h4>Restaurant address:</h4>
-                    {this.state.fs_address}
-                  </div>
-                }
-
-                {/* Map */}
-                {this.state.fs_lat !== null && this.state.fs_long !== null &&
-                  <div className="map">
-                    <iframe src={'//www.google.com/maps/embed/v1/place?q=' +
-                      this.state.fs_lat +
-                      ',' +
-                      this.state.fs_long +
-                      '&zoom=17&key=AIzaSyCPYUmzO3MqBwvcPjGdacMywrz06Vz8VK8'}>
-                    </iframe>
-                    {/*<a href={'https://www.google.com/maps/?q=' + this.state.fs_lat + ',' + this.state.fs_long} target="_blank">Google Maps Link</a>*/}
-                  </div>
-                }
+                {/* Map undefined */}
                 {this.state.fs_lat === null || this.state.fs_long === null &&
                   <div>
                     No location data

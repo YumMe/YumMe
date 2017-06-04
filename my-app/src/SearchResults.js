@@ -295,7 +295,7 @@ class SearchResults extends Component {
           <div className="search-navigation">
             <SearchBar />
             {this.state.noResults === undefined || this.state.noResults === false}
-            <p className="current-results light">Now viewing results for: {this.state.city}</p>
+            <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
             {this.state.noResults !== undefined && this.state.noResults === true &&
               <div>No results for '{this.state.city}'</div>
             }

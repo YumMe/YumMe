@@ -90,30 +90,32 @@ class SearchSquare extends Component {
                 <div className="wrapper">
               <span className="links">
                 {this.props.venueWebsite !== undefined &&
-                  <a href={this.props.venueWebsite} target="_blank" className="mdl-button mdl-js-button mdl-button--raised butt">Website</a>
+                  <a href={this.props.venueWebsite} target="_blank" className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button">Website</a>
                 }
                 {this.props.venueMenus !== undefined && 
-                  <a className="mdl-button mdl-js-button mdl-button--raised butt" href={this.props.venueMenus} target="_blank" >Menu</a>
+                  <a className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt" href={this.props.venueMenus} target="_blank" >Menu</a>
                 }
               </span>
               </div>
               <div className="contact disappears-in-mobile">
                 {this.props.venueAddress !== undefined &&
                 <div className="light">
-                  {this.props.venueAddress}
+                  <div className="light"><b>Address:</b> {this.props.venueAddress}</div>
                 </div>
                 }
                 {this.props.venueAddress === undefined &&
                   <div>No address information</div>  
                 }
                 {this.props.venuePhone !== undefined &&
-                  <div className="light">Phone: {this.props.venuePhone}</div>
+                  <div className="light"><b>Phone:</b> {this.props.venuePhone}</div>
                 }
                 {this.props.venuePhone === undefined &&
                   <div>No phone number</div>  
                 }
               </div>
-              <p onClick={this.goToRestaurantPage} className="clickable">View more information</p>
+              <div className="wrapper">
+                <button onClick={this.goToRestaurantPage} className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt view-more">View more information</button>
+              </div>
             </div>
           </DialogContent>
           </div>

@@ -569,8 +569,16 @@ button.exit{
     margin-left: 0px;
     margin: 0 auto;
   }
-
-
+  .homepage {
+    padding: 20px;
+    padding-top: 150px;
+  }
+  .mdl-textfield__input {
+    font-size: 11px;
+  }
+  .mdl-textfield {
+    width: 150px;
+  }
   /*.location-pointer {
     font-size: 6vw;
   }*/

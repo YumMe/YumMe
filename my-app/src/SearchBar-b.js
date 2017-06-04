@@ -266,7 +266,7 @@ export default class SearchBar extends React.Component {
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
-                        'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                        'https://api.geonames.org/findNearbyPlaceNameJSON?lat='
                         + latAndLong[0]
                         + '&lng='
                         + latAndLong[1]

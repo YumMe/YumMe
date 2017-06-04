@@ -311,20 +311,24 @@ class App extends Component {
               <div className="left-pics">
                 {/*Pictures*/}
                 <div className="restaurant-pic">
-                  <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter size900"></img>
+                  
+                  <RestaurantImageModal image={this.state.fs_mainImage} size={900} key={0} />
                 </div>
-
+                
+                {/*
+                  
+              <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter size900"></img>  
+              <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter size450"></img>*/}
                 <div className="restaurant-pics">
                   {/* Replace with grid with modals */}
                   {this.state.fs_additionalPhotos.length > 0 &&
-                    {/*<RestaurantImageModal image={this.state.fs_additionalPhotos[0]/>*/}
-                    <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter size450"></img>
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[0]} size={450} key={1} />
                   }
                   {this.state.fs_additionalPhotos.length > 1 &&
-                    <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter size450"></img>
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[1]} size={450} key={2} />
                   }
                   {this.state.fs_additionalPhotos.length > 2 &&
-                    <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter size450"></img>
+                    <RestaurantImageModal image={this.state.fs_additionalPhotos[2]} size={450} key={3} />
                   }
                 </div>
               </div>

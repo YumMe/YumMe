@@ -95,13 +95,20 @@ body {
   font-size: 30px;
 }
 /* Michael's CSS rules */
+.size1000 {
+  width: 500px;
+  height: 500px;
+  padding: 5px;
+}
 .size900 {
-  width: 450px;
-  height: 450px;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
 }
 .size450 {
-  width: 225px;
-  height: 225px;
+  width: 150px;
+  height: 150px;
+  padding: 5px;
 }
 .location-pointer {
   padding-right: 20px;

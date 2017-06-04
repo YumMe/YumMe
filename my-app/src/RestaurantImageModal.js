@@ -13,6 +13,7 @@ class RestaurantImageModal extends Component {
   }
 
   handleOpenDialog() {
+    console.log(this.props.image);
     this.setState({
       openDialog: true
     });
@@ -26,28 +27,30 @@ class RestaurantImageModal extends Component {
 
 
   render() {
-    console.log(this.props);
-    var customColor = '';
+    console.log(this.props.image);
+    
+    var size = 'size900';
+
+    if (this.props.size === 450) {
+      size = 'size450';
+    }
 
     return (
-      <div className="search-square">
-        <img className="search-image" src={this.props.image} alt="Yummy!" />
-        {/*The venue id: {this.props.venueId}*/}
-
-
-        {/*taking out overlay for testing purposes*/}
-        <div className="overlay clickable" onClick={this.handleOpenDialog}  >
+      <div className="change-cursor-to-pointer-on-hover">
+        <div className={size} onClick={this.handleOpenDialog}>
+          <img src={this.props.image} alt="Yummy!" className={size}  />
         </div>
+        {/*The venue id: {this.props.venueId}*/}
 
         <Dialog open={this.state.openDialog} className="modal light zindexone" onClick={this.handleCloseDialog}>
 
 
           {/* onClick={this.handleClose}*/}
           <div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>
-          <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
-          <DialogContent className="light">
-
-          </DialogContent>
+            <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
+            <DialogContent className="light clickable" onClick={this.handleCloseDialog}>
+              <img src={this.props.image} alt="Yummy!" className="size1000" />
+            </DialogContent>
           </div>
         </Dialog>
       </div>

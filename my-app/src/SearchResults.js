@@ -51,7 +51,7 @@ class SearchResults extends Component {
 
         // param = latAndLong;
 
-        cityApiCall = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+        cityApiCall = 'https://secure.geonames.org/findNearbyPlaceNameJSON?lat='
                     + query.lat
                     + '&lng='
                     + query.long
@@ -193,7 +193,10 @@ class SearchResults extends Component {
                 //console.log(data["response"]["venue"])
                 response.json().then((data) => {
                   //console.log(data);
-                  var currMenu = data["response"]["venue"]["menu"]["url"];
+                  var currMenu;
+                  if (data["response"]["venue"]["menu"] !== undefined) {
+                    currMenu = data["response"]["venue"]["menu"]["url"];
+                  }
                   var currRating = data["response"]["venue"]["rating"];
                   var currRatingColor = data["response"]["venue"]["ratingColor"];
                   //console.log(currRatingColor);

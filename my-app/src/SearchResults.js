@@ -131,7 +131,7 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
-            this.setState({'noResults': true});
+            this.setState({noResults: true});
             console.log(this.state.noResults);
           return;
         }
@@ -156,12 +156,15 @@ class SearchResults extends Component {
             switch (searchType) {
               case 'city':
                 console.log("No results found for city: " + param);
+                this.setState({noResults: true});
                 break;
               case 'coords':
                 console.log("No results found for coords: " + param);
+                this.setState({noResults: true});
                 break;
               default:
                 console.log("invalid search parameters");
+                this.setState({noResults: true});
                 break;
             }
           }
@@ -294,10 +297,11 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
-            {this.state.noResults === undefined || this.state.noResults === false}
-            <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
+            {this.state.noResults === undefined &&
+              <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
+            }
             {this.state.noResults !== undefined && this.state.noResults === true &&
-              <div>No results for '{this.state.city}'</div>
+              <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
             }
           </div>
         </div>

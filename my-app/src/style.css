@@ -447,3 +447,12 @@ button.exit{
 .restaurant-title {
   font-size: 30pt;
 }
+
+.foursquare-logo{
+  background-image: url("../img/foursquare-logo.jpg");
+}
+
+/*All things clickable*/
+.clickable{
+  cursor: pointer;
+}

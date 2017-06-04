@@ -52,7 +52,7 @@ class SearchSquare extends Component {
 
 
         {/*taking out overlay for testing purposes*/}
-        <div className="overlay" onClick={this.handleOpenDialog}  >
+        <div className="overlay clickable" onClick={this.handleOpenDialog}  >
 
           <div className="overlay-text">
             <div>{this.props.venueName}</div>
@@ -64,14 +64,16 @@ class SearchSquare extends Component {
         <Dialog open={this.state.openDialog} className="modal light">
 
           {/* onClick={this.handleClose}*/}
-          <button type='button' className='exit light' onClick={this.handleCloseDialog}>X</button>
+          <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
           <DialogContent className="light">
 
             <img className="photo" src={this.props.image} alt={this.props.venueID} />
             <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
               <div>
-                <img src="../img/foursquare-logo.png" alt="foursquare-logo" />
+                <div className="fourSquare-logo">
+                {/*<img src="../img/foursquare-logo.jpg" alt="foursquare-logo" />*/}
+                </div>
                 <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>
               <span className="links">
                 <a href={this.props.venueWebsite} className="mdl-button mdl-js-button mdl-button--raised butt">Website</a>
@@ -81,7 +83,7 @@ class SearchSquare extends Component {
                 <div className="light">{this.props.venueAddress}</div>
                 <div className="light">{this.props.venuePhone}</div>
               </div>
-              <p onClick={this.goToRestaurantPage}>View more</p>
+              <p onClick={this.goToRestaurantPage} className="clickable">View more</p>
             </div>
           </DialogContent>
         </Dialog>

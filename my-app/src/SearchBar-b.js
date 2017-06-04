@@ -262,7 +262,7 @@ export default class SearchBar extends React.Component {
 
                 usingCurrentLocation = true;
 
-                delay = 2000;
+                delay = 2500;
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =

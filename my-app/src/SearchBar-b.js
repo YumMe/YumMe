@@ -94,7 +94,7 @@ export default class SearchBar extends React.Component {
         } else {
             // featureCode=PPL
             // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
-            that.state.fetch = fetch('https://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
+            that.state.fetch = fetch('http://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
                 function (response) {
                     if (response.status !== 200) {
@@ -266,7 +266,7 @@ export default class SearchBar extends React.Component {
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
-                        'https://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                        'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
                         + latAndLong[0]
                         + '&lng='
                         + latAndLong[1]
@@ -348,12 +348,15 @@ export default class SearchBar extends React.Component {
                 console.log('Going to search results page for current location');
                 // kinda bad, find a different solution instead of reload
                 console.log('/search?lat=' + lat + '&long=' + long);
-                window.location.reload();
+                //window.location.reload();
+
                 hashHistory.push('/search?lat=' + lat + '&long=' + long);
+                this.forceUpdate();
             } else if (usingCurrentLocation === false) {
                 console.log('Going to search results page for "' + that.state.search + '"');
-                window.location.reload();
+                //window.location.reload();
                 hashHistory.push('/search?city=' + that.state.search.trim());
+                this.forceUpdate();
             }
         }, delay);
     }

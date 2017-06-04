@@ -58,7 +58,7 @@ export default class SearchBar extends React.Component {
         // Finds suggested cities
         // http://www.geonames.org/export/geonames-search.html
 
-        // example endpoint: http://api.geonames.org/search?q=london&maxRows=10&username=demo
+        // example endpoint: https://secure.geonames.org/search?q=london&maxRows=10&username=demo
         /*
             name_startsWith =>  whatever is in the search bar
             maxRows =>          10
@@ -93,8 +93,8 @@ export default class SearchBar extends React.Component {
             that.setState({ suggestedCities: [] });
         } else {
             // featureCode=PPL
-            // http://api.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
-            that.state.fetch = fetch('http://api.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
+            // https://secure.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
+            that.state.fetch = fetch('https://secure.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
                 function(response) {
                     if (response.status !== 200) {
@@ -266,13 +266,13 @@ export default class SearchBar extends React.Component {
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
-                    'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                    'https://secure.geonames.org/findNearbyPlaceNameJSON?lat='
                     + latAndLong[0]
                     + '&lng='
                     + latAndLong[1]
                     + '&username=greycabb&cities=cities1000';
                     console.log(apiCall);
-                    // http://api.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery
+                    // https://secure.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery
 
                     that.state.fetch = fetch(apiCall)
                         .then(

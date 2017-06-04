@@ -131,7 +131,7 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
-            this.setState({'noResults': true});
+            this.setState({noResults: true});
             console.log(this.state.noResults);
           return;
         }
@@ -156,12 +156,15 @@ class SearchResults extends Component {
             switch (searchType) {
               case 'city':
                 console.log("No results found for city: " + param);
+                this.setState({noResults: true});
                 break;
               case 'coords':
                 console.log("No results found for coords: " + param);
+                this.setState({noResults: true});
                 break;
               default:
                 console.log("invalid search parameters");
+                this.setState({noResults: true});
                 break;
             }
           }
@@ -294,12 +297,13 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
-            {this.state.noResults === undefined || this.state.noResults === false}
-            <p className="current-results center moves-in-mobile light">Now viewing results for: {this.state.city}</p>
-            {this.state.noResults !== undefined && this.state.noResults === true &&
-              <div>No results for '{this.state.city}'</div>
-            }
           </div>
+          {this.state.noResults === undefined &&
+              <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
+            }
+            {this.state.noResults !== undefined && this.state.noResults === true &&
+              <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
+            }
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}

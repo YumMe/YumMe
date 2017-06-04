@@ -175,7 +175,7 @@ export default class SearchBar extends React.Component {
 
         setTimeout(function () {
             that.goToSearchResultsPage();
-        }, 2000);
+        }, 2400);
     }
 
 

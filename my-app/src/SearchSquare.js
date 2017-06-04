@@ -29,7 +29,7 @@ class SearchSquare extends Component {
   }
 
   goToFoursquarePage() {
-    //console.log(this.props.venueFoursquarePage);
+    console.log(this.props.venueFoursquarePage);
     if (this.props.venueFoursquarePage !== undefined) {
       //console.log('memes');
       window.open(this.props.venueFoursquarePage, '_blank');
@@ -84,8 +84,10 @@ class SearchSquare extends Component {
             <div className="info">
               <h1 className="light modal-heading black" onClick={this.goToRestaurantPage}>{this.props.venueName}</h1>
               <div>
-                <div className="fourSquare-logo" onClick={this.goToFoursquarePage}>
-                </div>
+                
+                {this.props.venueFoursquarePage !== undefined && 
+                  <div className="fourSquare-logo" onClick={this.goToFoursquarePage}></div>
+                }
                 {this.props.venueRating !== undefined &&
                   <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span>
                 }

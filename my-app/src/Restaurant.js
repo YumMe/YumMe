@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import SearchResultsGrid from './SearchResultsGrid';
+import RestaurantImageModal from './RestaurantImageModal';
 
 class App extends Component {
 
@@ -188,11 +189,11 @@ class App extends Component {
                 for (var i = 0; i < photos.length; i++) {
                   if (i === 0) {
                     //fs_mainImage = (photos[i]['prefix'] + photos[i]['suffix']);
-                    fs_mainImage = photos[i]["prefix"] + "450x450" + photos[i]["suffix"];
+                    fs_mainImage = photos[i]["prefix"] + "900x900" + photos[i]["suffix"];
                   }
                   else if (fs_additionalPhotos.length < maxPhotoCount) {
                     fs_additionalPhotos.push(
-                      photos[i]["prefix"] + "225x225" + photos[i]["suffix"]
+                      photos[i]["prefix"] + "900x900" + photos[i]["suffix"]
                     );
                   } else {
                     break;
@@ -310,19 +311,20 @@ class App extends Component {
               <div className="left-pics">
                 {/*Pictures*/}
                 <div className="restaurant-pic">
-                  <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter"></img>
+                  <img src={this.state.fs_mainImage} alt={'Picture of ' + this.state.fs_name} className="image-filter size900"></img>
                 </div>
 
                 <div className="restaurant-pics">
                   {/* Replace with grid with modals */}
                   {this.state.fs_additionalPhotos.length > 0 &&
-                    <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter"></img>
+                    {/*<RestaurantImageModal image={this.state.fs_additionalPhotos[0]/>*/}
+                    <img src={this.state.fs_additionalPhotos[0]} alt={'1st picture of ' + this.state.fs_name} className="image-filter size450"></img>
                   }
                   {this.state.fs_additionalPhotos.length > 1 &&
-                    <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter"></img>
+                    <img src={this.state.fs_additionalPhotos[1]} alt={'2nd picture of ' + this.state.fs_name} className="image-filter size450"></img>
                   }
                   {this.state.fs_additionalPhotos.length > 2 &&
-                    <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter"></img>
+                    <img src={this.state.fs_additionalPhotos[2]} alt={'3rd picture of ' + this.state.fs_name} className="image-filter size450"></img>
                   }
                 </div>
               </div>

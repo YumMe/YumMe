@@ -95,6 +95,14 @@ body {
   font-size: 30px;
 }
 /* Michael's CSS rules */
+.size900 {
+  width: 450px;
+  height: 450px;
+}
+.size450 {
+  width: 225px;
+  height: 225px;
+}
 .location-pointer {
   padding-right: 20px;
   cursor: pointer;

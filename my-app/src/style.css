@@ -180,6 +180,7 @@ body {
 
 .go-button {
   margin-left: 1vw;
+  text-align: center;
 }
 
 /* search results grid css*/
@@ -309,10 +310,6 @@ margin: 20px;
   padding: 10px;
 }
 
-.contact, .light {
-  padding: 5px;
-  
-}
 
 button.exit{
   margin-left: 97%;

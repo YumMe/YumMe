@@ -323,7 +323,7 @@ export default class SearchBar extends React.Component {
                 // Make this a text below instead
                 console.log('Please enter a city!');
                 this.setState({
-                    showingErrorMessage: true
+                    showingErrorMessage: "Please enter a city!"
                 });
                 return;
             }
@@ -384,7 +384,9 @@ export default class SearchBar extends React.Component {
                                 <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
                             }
                             {this.state.locationServicesAllowed === false &&
-                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); } }></i>
+                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); that.setState({
+                    showingErrorMessage: "Please enable location services to use this feature!"
+                }); } }></i>
                             }
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off" />
@@ -396,8 +398,8 @@ export default class SearchBar extends React.Component {
                                     </div>
                                 }
                             </div>
-                            {this.state.showingErrorMessage === true &&
-                                <div className="error-message">Please enter a city!</div>
+                            {this.state.showingErrorMessage !== false &&
+                                <div className="error-message">{this.state.showingErrorMessage}</div>
                             }
                             {this.state.showingErrorMessage === false &&
                                 <div></div>

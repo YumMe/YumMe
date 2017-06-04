@@ -51,7 +51,7 @@ class SearchResults extends Component {
 
         // param = latAndLong;
 
-        cityApiCall = 'https://api.geonames.org/findNearbyPlaceNameJSON?lat='
+        cityApiCall = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
                     + query.lat
                     + '&lng='
                     + query.long

@@ -453,7 +453,9 @@ button.exit{
 }
 
 .foursquare-logo{
-  background-image: url("../img/foursquare-logo.jpg");
+  background-image: url('../img/foursquare-logo.jpg');
+  width: 100%;
+  height: auto;
 }
 
 /*All things clickable*/

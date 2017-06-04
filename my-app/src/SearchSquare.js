@@ -71,8 +71,8 @@ class SearchSquare extends Component {
             <div className="info">
               <h1 className="light modal-heading">{this.props.venueName}</h1>
               <div>
-                <div className="fourSquare-logo">
-                {/*<img src="../img/foursquare-logo.jpg" alt="foursquare-logo" />*/}
+                <div className="fourSquare-logo">logo here
+                <img src='../img/foursquare-logo.jpg" alt="foursquare-logo' />
                 </div>
                 <span className="rating" style={{ color: customColor }}>{this.props.venueRating}/10</span></div>
                 <div className="wrapper">

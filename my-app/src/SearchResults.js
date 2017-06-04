@@ -173,7 +173,12 @@ class SearchResults extends Component {
           for (var i = 0; i < venues.length; i++) {
             let currId = venues[i]["id"];
             let currName = venues[i]["name"];
-            let currMenu = venues[i]["menu"]["url"];
+            var currMenu;
+            if (venues[i]["menu"] !== undefined) {
+              let currMenu = venues[i]["menu"]["url"];
+            } else {
+              let currMenu = undefined;
+            }
             let currNumber = venues[i]["contact"]["formattedPhone"];
 
             let currWebsite = venues[i]["url"];
@@ -297,13 +302,14 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
-          </div>
-          {this.state.noResults === undefined &&
+            {this.state.noResults === undefined &&
               <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
             }
-            {this.state.noResults !== undefined && this.state.noResults === true &&
-              <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
-            }
+          {this.state.noResults !== undefined && this.state.noResults === true &&
+            <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
+          }
+          </div>
+          
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}

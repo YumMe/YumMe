@@ -29,9 +29,9 @@ class SearchSquare extends Component {
   }
 
   goToFoursquarePage() {
-    console.log(this.props.venueFoursquarePage);
+    //console.log(this.props.venueFoursquarePage);
     if (this.props.venueFoursquarePage !== undefined) {
-      console.log('memes');
+      //console.log('memes');
       window.open(this.props.venueFoursquarePage, '_blank');
       window.focus();
     }
@@ -45,14 +45,14 @@ class SearchSquare extends Component {
 
 
   render() {
-    console.log(this.props);
-    console.log(this.props.venueRatingColor)
+    //console.log(this.props);
+    //console.log(this.props.venueRatingColor)
     var customColor = '';
 
 
     customColor = "#" + this.props.venueRatingColor;
 
-    console.log('CC: ' + customColor);
+    //console.log('CC: ' + customColor);
 
 
 
@@ -78,7 +78,7 @@ class SearchSquare extends Component {
           {/* onClick={this.handleClose}*/}
           <div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>
           <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
-          <DialogContent className="light">
+          <DialogContent className="light center">
 
             <img className="photo clickable" src={this.props.image} alt={this.props.venueID} onClick={this.goToRestaurantPage} />
             <div className="info">

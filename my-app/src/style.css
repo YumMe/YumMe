@@ -14,7 +14,7 @@
   background-repeat: no-repeat;
   display: flex;
   text-align: center;
-  align-items: center; 
+  align-items: center;
 }
 
 /*hompage text*/
@@ -90,59 +90,13 @@ body {
   color: white;
 }
 
-/*phone*/
-@media screen and (max-width: 600px){
-  .homepage {
-    background-image: url("../img/pasta-mobile.png");
-    align-items: initial;
-  }
-
-  .title{
-    font-size: 12vw;
-    margin-bottom: 0px;
-  }
-
-  h2.light{
-    font-size:6vw;
-  }
-
-  .text{
-    width: 85%;
-    margin-left: 0px;
-    margin: 0 auto;
-  }
-
-  .search-form {
-    width: 75%;
-    margin: 0 auto;
-  }
-
-  .location-pointer {
-    font-size: 6vw;
-  }
-
-  .placeholder{
-    font-size: 4vw;
-  }
-/*
-.search-form, .location-pointer {
-    display: inline-block;
-    width: 100%''    
-}*/
-
-  form{
-    display: inline-block;
-    width: 50vw;
-  }
-} 
-
 
 .fa.location-pointer {
   font-size: 30px;
 }
 /* Michael's CSS rules */
 .location-pointer {
-  padding-right: 10px;
+  padding-right: 20px;
   cursor: pointer;
   cursor: hand;
 }
@@ -192,15 +146,27 @@ body {
   text-align: left;
 }
 
-.go-button {
-  border-radius: 5px;
+.go-button, .back-button {
+  border-radius: 3px;
 }
+.black-text {
+  color: black;
+  display: block;
+  opacity: 1;
+}
+
 /* end of michael's css rules */
+
+.go-button {
+  margin-left: 1vw;
+}
 
 /* search results grid css*/
 
 /*flex container*/
 .search-grid {
+  position: absolute;
+  top: 100px;
   display: flex;
   flex-flow: row wrap;
   align-content: center;
@@ -219,7 +185,15 @@ body {
 .search-square {
   margin: 20px 20px;
   position: relative;
+  -webkit-filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+  filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
 }
+
+.image-filter {
+  -webkit-filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+  filter: saturate(1.4) sepia(0.25) hue-rotate(-15deg) contrast(0.8) brightness(1.1);
+}
+
 .overlay {
   padding: none;
   position: absolute;
@@ -251,12 +225,20 @@ body {
 
 /* messing around with navigation top*/
 .navigation {
+  padding: 10px;
+  /*padding-bottom: 20px;*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
 }
 .logo-navigation {
   margin-top: 30px;
   margin-left: 50px;
 }
-
 
 .search-navigation {
   margin-left: 35vw;
@@ -320,4 +302,148 @@ button.exit{
 .photo{
   float: left;
   margin: 20px;
+}
+
+.current-results {
+  margin-left: 45vw;
+  margin-top: -75px;
+  text-align: center;
+  font-size: 16px;
+  width: 200px;
+}
+
+.mdl-button--fab.mdl-button--colored{
+  background-color: black;
+}
+
+.fa-angle-up {
+  color: white;
+}
+
+.mdl-button--fab.mdl-button--colored:hover {
+  background-color: green;
+}
+
+/*phone*/
+@media screen and (max-width: 600px){
+  .search-navigation {
+    margin-top: 20vh;
+    width: 100%;
+    margin-left: 10vw;
+    display: block;
+  }
+  .search-grid {
+    top: 150px;
+  }
+  .homepage {
+    background-image: url("../img/pasta-mobile.png");
+    align-items: initial;
+  }
+
+  .title{
+    font-size: 12vw;
+    margin-bottom: 0px;
+  }
+
+  h2.light{
+    font-size:6vw;
+  }
+
+  .text{
+    width: 85%;
+    margin-left: 0px;
+    margin: 0 auto;
+  }
+
+  .search-form {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /*.location-pointer {
+    font-size: 6vw;
+  }*/
+
+  .placeholder{
+    font-size: 4vw;
+  }
+/*
+.search-form, .location-pointer {
+    display: inline-block;
+    width: 100%''    
+}*/
+
+  form{
+    display: inline-block;
+    width: 50vw;
+  }
+} 
+
+/* RESTAURANT */
+
+.restaurant-view {
+  margin-top: 100px;
+  padding-left: 5vw;
+}
+
+.restaurant-pic {
+  margin-bottom: 5px;
+}
+
+.image-filter {
+  padding: 5px;
+}
+
+
+.rating {
+  margin-top: 10px;
+  font-size: 28px;
+
+}
+
+.review {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #b7b7b7;
+}
+
+.address {
+  margin-top: 30px;
+}
+*/
+.map {
+  margin-top: 36px;
+  width: 100%;
+}
+
+/* Foursquare website */
+/*
+.fsite {
+  margin-top: 30px;
+}
+
+/* Restaurant website */
+/*
+.rsite {
+  margin-top: 30px;
+}
+*/
+.hours {
+  /*position: absolute;
+  margin-bottom: 50px;*/
+}
+
+/* leanne's restaurant view rules */
+.left-pics {
+  float: left;
+  margin-right: none;
+}
+
+.right-information {
+  display: inline-block;
+  padding-left: 50px;
+}
+
+.restaurant-title {
+  font-size: 30pt;
 }

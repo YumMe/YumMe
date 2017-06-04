@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchResultsGrid from './SearchResultsGrid';
 import SearchBar from './SearchBar';
 import Logo from './Logo';
+import ScrollToTop from 'react-scroll-up';
 
 class SearchResults extends Component {
 
@@ -22,7 +23,7 @@ class SearchResults extends Component {
     this.queryParametersAreValid = this.queryParametersAreValid.bind(this);
   }
 
-
+  
   componentDidMount() {
 
     // Get query parameters
@@ -37,6 +38,9 @@ class SearchResults extends Component {
     // For logging purposes: either the city name, or lat,long
     var param = '';
 
+    // Converting lat, long to city name
+    var cityApiCall = null;
+
     // (1) If using current location (takes priority over city)
     if (query.lat !== undefined && query.long !== undefined) {
       if (this.queryParametersAreValid(query.lat, query.long)) {
@@ -45,7 +49,13 @@ class SearchResults extends Component {
         // https://developer.foursquare.com/docs/venues/search
         var latAndLong = query.lat + ',' + query.long;
 
-        param = latAndLong;
+        // param = latAndLong;
+
+        cityApiCall = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat='
+                    + query.lat
+                    + '&lng='
+                    + query.long
+                    + '&username=greycabb&cities=cities1000';
 
         foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?ll='
           + latAndLong
@@ -76,7 +86,43 @@ class SearchResults extends Component {
         + '&intent=browse&query=restaurant&limit=50&v=20170605&client_id=N2POGB50IPO43FHUPOHRRJE0FWNDTV5DUCITOFVFWIXHBLUD&client_secret=JURFUE0WYS02ZFQJ0O132PIXOTBNJK1IDMQING34BNNNVYWL';
     }
 
+    this.setState({ city: param });
+
     console.log(foursquareApiCall);
+    console.log(param);
+    
+  
+
+    // Convert lat, long to city
+    fetch(cityApiCall)
+      .then(
+        (response) => {
+          if (response.status !== 200) {
+            return;
+          }
+          response.json().then((data) => {
+            console.log(data);
+            if (data.geonames !== undefined) {
+              for (var i = 0; i < data.geonames.length; i++) {
+                var name = data.geonames[0].name;
+                var state = data.geonames[0].adminCode1;
+
+                // Ignore non-letter state codes
+                if (state !== undefined) {
+                  name += ', ' + state;
+                  
+                  this.setState({
+                    city: name
+                  })
+
+                  break;
+                }
+              }
+            };
+          });
+        }
+      )
+
 
     // Grab venues
     fetch(foursquareApiCall)
@@ -85,6 +131,8 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
+            this.setState({'noResults': true});
+            console.log(this.state.noResults);
           return;
         }
         response.json().then((data) => {
@@ -183,7 +231,7 @@ class SearchResults extends Component {
         console.log('Fetch Error :-S', err);
       });
   }
-
+  
   // Validates query parameters
   queryParametersAreValid(lat, long) {
 
@@ -215,6 +263,8 @@ class SearchResults extends Component {
   }
 
 
+
+
   render() {
     return (
       <div >
@@ -224,6 +274,11 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
+            {this.state.noResults === undefined || this.state.noResults === false}
+            <p className="current-results light">Now viewing results for: {this.state.city}</p>
+            {this.state.noResults !== undefined && this.state.noResults === true &&
+              <div>No results for '{this.state.city}'</div>
+            }
           </div>
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
@@ -231,7 +286,12 @@ class SearchResults extends Component {
             venueRating={this.state.venueRating} 
             venueRatingColor={this.state.venueRatingColor}/>
         }
-      </div >
+        <ScrollToTop showUnder={160}>
+          <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i className="fa fa-angle-up" aria-hidden="true"></i>
+          </button>
+        </ScrollToTop>
+      </div>
     );
   }
 }

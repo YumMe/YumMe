@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import { Dialog, DialogContent } from 'react-mdl';
+import { hashHistory } from 'react-router';
 
 class SearchSquare extends Component {
 
@@ -9,7 +10,7 @@ class SearchSquare extends Component {
     this.state = {};
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
-
+    this.goToRestaurantPage = this.goToRestaurantPage.bind(this);
   }
 
   handleOpenDialog() {
@@ -24,6 +25,12 @@ class SearchSquare extends Component {
     });
   }
 
+
+  goToRestaurantPage() {
+    if (this.props.venueId !== undefined) {
+      hashHistory.push('/restaurant?venue_id=' + this.props.venueId);
+    }
+  }
 
 
   render() {
@@ -46,10 +53,12 @@ class SearchSquare extends Component {
 
         {/*taking out overlay for testing purposes*/}
         <div className="overlay" onClick={this.handleOpenDialog}  >
-          <div className="overlay-text">{this.props.venueName}</div>
+
+          <div className="overlay-text">
+            <div>{this.props.venueName}</div>
+            <div onClick={this.goToRestaurantPage}>{this.props.venueId}</div>
+          </div>
         </div>
-
-
 
         <Dialog open={this.state.openDialog} className="modal light">
 

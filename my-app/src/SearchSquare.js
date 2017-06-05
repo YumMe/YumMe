@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 const customStyles = {
   content : {
     width                 : '50vw',
+    height                : '60vh',
     border                : 'none',
     top                   : '60%',
     left                  : '50%',
@@ -28,7 +29,7 @@ class SearchSquare extends Component {
     /*this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);*/
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
+    //this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.goToRestaurantPage = this.goToRestaurantPage.bind(this);
     this.goToFoursquarePage = this.goToFoursquarePage.bind(this);
@@ -49,11 +50,6 @@ class SearchSquare extends Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
   }
 
   closeModal() {
@@ -104,11 +100,12 @@ class SearchSquare extends Component {
           </div>
         </div>
 
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} onClick={this.closeModal}>
+        <Modal isOpen={this.state.modalIsOpen} style={customStyles} onRequestClose={this.closeModal} onClick={this.closeModal} contentLabel="Restaurant Search Square">
         {/*className="modal light zindexone"*/}
 
           {/* onClick={this.handleClose}*/}
-          <div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>
+          {/*<div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>*/}
+          <div className="zindextwo" onClick={this.closeModal}></div>
           <button type='button' className='clickable exit light' onClick={this.closeModal}>X</button>
           <div className="light center">
 
@@ -158,7 +155,7 @@ class SearchSquare extends Component {
               </div>
             </div>
           </div>
-          </div>
+         {/* </div> */}
         </Modal>
       </div>
     );

@@ -26,7 +26,7 @@ class RestaurantImageModal extends Component {
     /*this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);*/
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
+    //this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -45,11 +45,6 @@ class RestaurantImageModal extends Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
   }
 
   closeModal() {
@@ -73,7 +68,7 @@ class RestaurantImageModal extends Component {
         {/*The venue id: {this.props.venueId}*/}
 
         {/*<Dialog open={this.state.openDialog} className="modal light zindexone" onClick={this.handleCloseDialog}>*/}
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} onClick={this.closeModal}>
+        <Modal isOpen={this.state.modalIsOpen} style={customStyles} onRequestClose={this.closeModal} onClick={this.closeModal} contentLabel="Restaurant Image Square">
 
 
           {/* onClick={this.handleClose}*/}

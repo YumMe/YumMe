@@ -390,7 +390,7 @@ class App extends Component {
                     {this.state.fs_phone}
                     <h4>Restaurant address:</h4>
                     {this.state.fs_address}
-                    <iframe className="map" src={'//www.google.com/maps/embed/v1/place?q=' +
+                    <iframe className="map" src={'https://www.google.com/maps/embed/v1/place?q=' +
                       this.state.fs_lat +
                       ',' +
                       this.state.fs_long +

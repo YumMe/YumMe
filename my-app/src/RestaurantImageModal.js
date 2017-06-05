@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 //import { Dialog, DialogContent } from 'react-mdl';
 import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
- 
+
+const customStyles = {
+  content : {
+    width                 : '50vw',
+    border                : 'none',
+    top                   : '60%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-20%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class RestaurantImageModal extends Component {
 
@@ -61,7 +73,7 @@ class RestaurantImageModal extends Component {
         {/*The venue id: {this.props.venueId}*/}
 
         {/*<Dialog open={this.state.openDialog} className="modal light zindexone" onClick={this.handleCloseDialog}>*/}
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onClick={this.closeModal}>
+        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} onClick={this.closeModal}>
 
 
           {/* onClick={this.handleClose}*/}

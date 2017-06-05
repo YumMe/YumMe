@@ -5,6 +5,18 @@ import Modal from 'react-modal';
 import { hashHistory } from 'react-router';
 import ReactDOM from 'react-dom';
  
+const customStyles = {
+  content : {
+    width                 : '50vw',
+    border                : 'none',
+    top                   : '60%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-20%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class SearchSquare extends Component {
 
@@ -92,7 +104,7 @@ class SearchSquare extends Component {
           </div>
         </div>
 
-        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} onClick={this.closeModal}>
+        <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal} style={customStyles} onClick={this.closeModal}>
         {/*className="modal light zindexone"*/}
 
           {/* onClick={this.handleClose}*/}

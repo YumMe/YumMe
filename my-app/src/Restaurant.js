@@ -446,7 +446,7 @@ class App extends Component {
 
 
                   {this.state.fs_isOpen === true &&
-                    <div className="hours-status">Open now!</div>
+                    <div className="hours-open hours-status">Open now!</div>
                   }
                   {this.state.fs_isOpen === false &&
                     <div className="hours-status">Currently closed</div>

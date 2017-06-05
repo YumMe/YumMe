@@ -376,6 +376,10 @@ button.exit{
   text-align: center;
   font-weight: bold;
 }
+
+.hours-open {
+  color:#C5DE35;
+}
 .image-filter {
   padding: 5px;
 }

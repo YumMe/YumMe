@@ -220,8 +220,16 @@ class SearchResults extends Component {
                   //console.log("entering menu if statement");
 
                   menuArray.push(currMenu);
+                  
+                  var spacedAddress = '';
+                  for (var i = 0; i < currAdress.length; i++) {
+                    spacedAddress += currAdress[i];
+                    if(i < currAdress.length) {
+                      spacedAddress += ' ';
+                    }
+                  }
 
-                  addressArray.push(currAdress);
+                  addressArray.push(spacedAddress);
 
                   var foursquarePageUrl = currMenu;
                   if (currMenu !== undefined) {

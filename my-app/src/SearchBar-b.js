@@ -122,8 +122,11 @@ export default class SearchBar extends React.Component {
 
                                     // Ignore the result in the search bar
                                     if (name.toLowerCase() !== searchQuery.toLowerCase()) {
-                                        cityNames.push(name);
-                                        resultCount++;
+                                        var charAt0 = name.charAt(0);
+                                        if (charAt0 !== charAt0.toLowerCase()) {
+                                            cityNames.push(name);
+                                            resultCount++;
+                                        }
                                     }
 
                                     // Stop at the 5th vallid result (city, state pair)
@@ -223,6 +226,11 @@ export default class SearchBar extends React.Component {
             function (position) {
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                if (accuracy != null && accuracy > 200) {
+                    alert("Due to Geolocation constraints, we were unable to get your exact location! Accuracy not sufficient, was " + accuracy + "m, expected 200m");
+                }
 
                 that.setState({
                     lat: lat,
@@ -230,7 +238,9 @@ export default class SearchBar extends React.Component {
                     currentLocationSearch: true,
                 });
                 latAndLong.push(lat, long);
-            }
+            },
+            function () { },
+            { enableHighAccuracy: true }
         );
         return latAndLong;
     }
@@ -244,7 +254,7 @@ export default class SearchBar extends React.Component {
         }
 
         // if not false, then we are using current location
-        var latAndLong = false;
+        var latAndLong = [];
 
         var usingCurrentLocation = false;
 
@@ -262,7 +272,8 @@ export default class SearchBar extends React.Component {
 
                 usingCurrentLocation = true;
 
-                delay = 2500;
+                delay = 1000;
+                
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
@@ -337,29 +348,48 @@ export default class SearchBar extends React.Component {
         // 3) long = longitude
         //      ignored if mylocation = false
 
-        setTimeout(function () {
-            var lat = '';
-            var long = '';
-            if (latAndLong !== false && usingCurrentLocation === true) {
-                lat = latAndLong[0];
-                long = latAndLong[1];
-            }
-            if (usingCurrentLocation === true) {
-                console.log('Going to search results page for current location');
-                // kinda bad, find a different solution instead of reload
-                console.log('/search?lat=' + lat + '&long=' + long);
-                window.location.reload();
+        var lat = '';
+        var long = '';
 
-                hashHistory.push('/search?lat=' + lat + '&long=' + long);
-                //that.forceUpdate();
-            } else if (usingCurrentLocation === false) {
-                console.log('Going to search results page for "' + that.state.search + '"');
-                
+        if (usingCurrentLocation === true) {
+            setInterval(function () {
+                console.log('boop');
+                if (latAndLong.length >= 2) {
+                    lat = latAndLong[0];
+                    long = latAndLong[1];
+
+                    console.log('Going to search results page for current location');
+                    // kinda bad, find a different solution instead of reload
+                    console.log('/search?lat=' + lat + '&long=' + long);
+                    //window.location.reload();
+                    window.location.reload(true);
+
+                    hashHistory.push('/search?lat=' + lat + '&long=' + long);
+                    //that.forceUpdate();
+                }
+            }, 200);
+        } else if (usingCurrentLocation === false) {
+            console.log('Going to search results page for "' + that.state.search + '"');
+
+            // If search query contains no comma, and the first suggested city
+            if (that.state.search.trim().indexOf(',') === -1 && that.state.suggestedCities.length > 0) {
+                var firstCity = that.state.suggestedCities[0];
+
+                // If first city contains the current search query reduced:
+                if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
+                    hashHistory.push('/search?city=' + firstCity);
+                    window.location.reload(true);
+                } else {
+                    hashHistory.push('/search?city=' + that.state.search.trim());
+                    window.location.reload(true);
+                }
+            } else {
                 hashHistory.push('/search?city=' + that.state.search.trim());
-                window.location.reload();
+                //window.location.reload();
+                window.location.reload(true);
                 //that.forceUpdate();
             }
-        }, delay);
+        }
     }
 
 

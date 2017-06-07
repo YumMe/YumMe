@@ -284,7 +284,7 @@ body {
 /*modal*/
 .modal{
   width: 80vw;
-  height: auto;
+  height: 200px;
 }
 
 .photo{
@@ -375,6 +375,10 @@ button.exit{
 .hours-status {
   text-align: center;
   font-weight: bold;
+}
+
+.hours-open {
+  color:#C5DE35;
 }
 .image-filter {
   padding: 5px;

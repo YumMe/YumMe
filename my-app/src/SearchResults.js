@@ -23,7 +23,7 @@ class SearchResults extends Component {
     this.queryParametersAreValid = this.queryParametersAreValid.bind(this);
   }
 
-  
+
   componentDidMount() {
 
     // Get query parameters
@@ -52,10 +52,10 @@ class SearchResults extends Component {
         // param = latAndLong;
 
         cityApiCall = 'https://secure.geonames.org/findNearbyPlaceNameJSON?lat='
-                    + query.lat
-                    + '&lng='
-                    + query.long
-                    + '&username=greycabb&cities=cities1000';
+          + query.lat
+          + '&lng='
+          + query.long
+          + '&username=greycabb&cities=cities1000';
 
         foursquareApiCall = 'https://api.foursquare.com/v2/venues/search?ll='
           + latAndLong
@@ -90,12 +90,13 @@ class SearchResults extends Component {
 
     //console.log(foursquareApiCall);
     //console.log(param);
-    
-  
 
-    // Convert lat, long to city
-    fetch(cityApiCall)
-      .then(
+
+
+    // Convert lat, long to city if necessary
+    if (cityApiCall !== null) {
+      fetch(cityApiCall)
+        .then(
         (response) => {
           if (response.status !== 200) {
             return;
@@ -110,10 +111,10 @@ class SearchResults extends Component {
                 // Ignore non-letter state codes
                 if (state !== undefined) {
                   name += ', ' + state;
-                  
+
                   this.setState({
                     city: name
-                  })
+                  });
 
                   break;
                 }
@@ -121,7 +122,8 @@ class SearchResults extends Component {
             };
           });
         }
-      )
+        )
+    }
 
 
     // Grab venues
@@ -131,8 +133,8 @@ class SearchResults extends Component {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             response.status);
-            this.setState({noResults: true});
-            console.log(this.state.noResults);
+          this.setState({ noResults: true });
+          console.log(this.state.noResults);
           return;
         }
         response.json().then((data) => {
@@ -156,15 +158,15 @@ class SearchResults extends Component {
             switch (searchType) {
               case 'city':
                 console.log("No results found for city: " + param);
-                this.setState({noResults: true});
+                this.setState({ noResults: true });
                 break;
               case 'coords':
                 console.log("No results found for coords: " + param);
-                this.setState({noResults: true});
+                this.setState({ noResults: true });
                 break;
               default:
                 console.log("invalid search parameters");
-                this.setState({noResults: true});
+                this.setState({ noResults: true });
                 break;
             }
           }
@@ -221,7 +223,15 @@ class SearchResults extends Component {
 
                   menuArray.push(currMenu);
 
-                  addressArray.push(currAdress);
+                  var spacedAddress = '';
+                  for (var i = 0; i < currAdress.length; i++) {
+                    spacedAddress += currAdress[i];
+                    if (i < currAdress.length) {
+                      spacedAddress += ' ';
+                    }
+                  }
+
+                  addressArray.push(spacedAddress);
 
                   var foursquarePageUrl = currMenu;
                   if (currMenu !== undefined) {
@@ -233,7 +243,8 @@ class SearchResults extends Component {
                   // if(data["respones"]["venues"][i]["menu"] != undefined)
                   //  webArray.push(currWebsite);
                   this.setState(
-                    { venueImages: imagesArray,
+                    {
+                      venueImages: imagesArray,
                       venueIds: idArray,
                       venueNames: nameArray,
                       venueAddress: addressArray,
@@ -241,7 +252,7 @@ class SearchResults extends Component {
                       venuePhone: phoneArray,
                       venueWebsite: webArray,
                       venueRating: ratingArray,
-                      venueRatingColor:ratingColorArray,
+                      venueRatingColor: ratingColorArray,
                       venueFoursquarePage: foursquarePageUrlArray
                     });
                   // venueWebsite: webArray, 
@@ -261,7 +272,7 @@ class SearchResults extends Component {
         console.log('Fetch Error :-S', err);
       });
   }
-  
+
   // Validates query parameters
   queryParametersAreValid(lat, long) {
 
@@ -289,7 +300,7 @@ class SearchResults extends Component {
       return true;
     }
     console.log('lat or long is invalid');
-    return false;
+    return false; 
   }
 
 
@@ -304,21 +315,21 @@ class SearchResults extends Component {
           </div>
           <div className="search-navigation">
             <SearchBar />
-            </div>
-            {this.state.noResults === undefined &&
-              <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
-            }
+          </div>
+          {this.state.noResults === undefined &&
+            <p className="current-results disappears-in-mobile light">Now viewing results for: {this.state.city}</p>
+          }
           {this.state.noResults !== undefined && this.state.noResults === true &&
             <p className="current-results disappears-in-mobile-light">No results for '{this.state.city}'</p>
           }
-          
-          
+
+
         </div>
         {this.state.venueImages !== undefined && this.state.venueIds !== undefined && this.state.venueNames !== undefined &&
           <SearchResultsGrid venueImages={this.state.venueImages} venueIds={this.state.venueIds} venueNames={this.state.venueNames} venueAddress={this.state.venueAddress} venuePhone={this.state.venuePhone} venueMenus={this.state.venueMenus} venueWebsite={this.state.venueWebsite}
-            venueRating={this.state.venueRating} 
+            venueRating={this.state.venueRating}
             venueRatingColor={this.state.venueRatingColor}
-            venueFoursquarePage={this.state.venueFoursquarePage}/>
+            venueFoursquarePage={this.state.venueFoursquarePage} />
         }
         <ScrollToTop showUnder={160}>
           <button className="scroll-up mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">

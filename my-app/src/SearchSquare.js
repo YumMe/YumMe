@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
-import { Dialog, DialogContent } from 'react-mdl';
+//import { Dialog, DialogContent } from 'react-mdl';
+import Modal from 'react-modal';
 import { hashHistory } from 'react-router';
 import ReactDOM from 'react-dom';
  
+const customStyles = {
+  content : {
+    width                 : '50vw',
+    height                : '60vh',
+    border                : 'none',
+    top                   : '60%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-20%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class SearchSquare extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.handleOpenDialog = this.handleOpenDialog.bind(this);
-    this.handleCloseDialog = this.handleCloseDialog.bind(this);
+    this.state = {
+      modalIsOpen: false
+    };
+    /*this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);*/
+    this.openModal = this.openModal.bind(this);
+    //this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.goToRestaurantPage = this.goToRestaurantPage.bind(this);
     this.goToFoursquarePage = this.goToFoursquarePage.bind(this);
+
   }
 
-  handleOpenDialog() {
+  /*handleOpenDialog() {
     this.setState({
       openDialog: true
     });
@@ -26,6 +46,14 @@ class SearchSquare extends Component {
     this.setState({
       openDialog: false
     });
+  }*/
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   goToFoursquarePage() {
@@ -63,7 +91,7 @@ class SearchSquare extends Component {
 
 
         {/*taking out overlay for testing purposes*/}
-        <div className="overlay clickable" onClick={this.handleOpenDialog}  >
+        <div className="overlay clickable" onClick={this.openModal}  >
 
           <div className="overlay-text">
             <div>{this.props.venueName}</div>
@@ -72,13 +100,14 @@ class SearchSquare extends Component {
           </div>
         </div>
 
-        <Dialog open={this.state.openDialog} className="modal light zindexone" onClick={this.handleCloseDialog}>
-
+        <Modal isOpen={this.state.modalIsOpen} style={customStyles} onRequestClose={this.closeModal} onClick={this.closeModal} contentLabel="Restaurant Search Square">
+        {/*className="modal light zindexone"*/}
 
           {/* onClick={this.handleClose}*/}
-          <div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>
-          <button type='button' className='clickable exit light' onClick={this.handleCloseDialog}>X</button>
-          <DialogContent className="light center">
+          {/*<div className="zindextwo" onClick={function(event) { event.stopPropagation()}}>*/}
+          <div className="zindextwo" onClick={this.closeModal}></div>
+          <button type='button' className='clickable exit light' onClick={this.closeModal}>X</button>
+          <div className="light center">
 
             <img className="photo clickable" src={this.props.image} alt={this.props.venueID} onClick={this.goToRestaurantPage} />
             <div className="info">
@@ -125,9 +154,9 @@ class SearchSquare extends Component {
                 <button onClick={this.goToRestaurantPage} className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button butt view-more">View more information</button>
               </div>
             </div>
-          </DialogContent>
           </div>
-        </Dialog>
+         {/* </div> */}
+        </Modal>
       </div>
     );
   }

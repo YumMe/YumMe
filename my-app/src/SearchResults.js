@@ -114,7 +114,7 @@ class SearchResults extends Component {
 
                   this.setState({
                     city: name
-                  })
+                  });
 
                   break;
                 }

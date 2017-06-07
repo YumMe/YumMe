@@ -96,7 +96,7 @@ export default class SearchBar extends React.Component {
             // https://secure.geonames.org/searchJSON?q=sammamish&maxRows=10&username=greycabb removed maxRows=10
             that.state.fetch = fetch('https://secure.geonames.org/searchJSON?username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery)
                 .then(
-                function(response) {
+                function (response) {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' + response.status);
                         // Clear suggested cities
@@ -105,7 +105,7 @@ export default class SearchBar extends React.Component {
                     }
 
                     // Examine the text in the response
-                    response.json().then(function(data) {
+                    response.json().then(function (data) {
                         console.log(data);
                         if (data) {
                             var cityNames = [];//["[Results for " + searchQuery + "]"];
@@ -137,7 +137,7 @@ export default class SearchBar extends React.Component {
                     });
                 }
                 )
-                .catch(function(err) {
+                .catch(function (err) {
                     console.log('Fetch Error :-S', err);
                 });
         }
@@ -173,7 +173,7 @@ export default class SearchBar extends React.Component {
         clearTimeout(this.typingTimer);
         this.resetTypingTimer(true);
 
-        setTimeout(function() {
+        setTimeout(function () {
             that.goToSearchResultsPage();
         }, 1800);
     }
@@ -188,13 +188,13 @@ export default class SearchBar extends React.Component {
             alert("Geolocation not supported in your browser");
             return;
         }
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             console.log('ur tracked hehe');
             that.setState({
                 locationServicesAllowed: true
             });
         },
-            function(error) {
+            function (error) {
                 if (error.code === error.PERMISSION_DENIED) {
                     console.log('ur not tracked lol');
                     that.setState({
@@ -220,7 +220,7 @@ export default class SearchBar extends React.Component {
 
         var latAndLong = [];
         navigator.geolocation.getCurrentPosition(
-            function(position) {
+            function (position) {
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
 
@@ -231,8 +231,8 @@ export default class SearchBar extends React.Component {
                 });
                 latAndLong.push(lat, long);
             },
-            function() {},
-            {enableHighAccuracy: true}
+            function () { },
+            { enableHighAccuracy: true }
         );
         return latAndLong;
     }
@@ -268,23 +268,23 @@ export default class SearchBar extends React.Component {
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
-                    'https://secure.geonames.org/findNearbyPlaceNameJSON?lat='
-                    + latAndLong[0]
-                    + '&lng='
-                    + latAndLong[1]
-                    + '&username=greycabb&cities=cities1000';
+                        'https://secure.geonames.org/findNearbyPlaceNameJSON?lat='
+                        + latAndLong[0]
+                        + '&lng='
+                        + latAndLong[1]
+                        + '&username=greycabb&cities=cities1000';
                     console.log(apiCall);
                     // https://secure.geonames.org/searchJSON?maxRows=10&username=greycabb&country=us&cities=cities1000&name_startsWith=' + searchQuery
 
                     that.state.fetch = fetch(apiCall)
                         .then(
-                        function(response) {
+                        function (response) {
                             if (response.status !== 200) {
                                 return;
                             }
 
                             // Examine the text in the response
-                            response.json().then(function(data) {
+                            response.json().then(function (data) {
                                 console.log(data);
                                 if (data) {
 
@@ -293,7 +293,7 @@ export default class SearchBar extends React.Component {
                                         for (var i = 0; i < data.geonames.length; i++) {
                                             var name = data.geonames[0].name;
                                             var state = data.geonames[0].adminCode1;
-                                            
+
                                             // Ignore non-letter state codes
                                             if (state !== undefined && that.stringIsOnlyLetters(state)) {
                                                 name += ', ' + state;
@@ -311,12 +311,12 @@ export default class SearchBar extends React.Component {
                             });
                         }
                         )
-                        .catch(function(err) {
+                        .catch(function (err) {
                             console.log('Fetch Error :-S', err);
                         });
 
                 }
-                setTimeout(function() { getCityFromCoords(latAndLong, that)}, 200);
+                setTimeout(function () { getCityFromCoords(latAndLong, that) }, 200);
                 this.setState({
                     city: name
                 })
@@ -330,7 +330,7 @@ export default class SearchBar extends React.Component {
                 return;
             }
         }
-        
+
         // Parameters:
 
         // 1) city = city name
@@ -339,7 +339,7 @@ export default class SearchBar extends React.Component {
         // 3) long = longitude
         //      ignored if mylocation = false
 
-        setTimeout(function() {
+        setTimeout(function () {
             var lat = '';
             var long = '';
             if (latAndLong !== false && usingCurrentLocation === true) {
@@ -357,11 +357,25 @@ export default class SearchBar extends React.Component {
                 //that.forceUpdate();
             } else if (usingCurrentLocation === false) {
                 console.log('Going to search results page for "' + that.state.search + '"');
-                
-                hashHistory.push('/search?city=' + that.state.search.trim());
-                //window.location.reload();
-                window.location.reload(true);
-                //that.forceUpdate();
+
+                // If search query contains no comma, and the first suggested city
+                if (that.state.search.trim().indexOf(',') === -1 && that.state.suggestedCities.length > 0) {
+                    var firstCity = that.state.suggestedCities[0];
+
+                    // If first city contains the current search query reduced:
+                    if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
+                        hashHistory.push('/search?city=' + firstCity);
+                        window.location.reload(true);
+                    } else {
+                        hashHistory.push('/search?city=' + that.state.search.trim());
+                        window.location.reload(true);
+                    }
+                } else {
+                    hashHistory.push('/search?city=' + that.state.search.trim());
+                    //window.location.reload();
+                    window.location.reload(true);
+                    //that.forceUpdate();
+                }
             }
         }, delay);
     }
@@ -371,14 +385,14 @@ export default class SearchBar extends React.Component {
     // Render in dom
     render() {
         var that = this;
-        
+
         var showDropdown = false;
         var dropdown = null;
 
         if (this.state.suggestedCities.length > 0) {
             showDropdown = true;
             dropdown =
-                this.state.suggestedCities.map(function(city, i) {
+                this.state.suggestedCities.map(function (city, i) {
                     return <div key={i} onClick={(e) => that.clickSearchResult(e, that)} className="highlight-on-hover dropdown-result">{city}</div>;
                 });
         }
@@ -392,9 +406,11 @@ export default class SearchBar extends React.Component {
                                 <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={(e) => this.goToSearchResultsPage(e, true)}></i>
                             }
                             {this.state.locationServicesAllowed === false &&
-                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={function() { alert('Please enable location services to use this feature!'); that.setState({
-                    showingErrorMessage: "Please enable location services to use this feature!"
-                }); } }></i>
+                                <i className="fa fa-location-arrow location-pointer pointer-on-hover" aria-hidden="true" onClick={function () {
+                                    alert('Please enable location services to use this feature!'); that.setState({
+                                        showingErrorMessage: "Please enable location services to use this feature!"
+                                    });
+                                } }></i>
                             }
                             <div className="mdl-textfield mdl-js-textfield">
                                 <input className="mdl-textfield__input" type="search" id="sample1" ref="searchbar" placeholder="Where do you want to eat?" autoComplete="off" />
@@ -419,7 +435,7 @@ export default class SearchBar extends React.Component {
                         <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={this.goToSearchResultsPage}>
                             Go!
                         </button>
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={function () { history.back() }}>{'<'} Back
+                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect button light go-button" onClick={function () { history.back() } }>{'<'} Back
                         </button>
                         <h1>{this.state.name}</h1>
                     </div>

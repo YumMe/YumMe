@@ -230,7 +230,9 @@ export default class SearchBar extends React.Component {
                     currentLocationSearch: true,
                 });
                 latAndLong.push(lat, long);
-            }
+            },
+            function() {},
+            {enableHighAccuracy: true}
         );
         return latAndLong;
     }

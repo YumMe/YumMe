@@ -249,7 +249,7 @@ export default class SearchBar extends React.Component {
         }
 
         // if not false, then we are using current location
-        var latAndLong = false;
+        var latAndLong = [];
 
         var usingCurrentLocation = false;
 
@@ -267,7 +267,7 @@ export default class SearchBar extends React.Component {
 
                 usingCurrentLocation = true;
 
-                delay = 2000;
+                delay = 1000;
                 // get city from lat and long
                 function getCityFromCoords(latAndLong, that) {
                     var apiCall =
@@ -342,22 +342,27 @@ export default class SearchBar extends React.Component {
         // 3) long = longitude
         //      ignored if mylocation = false
 
-        setTimeout(function () {
+        setInterval(function () {
             var lat = '';
             var long = '';
-            if (latAndLong !== false && usingCurrentLocation === true) {
-                lat = latAndLong[0];
-                long = latAndLong[1];
-            }
-            if (usingCurrentLocation === true) {
-                console.log('Going to search results page for current location');
-                // kinda bad, find a different solution instead of reload
-                console.log('/search?lat=' + lat + '&long=' + long);
-                //window.location.reload();
-                window.location.reload(true);
 
-                hashHistory.push('/search?lat=' + lat + '&long=' + long);
-                //that.forceUpdate();
+            if (usingCurrentLocation === true) {
+                setInterval(function () {
+                    console.log('boop');
+                    if (latAndLong.length >= 2) {
+                        lat = latAndLong[0];
+                        long = latAndLong[1];
+
+                        console.log('Going to search results page for current location');
+                        // kinda bad, find a different solution instead of reload
+                        console.log('/search?lat=' + lat + '&long=' + long);
+                        //window.location.reload();
+                        window.location.reload(true);
+
+                        hashHistory.push('/search?lat=' + lat + '&long=' + long);
+                        //that.forceUpdate();
+                    }
+                }, 200);
             } else if (usingCurrentLocation === false) {
                 console.log('Going to search results page for "' + that.state.search + '"');
 

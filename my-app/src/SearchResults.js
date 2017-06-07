@@ -300,7 +300,7 @@ class SearchResults extends Component {
       return true;
     }
     console.log('lat or long is invalid');
-    return false;
+    return false; 
   }
 
 

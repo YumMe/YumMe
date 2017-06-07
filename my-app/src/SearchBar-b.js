@@ -226,6 +226,11 @@ export default class SearchBar extends React.Component {
             function (position) {
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                if (accuracy != null && accuracy > 200) {
+                    alert("Due to Geolocation constraints, we were unable to get your exact location! Accuracy not sufficient, was " + accuracy + "m, expected 200m");
+                }
 
                 that.setState({
                     lat: lat,
@@ -342,50 +347,48 @@ export default class SearchBar extends React.Component {
         // 3) long = longitude
         //      ignored if mylocation = false
 
-        setInterval(function () {
-            var lat = '';
-            var long = '';
+        var lat = '';
+        var long = '';
 
-            if (usingCurrentLocation === true) {
-                setInterval(function () {
-                    console.log('boop');
-                    if (latAndLong.length >= 2) {
-                        lat = latAndLong[0];
-                        long = latAndLong[1];
+        if (usingCurrentLocation === true) {
+            setInterval(function () {
+                console.log('boop');
+                if (latAndLong.length >= 2) {
+                    lat = latAndLong[0];
+                    long = latAndLong[1];
 
-                        console.log('Going to search results page for current location');
-                        // kinda bad, find a different solution instead of reload
-                        console.log('/search?lat=' + lat + '&long=' + long);
-                        //window.location.reload();
-                        window.location.reload(true);
-
-                        hashHistory.push('/search?lat=' + lat + '&long=' + long);
-                        //that.forceUpdate();
-                    }
-                }, 200);
-            } else if (usingCurrentLocation === false) {
-                console.log('Going to search results page for "' + that.state.search + '"');
-
-                // If search query contains no comma, and the first suggested city
-                if (that.state.search.trim().indexOf(',') === -1 && that.state.suggestedCities.length > 0) {
-                    var firstCity = that.state.suggestedCities[0];
-
-                    // If first city contains the current search query reduced:
-                    if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
-                        hashHistory.push('/search?city=' + firstCity);
-                        window.location.reload(true);
-                    } else {
-                        hashHistory.push('/search?city=' + that.state.search.trim());
-                        window.location.reload(true);
-                    }
-                } else {
-                    hashHistory.push('/search?city=' + that.state.search.trim());
+                    console.log('Going to search results page for current location');
+                    // kinda bad, find a different solution instead of reload
+                    console.log('/search?lat=' + lat + '&long=' + long);
                     //window.location.reload();
                     window.location.reload(true);
+
+                    hashHistory.push('/search?lat=' + lat + '&long=' + long);
                     //that.forceUpdate();
                 }
+            }, 200);
+        } else if (usingCurrentLocation === false) {
+            console.log('Going to search results page for "' + that.state.search + '"');
+
+            // If search query contains no comma, and the first suggested city
+            if (that.state.search.trim().indexOf(',') === -1 && that.state.suggestedCities.length > 0) {
+                var firstCity = that.state.suggestedCities[0];
+
+                // If first city contains the current search query reduced:
+                if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
+                    hashHistory.push('/search?city=' + firstCity);
+                    window.location.reload(true);
+                } else {
+                    hashHistory.push('/search?city=' + that.state.search.trim());
+                    window.location.reload(true);
+                }
+            } else {
+                hashHistory.push('/search?city=' + that.state.search.trim());
+                //window.location.reload();
+                window.location.reload(true);
+                //that.forceUpdate();
             }
-        }, delay);
+        }
     }
 
 

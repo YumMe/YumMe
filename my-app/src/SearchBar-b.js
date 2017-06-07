@@ -230,7 +230,9 @@ export default class SearchBar extends React.Component {
                     currentLocationSearch: true,
                 });
                 latAndLong.push(lat, long);
-            }
+            },
+            function () { },
+            { enableHighAccuracy: true }
         );
         return latAndLong;
     }
@@ -348,16 +350,32 @@ export default class SearchBar extends React.Component {
                 console.log('Going to search results page for current location');
                 // kinda bad, find a different solution instead of reload
                 console.log('/search?lat=' + lat + '&long=' + long);
-                window.location.reload();
+                //window.location.reload();
+                window.location.reload(true);
 
                 hashHistory.push('/search?lat=' + lat + '&long=' + long);
                 //that.forceUpdate();
             } else if (usingCurrentLocation === false) {
                 console.log('Going to search results page for "' + that.state.search + '"');
-                
-                hashHistory.push('/search?city=' + that.state.search.trim());
-                window.location.reload();
-                //that.forceUpdate();
+
+                // If search query contains no comma, and the first suggested city
+                if (that.state.search.trim().indexOf(',') === -1 && that.state.suggestedCities.length > 0) {
+                    var firstCity = that.state.suggestedCities[0];
+
+                    // If first city contains the current search query reduced:
+                    if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
+                        hashHistory.push('/search?city=' + firstCity);
+                        window.location.reload(true);
+                    } else {
+                        hashHistory.push('/search?city=' + that.state.search.trim());
+                        window.location.reload(true);
+                    }
+                } else {
+                    hashHistory.push('/search?city=' + that.state.search.trim());
+                    //window.location.reload();
+                    window.location.reload(true);
+                    //that.forceUpdate();
+                }
             }
         }, delay);
     }

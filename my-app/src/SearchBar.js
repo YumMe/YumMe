@@ -362,6 +362,9 @@ export default class SearchBar extends React.Component {
                     // kinda bad, find a different solution instead of reload
                     console.log('/search?lat=' + lat + '&long=' + long);
                     //window.location.reload(true);
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 100);
 
                     hashHistory.push('/search?lat=' + lat + '&long=' + long);
                 }
@@ -377,13 +380,22 @@ export default class SearchBar extends React.Component {
                 if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
                     hashHistory.push('/search?city=' + firstCity);
                     //window.location.reload(true);
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 100);
                 } else {
                     hashHistory.push('/search?city=' + that.state.search.trim());
                     //window.location.reload(true);
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 100);
                 }
             } else {
                 hashHistory.push('/search?city=' + that.state.search.trim());
                 //window.location.reload(true);
+                setTimeout(function () {
+                    window.location.reload(true);
+                }, 100);
             }
         }
     }

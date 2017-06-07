@@ -361,11 +361,9 @@ export default class SearchBar extends React.Component {
                     console.log('Going to search results page for current location');
                     // kinda bad, find a different solution instead of reload
                     console.log('/search?lat=' + lat + '&long=' + long);
-                    //window.location.reload();
-                    window.location.reload(true);
+                    //window.location.reload(true);
 
                     hashHistory.push('/search?lat=' + lat + '&long=' + long);
-                    //that.forceUpdate();
                 }
             }, 200);
         } else if (usingCurrentLocation === false) {
@@ -378,16 +376,14 @@ export default class SearchBar extends React.Component {
                 // If first city contains the current search query reduced:
                 if (firstCity.toLowerCase().indexOf(that.state.search.toLowerCase().trim()) > -1) {
                     hashHistory.push('/search?city=' + firstCity);
-                    window.location.reload(true);
+                    //window.location.reload(true);
                 } else {
                     hashHistory.push('/search?city=' + that.state.search.trim());
-                    window.location.reload(true);
+                    //window.location.reload(true);
                 }
             } else {
                 hashHistory.push('/search?city=' + that.state.search.trim());
-                //window.location.reload();
-                window.location.reload(true);
-                //that.forceUpdate();
+                //window.location.reload(true);
             }
         }
     }

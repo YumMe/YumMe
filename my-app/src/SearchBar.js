@@ -122,8 +122,11 @@ export default class SearchBar extends React.Component {
 
                                     // Ignore the result in the search bar
                                     if (name.toLowerCase() !== searchQuery.toLowerCase()) {
-                                        cityNames.push(name);
-                                        resultCount++;
+                                        var charAt0 = name.charAt(0);
+                                        if (charAt0 !== charAt0.toLowerCase()) {
+                                            cityNames.push(name);
+                                            resultCount++;
+                                        }
                                     }
 
                                     // Stop at the 5th vallid result (city, state pair)

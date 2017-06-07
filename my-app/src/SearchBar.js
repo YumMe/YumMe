@@ -226,6 +226,13 @@ export default class SearchBar extends React.Component {
             function (position) {
                 var lat = position.coords.latitude;
                 var long = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+
+                if (accuracy > 200) {
+                    alert("Due to Geolocation constraints, we were unable to get your exact location! Accuracy not sufficient, was " + accuracy + "m, expected 200m");
+                }
+
+                console.log('CCCCC ' + accuracy);
 
                 that.setState({
                     lat: lat,

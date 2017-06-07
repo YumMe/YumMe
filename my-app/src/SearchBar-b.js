@@ -363,7 +363,7 @@ export default class SearchBar extends React.Component {
                     //window.location.reload(true);
                     setTimeout(function () {
                         window.location.reload(true);
-                    }, 100);
+                    }, 200);
 
                     hashHistory.push('/search?lat=' + lat + '&long=' + long);
                 }
@@ -381,21 +381,21 @@ export default class SearchBar extends React.Component {
                     //window.location.reload(true);
                     setTimeout(function () {
                         window.location.reload(true);
-                    }, 100);
+                    }, 200);
 
                 } else {
                     hashHistory.push('/search?city=' + that.state.search.trim());
                     //window.location.reload(true);
                     setTimeout(function () {
                         window.location.reload(true);
-                    }, 100);
+                    }, 200);
                 }
             } else {
                 hashHistory.push('/search?city=' + that.state.search.trim());
                 //window.location.reload(true);
                 setTimeout(function () {
                     window.location.reload(true);
-                }, 100);
+                }, 200);
             }
         }
     }
